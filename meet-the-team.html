@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meet the Team - Wisconsin Robotics</title>
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+* {
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* COLOR VARIABLES */
+:root {
+  --bg-primary: #000000;
+  --bg-card: #1a1a1a;
+  --text-primary: #f3f3f3;
+  --text-secondary: #b8b8b8;
+  --orange: #ff6b35;
+  --orange-soft: #f7931e;
+  --shadow: rgba(255,107,53,0.2);
+}
+.dark {
+  --bg-primary: #0e0f12;
+  --bg-card: #17191d;
+  --text-primary: #f3f3f3;
+  --text-secondary: #b8b8b8;
+  --shadow: rgba(255,107,53,0.1);
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* ANIMATIONS */
+@keyframes gradientShift {
+  0%,100% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+}
+.gradient-text {
+  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-soft) 50%, #c44536 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+.dark .gradient-text {
+  text-shadow: 0 0 8px rgba(255,107,53,0.6),
+               0 0 16px rgba(247,147,30,0.5);
+}
+
+/* NAVBAR */
+nav {
+  backdrop-filter: blur(10px);
+  background-color: rgba(20, 10, 6, 0.9);
+}
+
+/* CARDS */
+.card {
+  background: var(--bg-card);
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(255,107,53,0.25);
+}
+
+/* TEAM SECTIONS */
+.member-card img {
+  transition: transform 0.4s ease;
+}
+.member-card:hover img {
+  transform: scale(1.05);
+}
+.role-badge {
+  background: linear-gradient(135deg, var(--orange), var(--orange-soft));
+  color: white;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.3rem 0.8rem;
+  display: inline-block;
+  box-shadow: 0 2px 8px rgba(255,107,53,0.4);
+}
+
+/* RESPONSIVE GRID CENTER FIX */
+.team-grid {
+  display: grid;
+  justify-content: center;
+  gap: 2.5rem;
+}
+@media(min-width:768px){.team-grid{grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));}}
+
+/* SMOOTH APPEAR */
+.fade-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+}
+.fade-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* HERO BACKGROUND */
+.mars-bg {
+  background: linear-gradient(135deg,#2c1810,#5c3023,#8c4b3f);
+  background-size: 400% 400%;
+  animation: mars 15s ease infinite;
+}
+@keyframes mars {
+  0%,100%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+}
+
+/* Mobile menu */
+.mobile-menu {
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+}
+.mobile-menu.active {
+  transform: translateX(0);
+}
+  </style>
+</head>
+<body class="bg-black">
+
+<!-- NAVBAR -->
+<nav class="sticky top-0 z-50 shadow-lg w-full text-[#e8e6e3]">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6 h-16">
+    <a href="index.html" class="flex items-center space-x-2">
+      <i data-feather="cpu" class="w-6 h-6 text-[var(--orange)]"></i>
+      <span class="font-bold text-lg text-[var(--orange)]">Wisconsin Robotics</span>
+    </a>
+    <div class="hidden md:flex items-center space-x-6">
+      <a href="index.html#about" class="hover:text-[var(--orange)] transition">About</a>
+      <a href="index.html#teams" class="hover:text-[var(--orange)] transition">Teams</a>
+      <a href="index.html#sponsors" class="hover:text-[var(--orange)] transition">Sponsors</a>
+      <a href="index.html#contact" class="hover:text-[var(--orange)] transition">Contact</a>
+      <button id="dark-toggle" class="hover:text-[var(--orange)] transition">
+        <i data-feather="moon" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <button id="mobile-toggle" class="md:hidden hover:text-[var(--orange)]">
+      <i data-feather="menu" class="w-6 h-6"></i>
+    </button>
+  </div>
+  
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu md:hidden fixed top-0 right-0 h-full w-64 bg-[#2c1810] shadow-2xl p-6">
+    <button id="mobile-close" class="absolute top-4 right-4 text-white">
+      <i data-feather="x" class="w-6 h-6"></i>
+    </button>
+    <div class="flex flex-col space-y-4 mt-12">
+      <a href="index.html#about" class="text-white hover:text-[var(--orange)] transition">About</a>
+      <a href="index.html#teams" class="text-white hover:text-[var(--orange)] transition">Teams</a>
+      <a href="index.html#sponsors" class="text-white hover:text-[var(--orange)] transition">Sponsors</a>
+      <a href="index.html#contact" class="text-white hover:text-[var(--orange)] transition">Contact</a>
+      <button id="dark-toggle-mobile" class="text-left text-white hover:text-[var(--orange)] transition">
+        <i data-feather="moon" class="w-5 h-5 inline"></i> Dark Mode
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="mars-bg text-center py-20 text-white">
+  <h1 class="text-5xl md:text-6xl font-extrabold mb-4">Meet <span class="gradient-text">The Team</span></h1>
+  <p class="text-lg md:text-xl opacity-90">A student-led effort at the University of Wisconsin–Madison</p>
+</section>
+
+<!-- STRUCTURE -->
+<section class="py-20 px-6 bg-[var(--bg-primary)] fade-section">
+  <div class="max-w-7xl mx-auto text-center mb-16">
+    <h2 class="text-5xl font-bold mb-4 gradient-text">Structure</h2>
+    <p class="text-[var(--text-secondary)] max-w-2xl mx-auto">
+      Wisconsin Robotics is made of teams, each contributing to the development of the rover and our mission.
+    </p>
+  </div>
+  <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+    <div class="card p-10 text-left">
+      <div class="w-16 h-16 bg-blue-500 rounded-xl flex items-center justify-center mb-6">
+        <i data-feather="cpu" class="text-white w-8 h-8"></i>
+      </div>
+      <h3 class="text-2xl font-bold mb-3">Technical Teams</h3>
+      <p class="text-[var(--text-secondary)]">
+        Our sub-teams encompassing electrical, software, and mechanical disciplines collaborate to design, develop, and construct our rover.
+      </p>
+    </div>
+    <div class="card p-10 text-left">
+      <div class="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center mb-6">
+        <i data-feather="users" class="text-white w-8 h-8"></i>
+      </div>
+      <h3 class="text-2xl font-bold mb-3">Outreach & Operations</h3>
+      <p class="text-[var(--text-secondary)]">
+        Engages communities to bring interest in robotics, handling sponsorships, finances, and recruitment year-round.
+      </p>
+    </div>
+    <div class="card p-10 text-left">
+      <div class="w-16 h-16 bg-purple-500 rounded-xl flex items-center justify-center mb-6">
+        <i data-feather="award" class="text-white w-8 h-8"></i>
+      </div>
+      <h3 class="text-2xl font-bold mb-3">Leadership</h3>
+      <p class="text-[var(--text-secondary)]">
+        Guides the entire organization, ensuring smooth operation and strategic direction across all projects and initiatives.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section class="py-20 px-6 bg-[var(--bg-card)] fade-section">
+  <div class="max-w-7xl mx-auto text-center mb-16">
+    <h2 class="text-5xl font-bold mb-4 gradient-text">Leadership</h2>
+    <div class="h-1 w-24 bg-gradient-to-r from-[var(--orange)] to-[var(--orange-soft)] mx-auto rounded-full"></div>
+  </div>
+  <div class="team-grid max-w-5xl mx-auto">
+    <div class="card p-8 text-center member-card">
+      <img src="http://static.photos/people/200x200/1" class="rounded-full w-40 h-40 mx-auto mb-4 object-cover" />
+      <h3 class="font-bold text-xl mb-2">Kohler Zuehlke</h3>
+      <span class="role-badge">President</span>
+    </div>
+    <div class="card p-8 text-center member-card">
+      <img src="http://static.photos/people/200x200/2" class="rounded-full w-40 h-40 mx-auto mb-4 object-cover" />
+      <h3 class="font-bold text-xl mb-2">Andy Li</h3>
+      <span class="role-badge">Vice President</span>
+    </div>
+    <div class="card p-8 text-center member-card">
+      <img src="http://static.photos/people/200x200/3" class="rounded-full w-40 h-40 mx-auto mb-4 object-cover" />
+      <h3 class="font-bold text-xl mb-2">Reid Morauske</h3>
+      <span class="role-badge">Project Director</span>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM LEADS -->
+<section class="py-20 px-6 bg-[var(--bg-primary)] fade-section">
+  <div class="max-w-7xl mx-auto text-center mb-16">
+    <h2 class="text-5xl font-bold mb-4 gradient-text">Team Leads</h2>
+    <div class="h-1 w-24 bg-gradient-to-r from-[var(--orange)] to-[var(--orange-soft)] mx-auto rounded-full"></div>
+  </div>
+  <div class="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+    <div class="card p-6 text-center member-card">
+      <img src="http://static.photos/people/120x120/4" class="rounded-full w-32 h-32 mx-auto mb-3 object-cover" />
+      <h3 class="font-semibold text-lg">Kien Vu</h3>
+      <p class="text-purple-600 text-sm font-semibold">Mechanical</p>
+    </div>
+    <div class="card p-6 text-center member-card">
+      <img src="http://static.photos/people/120x120/5" class="rounded-full w-32 h-32 mx-auto mb-3 object-cover" />
+      <h3 class="font-semibold text-lg">Noah Gilbert</h3>
+      <p class="text-purple-600 text-sm font-semibold">Mechanical</p>
+    </div>
+    <div class="card p-6 text-center member-card">
+      <img src="http://static.photos/people/120x120/6" class="rounded-full w-32 h-32 mx-auto mb-3 object-cover" />
+      <h3 class="font-semibold text-lg">Mihir Sandbhor</h3>
+      <p class="text-purple-600 text-sm font-semibold">Electrical</p>
+    </div>
+    <div class="card p-6 text-center member-card">
+      <img src="http://static.photos/people/120x120/7" class="rounded-full w-32 h-32 mx-auto mb-3 object-cover" />
+      <h3 class="font-semibold text-lg">Miles Sierra</h3>
+      <p class="text-purple-600 text-sm font-semibold">Electrical</p>
+    </div>
+    <div class="card p-6 text-center member-card">
+      <img src="http://static.photos/people/120x120/8" class="rounded-full w-32 h-32 mx-auto mb-3 object-cover" />
+      <h3 class="font-semibold text-lg">Nicolas Greaves</h3>
+      <p class="text-purple-600 text-sm font-semibold">Software</p>
+    </div>
+    <div class="card p-6 text-center member-card">
+      <img src="http://static.photos/people/120x120/9" class="rounded-full w-32 h-32 mx-auto mb-3 object-cover" />
+      <h3 class="font-semibold text-lg">Jay Sangani</h3>
+      <p class="text-purple-600 text-sm font-semibold">Software</p>
+    </div>
+    <div class="card p-6 text-center member-card">
+      <img src="http://static.photos/people/120x120/10" class="rounded-full w-32 h-32 mx-auto mb-3 object-cover" />
+      <h3 class="font-semibold text-lg">Katie Perkins</h3>
+      <p class="text-purple-600 text-sm font-semibold">Science</p>
+    </div>
+    <div class="card p-6 text-center member-card">
+      <img src="http://static.photos/people/120x120/11" class="rounded-full w-32 h-32 mx-auto mb-3 object-cover" />
+      <h3 class="font-semibold text-lg">Robbie Marlow</h3>
+      <p class="text-purple-600 text-sm font-semibold">Outreach</p>
+    </div>
+  </div>
+</section>
+
+<!-- OPERATIONS -->
+<section class="py-20 px-6 bg-[var(--bg-card)] fade-section">
+  <div class="max-w-7xl mx-auto text-center mb-16">
+    <h2 class="text-5xl font-bold mb-4 gradient-text">Operations</h2>
+    <div class="h-1 w-24 bg-gradient-to-r from-[var(--orange)] to-[var(--orange-soft)] mx-auto rounded-full"></div>
+  </div>
+  <div class="team-grid max-w-5xl mx-auto">
+    <div class="card p-6 text-center member-card">
+      <img src="http://static.photos/people/120x120/12" class="rounded-full w-32 h-32 mx-auto mb-3 object-cover" />
+      <h3 class="font-semibold text-lg">Ethan Mak</h3>
+      <p class="text-purple-600 text-sm font-semibold">Events Coordinator</p>
+    </div>
+    <div class="card p-6 text-center member-card">
+      <img src="http://static.photos/people/120x120/13" class="rounded-full w-32 h-32 mx-auto mb-3 object-cover" />
+      <h3 class="font-semibold text-lg">Chase Edwardson</h3>
+      <p class="text-purple-600 text-sm font-semibold">Social Media</p>
+    </div>
+    <div class="card p-6 text-center member-card">
+      <img src="http://static.photos/people/120x120/14" class="rounded-full w-32 h-32 mx-auto mb-3 object-cover" />
+      <h3 class="font-semibold text-lg">Jackson Hull</h3>
+      <p class="text-purple-600 text-sm font-semibold">Industry Relations</p>
+    </div>
+    <div class="card p-6 text-center member-card">
+      <img src="http://static.photos/people/120x120/15" class="rounded-full w-32 h-32 mx-auto mb-3 object-cover" />
+      <h3 class="font-semibold text-lg">Jeffery Liu</h3>
+      <p class="text-purple-600 text-sm font-semibold">URC Logistics</p>
+    </div>
+    <div class="card p-6 text-center member-card md:col-span-2">
+      <img src="http://static.photos/people/120x120/16" class="rounded-full w-32 h-32 mx-auto mb-3 object-cover" />
+      <h3 class="font-semibold text-lg">Junwoo Lee</h3>
+      <p class="text-purple-600 text-sm font-semibold">Website</p>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN SECTION -->
+<section class="py-24 px-6 bg-gradient-to-br from-[var(--orange)] via-[var(--orange-soft)] to-[#c44536] relative overflow-hidden">
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-10 left-10 w-72 h-72 bg-orange-400 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-10 right-10 w-96 h-96 bg-yellow-300 rounded-full blur-3xl"></div>
+  </div>
+  
+  <div class="max-w-4xl mx-auto text-center relative z-10">
+    <h2 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+      Interested in Joining?
+    </h2>
+    <p class="text-xl md:text-2xl text-white/90 mb-10 max-w-2xl mx-auto">
+      We welcome passionate students from all disciplines. Join us in building the future of robotics!
+    </p>
+    <a href="index.html#contact" class="inline-block bg-white text-[var(--orange)] px-12 py-5 rounded-2xl font-bold hover:bg-yellow-300 hover:text-[#c44536] hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-yellow-300/50 text-xl">
+      Get in Touch →
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[#111] text-gray-300 py-12 text-center">
+  <p class="mb-2">Made with 🧀 by Wisconsin Robotics</p>
+  <p>&copy; 2025 Wisconsin Robotics. All rights reserved.</p>
+</footer>
+
+<script>
+feather.replace();
+
+// Dark mode toggle
+const html = document.documentElement;
+const btn = document.getElementById("dark-toggle");
+const btnMobile = document.getElementById("dark-toggle-mobile");
+
+function toggleDark() {
+  html.classList.toggle("dark");
+  localStorage.setItem("theme", html.classList.contains("dark") ? "dark" : "light");
+  feather.replace();
+}
+
+btn.addEventListener("click", toggleDark);
+btnMobile.addEventListener("click", toggleDark);
+
+if(localStorage.getItem("theme") === "dark") {
+  html.classList.add("dark");
+}
+
+// Mobile menu
+const mobileToggle = document.getElementById("mobile-toggle");
+const mobileClose = document.getElementById("mobile-close");
+const mobileMenu = document.getElementById("mobile-menu");
+
+mobileToggle.addEventListener("click", () => {
+  mobileMenu.classList.add("active");
+  feather.replace();
+});
+
+mobileClose.addEventListener("click", () => {
+  mobileMenu.classList.remove("active");
+  feather.replace();
+});
+
+// Fade-in sections
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) e.target.classList.add("visible")
+  });
+}, {threshold: 0.2});
+
+document.querySelectorAll(".fade-section").forEach(sec => obs.observe(sec));
+</script>
+
+</body>
+</html>
