@@ -27,24 +27,27 @@ h1,h2,h3,h4,h5,h6 {
 
 /* COLOR VARIABLES */
 :root {
-  --bg-primary: #000000;
-  --bg-card: #1a1a1a;
-  --text-primary: #f3f3f3;
-  --text-secondary: #b8b8b8;
-  --orange: #ff6b35;
-  --orange-soft: #f7931e;
-  --shadow: rgba(255,107,53,0.2);
+  --bg-primary: #f7f6f4;
+  --bg-secondary: #ebe9e7;
+  --bg-card: #ffffff;
+  --text-primary: #1f1f1f;
+  --text-secondary: #444;
+  --orange: #c5050c;
+  --orange-soft: #e00122;
+  --shadow: rgba(0,0,0,0.1);
 }
 .dark {
   --bg-primary: #0e0f12;
+  --bg-secondary: #1a1d24;
   --bg-card: #17191d;
   --text-primary: #f3f3f3;
   --text-secondary: #b8b8b8;
-  --shadow: rgba(255,107,53,0.1);
+  --shadow: rgba(197,5,12,0.1);
 }
 
 body {
-  background: var(--bg-primary);
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  background-attachment: fixed;
   color: var(--text-primary);
 }
 
@@ -54,7 +57,7 @@ body {
   50% {background-position: 100% 50%;}
 }
 .gradient-text {
-  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-soft) 50%, #c44536 100%);
+  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-soft) 50%, #9b0000 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -62,8 +65,8 @@ body {
   animation: gradientShift 3s ease infinite;
 }
 .dark .gradient-text {
-  text-shadow: 0 0 8px rgba(255,107,53,0.6),
-               0 0 16px rgba(247,147,30,0.5);
+  text-shadow: 0 0 8px rgba(197,5,12,0.6),
+               0 0 16px rgba(224,1,34,0.5);
 }
 
 /* NAVBAR */
@@ -81,7 +84,7 @@ nav {
 }
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(255,107,53,0.25);
+  box-shadow: 0 12px 28px rgba(197,5,12,0.25);
 }
 a.card-link {
   text-decoration: none;
@@ -90,7 +93,7 @@ a.card-link {
 }
 a.card-link:hover .card {
   transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(255,107,53,0.25);
+  box-shadow: 0 12px 28px rgba(197,5,12,0.25);
 }
 a.card-link .card {
   cursor: pointer;
@@ -157,7 +160,7 @@ a.card-link .card {
 
 /* CTA Section */
 .cta-section {
-  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-soft) 50%, #c44536 100%);
+  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-soft) 50%, #9b0000 100%);
   position: relative;
   overflow: hidden;
 }
@@ -175,12 +178,28 @@ a.card-link .card {
   0%, 100% { transform: scale(1); opacity: 0.5; }
   50% { transform: scale(1.1); opacity: 0.8; }
 }
+
+/* Active nav link */
+nav a.active {
+  color: var(--orange) !important;
+  position: relative;
+}
+nav a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #c5050c, #e00122);
+  border-radius: 2px;
+}
   </style>
 </head>
-<body class="bg-black">
+<body>
 
 <!-- NAVBAR -->
-<nav class="sticky top-0 z-50 shadow-lg w-full text-[#e8e6e3]">
+<nav class="bg-gradient-to-r from-[#1a0f0a] via-[#2c1810] to-[#1a0f0a] sticky top-0 z-50 shadow-lg w-full text-[#e8e6e3] border-b border-[#c5050c]/20">
   <div class="max-w-7xl mx-auto flex justify-between items-center px-6 h-16">
     <a href="index.html" class="flex items-center space-x-2">
       <i data-feather="cpu" class="w-6 h-6 text-[var(--orange)]"></i>
@@ -188,8 +207,10 @@ a.card-link .card {
     </a>
     <div class="hidden md:flex items-center space-x-6">
       <a href="index.html#about" class="hover:text-[var(--orange)] transition">About</a>
-      <a href="index.html#teams" class="hover:text-[var(--orange)] transition">Teams</a>
-      <a href="sponsors.html" class="text-[var(--orange)]">Sponsors</a>
+      <a href="meet-the-team.html" class="hover:text-[var(--orange)] transition">Teams</a>
+      <a href="robots.html" class="hover:text-[var(--orange)] transition">Robots</a>
+      <a href="sponsors.html" class="active hover:text-[var(--orange)] transition">Sponsors</a>
+      <a href="index.html#gallery" class="hover:text-[var(--orange)] transition">Gallery</a>
       <a href="index.html#contact" class="hover:text-[var(--orange)] transition">Contact</a>
       <button id="dark-toggle" class="hover:text-[var(--orange)] transition">
         <i data-feather="moon" class="w-5 h-5"></i>
@@ -207,8 +228,9 @@ a.card-link .card {
     </button>
     <div class="flex flex-col space-y-4 mt-12">
       <a href="index.html#about" class="text-white hover:text-[var(--orange)] transition">About</a>
-      <a href="index.html#teams" class="text-white hover:text-[var(--orange)] transition">Teams</a>
-      <a href="sponsors.html" class="text-[var(--orange)]">Sponsors</a>
+      <a href="meet-the-team.html" class="text-white hover:text-[var(--orange)] transition">Teams</a>
+      <a href="robots.html" class="text-white hover:text-[var(--orange)] transition">Robots</a>
+      <a href="sponsors.html" class="active text-white hover:text-[var(--orange)] transition">Sponsors</a>
       <a href="index.html#contact" class="text-white hover:text-[var(--orange)] transition">Contact</a>
       <button id="dark-toggle-mobile" class="text-left text-white hover:text-[var(--orange)] transition">
         <i data-feather="moon" class="w-5 h-5 inline"></i> Dark Mode
@@ -541,21 +563,58 @@ a.card-link .card {
 </section>
 
 <!-- FOOTER -->
-<footer class="bg-[#111] text-gray-300 py-12">
-  <div class="max-w-7xl mx-auto px-6 text-center">
-    <div class="mb-6">
-      <img src="#" alt="Wisconsin Robotics Logo" class="h-16 mx-auto mb-4 opacity-80">
-    </div>
-    <p class="mb-2">Made with 🧀 by Wisconsin Robotics</p>
-    <p class="mb-4">
-      <a href="mailto:wisconsinrobotics@cae.wisc.edu" class="text-[var(--orange)] hover:underline">wisconsinrobotics@cae.wisc.edu</a>
-    </p>
-    <p class="text-sm text-gray-400">
-      Wisconsin Robotics<br>
-      1500 Engineering Drive, ERB 133<br>
-      Madison, WI 53706
-    </p>
-    <p class="mt-6 text-sm">&copy; 2025 Wisconsin Robotics. All rights reserved.</p>
+<footer class="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-16 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
+      <div class="grid md:grid-cols-4 gap-12">
+          <div>
+              <div class="flex items-center mb-4">
+                  <i data-feather="cpu" class="w-8 h-8 text-[#c5050c] mr-3"></i>
+                  <h3 class="text-xl font-bold">Wisconsin Robotics</h3>
+              </div>
+              <p class="text-gray-400 leading-relaxed">
+                  University of Wisconsin Madison's premier robotics student organization.
+              </p>
+          </div>
+          <div>
+              <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+              <ul class="space-y-3">
+                  <li><a href="#about" class="text-gray-400 hover:text-[#c5050c] transition-colors">About</a></li>
+                  <li><a href="#teams" class="text-gray-400 hover:text-[#c5050c] transition-colors">Teams</a></li>
+                  <li><a href="#sponsors" class="text-gray-400 hover:text-[#c5050c] transition-colors">Sponsors</a></li>
+                  <li><a href="meet-the-team.html" class="text-[#c5050c] font-semibold hover:text-[#e00122] transition-colors">Meet the Team</a></li>
+              </ul>
+          </div>
+          <div>
+              <h3 class="text-lg font-bold mb-4">Connect</h3>
+              <div class="flex space-x-4">
+                  <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#c5050c] transition-all">
+                      <i data-feather="facebook" class="w-5 h-5"></i>
+                  </a>
+                  <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#c5050c] transition-all">
+                      <i data-feather="twitter" class="w-5 h-5"></i>
+                  </a>
+                  <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#c5050c] transition-all">
+                      <i data-feather="instagram" class="w-5 h-5"></i>
+                  </a>
+                  <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#c5050c] transition-all">
+                      <i data-feather="linkedin" class="w-5 h-5"></i>
+                  </a>
+              </div>
+          </div>
+          <div>
+              <h3 class="text-lg font-bold mb-4">Newsletter</h3>
+              <div class="flex">
+                  <input type="email" placeholder="Your email" class="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-l-xl focus:ring-2 focus:ring-[#c5050c] focus:border-transparent transition-all">
+                  <button class="bg-gradient-to-r from-[#c5050c] to-[#e00122] px-5 py-3 rounded-r-xl hover:shadow-lg transition-all">
+                      <i data-feather="send" class="w-5 h-5"></i>
+                  </button>
+              </div>
+          </div>
+      </div>
+      <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+          <p class="mb-2">Made with 🧀 by Wisconsin Robotics</p>
+          <p>&copy; 2023 Wisconsin Robotics. All rights reserved.</p>
+      </div>
   </div>
 </footer>
 

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flowing Menu Demo - Wisconsin Robotics</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, #0e0f12 0%, #1a1d24 100%);
+            color: white;
+            overflow: hidden;
+        }
+
+        .demo-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .demo-header {
+            padding: 2rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 2px solid #c5050c;
+        }
+
+        .demo-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #c5050c 0%, #e00122 50%, #9b0000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .demo-header p {
+            color: #b8b8b8;
+            font-size: 0.9rem;
+        }
+
+        .demo-header a {
+            color: #c5050c;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .demo-header a:hover {
+            color: #e00122;
+        }
+
+        /* Flowing Menu Styles */
+        .menu-wrap {
+            flex: 1;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .menu__item {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            border-bottom: 1px solid rgba(197, 5, 12, 0.3);
+        }
+
+        .menu__item-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            position: relative;
+            cursor: pointer;
+            text-transform: uppercase;
+            text-decoration: none;
+            white-space: nowrap;
+            font-weight: 700;
+            color: #e8e6e3;
+            font-size: clamp(2rem, 5vh, 4rem);
+            transition: color 0.3s ease;
+            letter-spacing: 0.05em;
+        }
+
+        .menu__item-link:hover {
+            color: #1a1d24;
+        }
+
+        .marquee {
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: linear-gradient(135deg, #c5050c 0%, #e00122 100%);
+            transform: translate3d(0, 101%, 0);
+        }
+
+        .marquee__inner-wrap {
+            height: 100%;
+            width: 200%;
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .marquee__inner {
+            display: flex;
+            align-items: center;
+            position: relative;
+            height: 100%;
+            width: 200%;
+            will-change: transform;
+            animation: marquee 20s linear infinite;
+        }
+
+        .marquee__inner.paused {
+            animation-play-state: paused;
+        }
+
+        .marquee span {
+            color: white;
+            white-space: nowrap;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: clamp(1.5rem, 4vh, 3rem);
+            line-height: 1.2;
+            padding: 0 2vw;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .marquee__icon {
+            width: clamp(150px, 20vw, 250px);
+            height: clamp(80px, 10vh, 120px);
+            margin: 0 3vw;
+            border-radius: 20px;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .demo-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .demo-header {
+                padding: 1rem;
+            }
+
+            .menu__item-link {
+                font-size: clamp(1.5rem, 4vh, 3rem);
+            }
+
+            .marquee span {
+                font-size: clamp(1rem, 3vh, 2rem);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>Flowing Menu Demo</h1>
+            <p>Hover over each menu item to see the effect • <a href="index.html">← Back to Main Site</a></p>
+        </div>
+
+        <div class="menu-wrap">
+            <nav class="menu" id="flowingMenu"></nav>
+        </div>
+    </div>
+
+    <script>
+        // Menu Items Configuration
+        const menuItems = [
+            { 
+                link: 'index.html#about', 
+                text: 'About', 
+                image: 'http://static.photos/technology/600/400?random=1' 
+            },
+            { 
+                link: 'meet-the-team.html', 
+                text: 'Teams', 
+                image: 'http://static.photos/people/600/400?random=2' 
+            },
+            { 
+                link: 'sponsors.html', 
+                text: 'Sponsors', 
+                image: 'http://static.photos/industry/600/400?random=3' 
+            },
+            { 
+                link: 'index.html#gallery', 
+                text: 'Gallery', 
+                image: 'http://static.photos/technology/600/400?random=4' 
+            },
+            { 
+                link: 'index.html#contact', 
+                text: 'Contact', 
+                image: 'http://static.photos/business/600/400?random=5' 
+            }
+        ];
+
+        // Vanilla JS Flowing Menu Implementation
+        class FlowingMenu {
+            constructor(containerId, items) {
+                this.container = document.getElementById(containerId);
+                this.items = items;
+                this.animationDefaults = { duration: 0.6, ease: 'expo.out' };
+                this.init();
+            }
+
+            init() {
+                this.items.forEach((item, idx) => {
+                    this.createMenuItem(item, idx);
+                });
+            }
+
+            findClosestEdge(mouseX, mouseY, width, height) {
+                const topEdgeDist = this.distMetric(mouseX, mouseY, width / 2, 0);
+                const bottomEdgeDist = this.distMetric(mouseX, mouseY, width / 2, height);
+                return topEdgeDist < bottomEdgeDist ? 'top' : 'bottom';
+            }
+
+            distMetric(x, y, x2, y2) {
+                const xDiff = x - x2;
+                const yDiff = y - y2;
+                return xDiff * xDiff + yDiff * yDiff;
+            }
+
+            createMenuItem(item, idx) {
+                // Create menu item wrapper
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu__item';
+
+                // Create link
+                const link = document.createElement('a');
+                link.className = 'menu__item-link';
+                link.href = item.link;
+                link.textContent = item.text;
+
+                // Create marquee structure
+                const marquee = document.createElement('div');
+                marquee.className = 'marquee';
+
+                const marqueeInnerWrap = document.createElement('div');
+                marqueeInnerWrap.className = 'marquee__inner-wrap';
+
+                const marqueeInner = document.createElement('div');
+                marqueeInner.className = 'marquee__inner';
+
+                // Create repeated marquee content (4 times for smooth loop)
+                for (let i = 0; i < 4; i++) {
+                    const span = document.createElement('span');
+                    span.textContent = item.text;
+                    marqueeInner.appendChild(span);
+
+                    const icon = document.createElement('div');
+                    icon.className = 'marquee__icon';
+                    icon.style.backgroundImage = `url(${item.image})`;
+                    marqueeInner.appendChild(icon);
+                }
+
+                marqueeInnerWrap.appendChild(marqueeInner);
+                marquee.appendChild(marqueeInnerWrap);
+
+                // Event handlers
+                link.addEventListener('mouseenter', (e) => {
+                    this.handleMouseEnter(e, menuItem, marquee, marqueeInnerWrap);
+                });
+
+                link.addEventListener('mouseleave', (e) => {
+                    this.handleMouseLeave(e, menuItem, marquee, marqueeInnerWrap);
+                });
+
+                // Assemble
+                menuItem.appendChild(link);
+                menuItem.appendChild(marquee);
+                this.container.appendChild(menuItem);
+            }
+
+            handleMouseEnter(ev, itemEl, marqueeEl, marqueeInnerEl) {
+                const rect = itemEl.getBoundingClientRect();
+                const x = ev.clientX - rect.left;
+                const y = ev.clientY - rect.top;
+                const edge = this.findClosestEdge(x, y, rect.width, rect.height);
+
+                gsap.timeline({ defaults: this.animationDefaults })
+                    .set(marqueeEl, { y: edge === 'top' ? '-101%' : '101%' }, 0)
+                    .set(marqueeInnerEl, { y: edge === 'top' ? '101%' : '-101%' }, 0)
+                    .to([marqueeEl, marqueeInnerEl], { y: '0%' }, 0);
+            }
+
+            handleMouseLeave(ev, itemEl, marqueeEl, marqueeInnerEl) {
+                const rect = itemEl.getBoundingClientRect();
+                const x = ev.clientX - rect.left;
+                const y = ev.clientY - rect.top;
+                const edge = this.findClosestEdge(x, y, rect.width, rect.height);
+
+                gsap.timeline({ defaults: this.animationDefaults })
+                    .to(marqueeEl, { y: edge === 'top' ? '-101%' : '101%' }, 0)
+                    .to(marqueeInnerEl, { y: edge === 'top' ? '101%' : '-101%' }, 0);
+            }
+        }
+
+        // Initialize the menu
+        const flowingMenu = new FlowingMenu('flowingMenu', menuItems);
+    </script>
+</body>
+</html>
+

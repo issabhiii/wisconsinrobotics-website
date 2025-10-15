@@ -9,6 +9,7 @@
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap');
 
@@ -17,15 +18,21 @@ html,body {overflow-x:hidden;}
 h1,h2,h3,h4,h5,h6 {font-family:'Space Grotesk',sans-serif;}
 
 :root {
-  --bg-primary:#000;--bg-secondary:#111;--text-primary:#f3f3f3;
-  --card-bg:#1a1a1a;--border-color:#333;
+  --bg-primary:#fff;--bg-secondary:#f9fafb;--text-primary:#1f2937;
+  --card-bg:#fff;--border-color:#e5e7eb;
+  --uw-red:#c5050c;--uw-red-bright:#e00122;--uw-red-dark:#9b0000;
+  --orange:#c5050c;--orange-soft:#e00122;
 }
 .dark {
   --bg-primary:#111827;--bg-secondary:#1f2937;--text-primary:#f9fafb;
   --card-bg:#1f2937;--border-color:#374151;
   --text-secondary:#e5e7eb;--text-tertiary:#d1d5db;
 }
-.dark body {background-color:var(--bg-primary);color:var(--text-primary);}
+body {
+  background:linear-gradient(135deg,var(--bg-primary) 0%,var(--bg-secondary) 100%);
+  background-attachment:fixed;
+  color:var(--text-primary);
+}
 .dark .bg-white,.dark .bg-gray-50,.dark .bg-gray-100 {background-color:var(--card-bg)!important;}
 .dark .text-gray-800,.dark .text-gray-600 {color:var(--text-primary)!important;}
 .dark .text-gray-700 {color:#e5e7eb!important;}
@@ -34,7 +41,7 @@ h1,h2,h3,h4,h5,h6 {font-family:'Space Grotesk',sans-serif;}
 .vanta-bg {position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;}
 
 .gradient-text {
-  background:linear-gradient(135deg,#ff6b35 0%,#f7931e 50%,#c44536 100%);
+  background:linear-gradient(135deg,#c5050c 0%,#e00122 50%,#9b0000 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   background-size:200% 200%;animation:gradient-shift 3s ease infinite;
 }
@@ -52,11 +59,11 @@ h1,h2,h3,h4,h5,h6 {font-family:'Space Grotesk',sans-serif;}
 }
 .card-hover::before {
   content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
-  background:linear-gradient(90deg,transparent,rgba(255,107,53,0.1),transparent);
+  background:linear-gradient(90deg,transparent,rgba(197,5,12,0.1),transparent);
   transition:left .5s;
 }
 .card-hover:hover::before {left:100%;}
-.card-hover:hover {transform:translateY(-10px) scale(1.02);box-shadow:0 25px 50px -12px rgba(255,107,53,0.25);}
+.card-hover:hover {transform:translateY(-10px) scale(1.02);box-shadow:0 25px 50px -12px rgba(197,5,12,0.25);}
 
 .sponsor-logo {
   filter:grayscale(100%) brightness(0.5);transition:all .4s ease;opacity:0.6;
@@ -79,7 +86,7 @@ h1,h2,h3,h4,h5,h6 {font-family:'Space Grotesk',sans-serif;}
 
 .stat-number {
   font-size:3rem;font-weight:800;
-  background:linear-gradient(135deg,#ff6b35 0%,#f7931e 100%);
+  background:linear-gradient(135deg,#c5050c 0%,#e00122 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
 
@@ -91,20 +98,20 @@ h1,h2,h3,h4,h5,h6 {font-family:'Space Grotesk',sans-serif;}
 .video-overlay {position:relative;cursor:pointer;}
 .video-overlay::after {
   content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(255,107,53,0.3),rgba(196,69,54,0.3));
+  background:linear-gradient(135deg,rgba(197,5,12,0.3),rgba(155,0,0,0.3));
   opacity:0;transition:opacity .3s;
 }
 .video-overlay:hover::after {opacity:1;}
 
 .dark #contact h2,.dark #contact p,.dark #contact h3,.dark #contact h4,.dark #contact label,.dark #contact input,.dark #contact textarea {color:#fff!important;}
 .dark #contact input,.dark #contact textarea {background-color:#1f2937!important;border-color:#374151!important;}
-.dark #contact input:focus,.dark #contact textarea:focus {border-color:#ff6b35!important;box-shadow:0 0 0 3px rgba(255,107,53,0.1)!important;}
+.dark #contact input:focus,.dark #contact textarea:focus {border-color:#c5050c!important;box-shadow:0 0 0 3px rgba(197,5,12,0.1)!important;}
 .dark #contact button {color:white!important;}
 
 .dark #teams,.dark #gallery {background:linear-gradient(to bottom,#0f172a,#1e293b)!important;}
 .dark #teams .bg-white,.dark #gallery .bg-white {
   background-color:#f3f4f6!important;color:#111827!important;
-  box-shadow:0 10px 25px -5px rgba(255,107,53,0.2);
+  box-shadow:0 10px 25px -5px rgba(197,5,12,0.2);
   border:1px solid rgba(255,255,255,0.05);
 }
 .dark #teams h3,.dark #gallery h3 {color:#1f2937!important;}
@@ -112,63 +119,185 @@ h1,h2,h3,h4,h5,h6 {font-family:'Space Grotesk',sans-serif;}
 .dark #teams h2,.dark #gallery h2 {color:#f3f4f6!important;}
 
 .dark #teams h2,.dark #gallery h2,.dark #about h2,.dark #sponsors h2,.dark #contact h2 {
-  color:#ff6b35!important;
-  text-shadow:0 0 10px rgba(255,107,53,0.4),0 0 20px rgba(255,107,53,0.2);
+  color:#c5050c!important;
+  text-shadow:0 0 10px rgba(197,5,12,0.4),0 0 20px rgba(197,5,12,0.2);
   transition:text-shadow .3s ease,color .3s ease;
 }
 .dark #teams h2:hover,.dark #gallery h2:hover,.dark #about h2:hover,.dark #sponsors h2:hover,.dark #contact h2:hover {
-  text-shadow:0 0 15px rgba(255,107,53,0.7),0 0 30px rgba(255,107,53,0.4);
+  text-shadow:0 0 15px rgba(197,5,12,0.7),0 0 30px rgba(197,5,12,0.4);
 }
 
 .dark .gradient-text {
   position:relative;color:transparent;
-  background:linear-gradient(135deg,#ff6b35 0%,#f7931e 50%,#c44536 100%);
+  background:linear-gradient(135deg,#c5050c 0%,#e00122 50%,#9b0000 100%);
   -webkit-background-clip:text;background-clip:text;
-  text-shadow:0 0 8px rgba(255,107,53,0.5),0 0 16px rgba(247,147,30,0.3),0 0 24px rgba(196,69,54,0.2);
+  text-shadow:0 0 8px rgba(197,5,12,0.5),0 0 16px rgba(224,1,34,0.3),0 0 24px rgba(155,0,0,0.2);
   transition:text-shadow .4s ease,transform .3s ease;
 }
 .dark .gradient-text:hover {
-  text-shadow:0 0 12px rgba(255,107,53,0.8),0 0 24px rgba(247,147,30,0.5),0 0 36px rgba(196,69,54,0.4);
+  text-shadow:0 0 12px rgba(197,5,12,0.8),0 0 24px rgba(224,1,34,0.5),0 0 36px rgba(155,0,0,0.4);
   transform:scale(1.03);
 }
 
-a.text-\[#ff6b35\],.text-\[#ff6b35\],.group span {position:relative;display:inline-block;}
-a.text-\[#ff6b35\]::after,.text-\[#ff6b35\]::after,.group span::after {
+a.text-\[#c5050c\],.text-\[#c5050c\],.group span {position:relative;display:inline-block;}
+a.text-\[#c5050c\]::after,.text-\[#c5050c\]::after,.group span::after {
   content:'';position:absolute;left:0;bottom:-2px;width:0;height:2px;
-  background:linear-gradient(90deg,#ff6b35,#f7931e,#c44536);
+  background:linear-gradient(90deg,#c5050c,#e00122,#9b0000);
   border-radius:2px;transition:width .3s ease;
 }
-a.text-\[#ff6b35\]:hover::after,.text-\[#ff6b35\]:hover::after,.group:hover span::after {width:100%;}
-a.text-\[#ff6b35\]:hover,.text-\[#ff6b35\]:hover,.group:hover span {
-  text-shadow:0 0 8px rgba(255,107,53,0.5);
+a.text-\[#c5050c\]:hover::after,.text-\[#c5050c\]:hover::after,.group:hover span::after {width:100%;}
+a.text-\[#c5050c\]:hover,.text-\[#c5050c\]:hover,.group:hover span {
+  text-shadow:0 0 8px rgba(197,5,12,0.5);
   transform:translateY(-1px);transition:all .3s ease;
+}
+
+/* Flowing Menu Styles */
+.flowing-menu-wrap {
+  width:100%;
+  height:500px;
+  overflow:hidden;
+  border-radius:20px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.3);
+  background:linear-gradient(135deg,#1a0f0a 0%,#2c1810 100%);
+}
+.flowing-menu {
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+.flowing-menu__item {
+  flex:1;
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+  border-bottom:1px solid rgba(197,5,12,0.3);
+}
+.flowing-menu__item:last-child {
+  border-bottom:none;
+}
+.flowing-menu__item-link {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+  position:relative;
+  cursor:pointer;
+  text-transform:uppercase;
+  text-decoration:none;
+  white-space:nowrap;
+  font-weight:700;
+  color:#e8e6e3;
+  font-size:clamp(1.5rem,3.5vh,2.5rem);
+  transition:color .3s ease;
+  letter-spacing:0.05em;
+}
+.flowing-menu__item-link:hover {
+  color:#1a1d24;
+}
+.flowing-menu__marquee {
+  position:absolute;
+  top:0;
+  left:0;
+  overflow:hidden;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  background:linear-gradient(135deg,#c5050c 0%,#e00122 100%);
+  transform:translate3d(0,101%,0);
+}
+.flowing-menu__marquee-inner-wrap {
+  height:100%;
+  width:200%;
+  display:flex;
+  transform:translateX(0);
+}
+.flowing-menu__marquee-inner {
+  display:flex;
+  align-items:center;
+  position:relative;
+  height:100%;
+  width:200%;
+  will-change:transform;
+  animation:flowingMarquee 20s linear infinite;
+}
+.flowing-menu__marquee span {
+  color:white;
+  white-space:nowrap;
+  text-transform:uppercase;
+  font-weight:600;
+  font-size:clamp(1.2rem,3vh,2rem);
+  line-height:1.2;
+  padding:0 2vw;
+  text-shadow:0 2px 10px rgba(0,0,0,0.3);
+}
+.flowing-menu__icon {
+  width:clamp(120px,15vw,200px);
+  height:clamp(60px,8vh,100px);
+  margin:0 2vw;
+  border-radius:15px;
+  background-size:cover;
+  background-position:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  border:2px solid rgba(255,255,255,0.2);
+}
+@keyframes flowingMarquee {
+  from {transform:translateX(0);}
+  to {transform:translateX(-50%);}
+}
+@media(max-width:768px){
+  .flowing-menu-wrap {
+    height:400px;
+  }
+  .flowing-menu__item-link {
+    font-size:clamp(1.2rem,3vh,2rem);
+  }
+  .flowing-menu__marquee span {
+    font-size:clamp(1rem,2.5vh,1.5rem);
+  }
+}
+
+/* Active nav link */
+nav a.active {
+  color: var(--orange) !important;
+  position: relative;
+}
+nav a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #c5050c, #e00122);
+  border-radius: 2px;
 }
     </style>
 </head>
-<body class="bg-black overflow-x-hidden">
+<body class="overflow-x-hidden">
     <!-- Navigation -->
-    <nav class="bg-[#2c1810]/90 nav-blur sticky top-0 z-50 shadow-lg w-full">
+    <nav class="bg-gradient-to-r from-[#1a0f0a] via-[#2c1810] to-[#1a0f0a] nav-blur sticky top-0 z-50 shadow-lg w-full border-b border-[#c5050c]/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
-                    <i data-feather="cpu" class="w-6 h-6 sm:w-8 sm:h-8 text-[#ff6b35] mr-2 sm:mr-3"></i>
-                    <span class="text-lg sm:text-2xl font-bold text-[#ff6b35] tracking-tight">Wisconsin Robotics</span>
+                    <i data-feather="cpu" class="w-6 h-6 sm:w-8 sm:h-8 text-[#c5050c] mr-2 sm:mr-3"></i>
+                    <span class="text-lg sm:text-2xl font-bold text-[#c5050c] tracking-tight">Wisconsin Robotics</span>
                 </div>
                 <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
-                    <a href="#about" class="text-[#e8e6e3] hover:text-[#ff6b35] transition-colors font-medium text-sm lg:text-base">About</a>
-                    <a href="#teams" class="text-[#e8e6e3] hover:text-[#ff6b35] transition-colors font-medium text-sm lg:text-base">Teams</a>
-                    <a href="sponsors.html" class="text-[#e8e6e3] hover:text-[#ff6b35] transition-colors font-medium text-sm lg:text-base">Sponsors</a>
-                    <a href="#gallery" class="text-[#e8e6e3] hover:text-[#ff6b35] transition-colors font-medium text-sm lg:text-base">Gallery</a>
-                    <a href="#contact" class="text-[#e8e6e3] hover:text-[#ff6b35] transition-colors font-medium text-sm lg:text-base">Contact</a>
-                    <button id="dark-mode-toggle" class="text-[#e8e6e3] hover:text-[#ff6b35] transition-colors p-2">
+                    <a href="#about" class="active text-[#e8e6e3] hover:text-[#c5050c] transition-colors font-medium text-sm lg:text-base">About</a>
+                    <a href="meet-the-team.html" class="text-[#e8e6e3] hover:text-[#c5050c] transition-colors font-medium text-sm lg:text-base">Teams</a>
+                    <a href="robots.html" class="text-[#e8e6e3] hover:text-[#c5050c] transition-colors font-medium text-sm lg:text-base">Robots</a>
+                    <a href="sponsors.html" class="text-[#e8e6e3] hover:text-[#c5050c] transition-colors font-medium text-sm lg:text-base">Sponsors</a>
+                    <a href="#gallery" class="text-[#e8e6e3] hover:text-[#c5050c] transition-colors font-medium text-sm lg:text-base">Gallery</a>
+                    <a href="#contact" class="text-[#e8e6e3] hover:text-[#c5050c] transition-colors font-medium text-sm lg:text-base">Contact</a>
+                    <button id="dark-mode-toggle" class="text-[#e8e6e3] hover:text-[#c5050c] transition-colors p-2">
                         <i data-feather="moon" class="w-5 h-5"></i>
                     </button>
-                    <a href="meet-the-team.html" class="bg-[#ff6b35] text-white px-5 lg:px-6 py-2 rounded-lg font-medium hover:bg-[#e55a2b] transition-all glow-button text-sm lg:text-base">
-                        <span class="relative z-10">Meet the Team</span>
-                    </a>
                 </div>
                 <div class="md:hidden flex items-center space-x-3">
-                    <button id="dark-mode-toggle-mobile" class="text-[#e8e6e3] hover:text-[#ff6b35] transition-colors p-2">
+                    <button id="dark-mode-toggle-mobile" class="text-[#e8e6e3] hover:text-[#c5050c] transition-colors p-2">
                         <i data-feather="moon" class="w-5 h-5"></i>
                     </button>
                     <button id="mobile-menu-button" class="text-[#e8e6e3] focus:outline-none p-2">
@@ -188,14 +317,12 @@ a.text-\[#ff6b35\]:hover,.text-\[#ff6b35\]:hover,.group:hover span {
                 </button>
             </div>
             <nav class="space-y-4">
-                <a href="#about" class="block text-[#e8e6e3] hover:text-[#ff6b35] transition-colors font-medium text-lg">About</a>
-                <a href="#teams" class="block text-[#e8e6e3] hover:text-[#ff6b35] transition-colors font-medium text-lg">Teams</a>
-                <a href="sponsors.html" class="block text-[#e8e6e3] hover:text-[#ff6b35] transition-colors font-medium text-lg">Sponsors</a>
-                <a href="#gallery" class="block text-[#e8e6e3] hover:text-[#ff6b35] transition-colors font-medium text-lg">Gallery</a>
-                <a href="#contact" class="block text-[#e8e6e3] hover:text-[#ff6b35] transition-colors font-medium text-lg">Contact</a>
-                <a href="meet-the-team.html" class="block bg-[#ff6b35] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#e55a2b] transition-all text-center">
-                    Meet the Team
-                </a>
+                <a href="#about" class="active block text-[#e8e6e3] hover:text-[#c5050c] transition-colors font-medium text-lg">About</a>
+                <a href="meet-the-team.html" class="block text-[#e8e6e3] hover:text-[#c5050c] transition-colors font-medium text-lg">Teams</a>
+                <a href="robots.html" class="block text-[#e8e6e3] hover:text-[#c5050c] transition-colors font-medium text-lg">Robots</a>
+                <a href="sponsors.html" class="block text-[#e8e6e3] hover:text-[#c5050c] transition-colors font-medium text-lg">Sponsors</a>
+                <a href="#gallery" class="block text-[#e8e6e3] hover:text-[#c5050c] transition-colors font-medium text-lg">Gallery</a>
+                <a href="#contact" class="block text-[#e8e6e3] hover:text-[#c5050c] transition-colors font-medium text-lg">Contact</a>
             </nav>
         </div>
     </div>
@@ -213,15 +340,15 @@ a.text-\[#ff6b35\]:hover,.text-\[#ff6b35\]:hover,.group:hover span {
                     University of Wisconsin Madison's premier Mars robotics team dedicated to extraterrestrial innovation and competition.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4">
-                    <a href="#about" class="bg-[#ff6b35] text-white px-8 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold hover:bg-[#e55a2b] transition-all shadow-lg hover:shadow-2xl glow-button text-base sm:text-lg">
+                    <a href="#about" class="bg-[#c5050c] text-white px-8 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold hover:bg-[#b00000] transition-all shadow-lg hover:shadow-2xl glow-button text-base sm:text-lg">
                         <span class="relative z-10">Learn More</span>
                     </a>
-                    <a href="#contact" class="border-2 border-[#ff6b35] text-[#ff6b35] bg-white px-8 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold hover:bg-[#ff6b35] hover:text-white transition-all shadow-lg text-base sm:text-lg">
+                    <a href="#contact" class="border-2 border-[#c5050c] text-[#c5050c] bg-white px-8 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold hover:bg-[#c5050c] hover:text-white transition-all shadow-lg text-base sm:text-lg">
                         Join the Mission
                     </a>
                 </div>
                 <div class="mt-12 sm:mt-16 scroll-indicator">
-                    <i data-feather="chevron-down" class="w-6 h-6 sm:w-8 sm:h-8 text-[#ff6b35] mx-auto"></i>
+                    <i data-feather="chevron-down" class="w-6 h-6 sm:w-8 sm:h-8 text-[#c5050c] mx-auto"></i>
                 </div>
             </div>
         </div>
@@ -294,51 +421,104 @@ a.text-\[#ff6b35\]:hover,.text-\[#ff6b35\]:hover,.group:hover span {
         </div>
     </section>
 
-    <!-- Teams Section -->
-    <section id="teams" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-gray-100 w-full">
+    <!-- Robots Section -->
+    <section id="robots" class="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-gray-100 w-full">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-12 sm:mb-16 md:mb-20">
                 <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6">
-                    <span class="gradient-text">Teams</span>
+                    <span class="gradient-text">Meet our Robots!</span>
                 </h2>
                 <p class="text-base sm:text-lg md:text-xl text-black-700 max-w-3xl mx-auto leading-relaxed px-2 font-medium">
-                    We have multiple specialized teams working on different aspects of robotics and various competition categories.
+                    From Mars rovers to outreach bots, explore the legacy of innovation from Wisconsin Robotics.
                 </p>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <div class="bg-white p-8 rounded-2xl card-hover shadow-lg">
-                    <img src="http://static.photos/technology/640x360/1" alt="Autonomous Robotics" class="w-full h-56 object-cover rounded-xl mb-6 shadow-md">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Autonomous Robotics</h3>
-                    <p class="text-black mb-6 leading-relaxed">
-                        Developing self-navigating robots capable of complex decision-making and environmental interaction.
-                    </p>
-                    <div class="flex items-center text-[#ff6b35] font-semibold group">
-                        <span>Learn more</span>
-                        <i data-feather="arrow-right" class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform"></i>
+            
+            <!-- Past Robots Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
+                <div class="bg-white rounded-2xl overflow-hidden card-hover shadow-lg">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="http://static.photos/technology/640/480?random=21" alt="Eclipse - URC 2023" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Eclipse</h3>
+                        <p class="text-gray-600 mb-4">URC 2023</p>
+                        <a href="robots.html" class="flex items-center text-[#c5050c] font-semibold group">
+                            <span>View all robots</span>
+                            <i data-feather="arrow-right" class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="bg-white p-8 rounded-2xl card-hover shadow-lg">
-                    <img src="http://static.photos/industry/640x360/2" alt="Competition Robotics" class="w-full h-56 object-cover rounded-xl mb-6 shadow-md">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Competition Robotics</h3>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        Building robots for specific competition challenges, focusing on performance, reliability, and strategy.
-                    </p>
-                    <div class="flex items-center text-[#ff6b35] font-semibold group">
-                        <span>Learn more</span>
-                        <i data-feather="arrow-right" class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform"></i>
+                
+                <div class="bg-white rounded-2xl overflow-hidden card-hover shadow-lg">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="http://static.photos/technology/640/480?random=22" alt="Horizon - URC 2019" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Horizon</h3>
+                        <p class="text-gray-600 mb-4">URC 2019</p>
+                        <a href="robots.html" class="flex items-center text-[#c5050c] font-semibold group">
+                            <span>View all robots</span>
+                            <i data-feather="arrow-right" class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="bg-white p-8 rounded-2xl card-hover shadow-lg">
-                    <img src="http://static.photos/education/640x360/3" alt="Education & Outreach" class="w-full h-56 object-cover rounded-xl mb-6 shadow-md">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Education & Outreach</h3>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        Teaching robotics fundamentals and inspiring the next generation of engineers through workshops and demos.
-                    </p>
-                    <div class="flex items-center text-[#ff6b35] font-semibold group">
-                        <span>Learn more</span>
-                        <i data-feather="arrow-right" class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform"></i>
+                
+                <div class="bg-white rounded-2xl overflow-hidden card-hover shadow-lg">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="http://static.photos/technology/640/480?random=23" alt="Ascent MkII - URC 2018" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Ascent MkII</h3>
+                        <p class="text-gray-600 mb-4">URC 2018</p>
+                        <a href="robots.html" class="flex items-center text-[#c5050c] font-semibold group">
+                            <span>View all robots</span>
+                            <i data-feather="arrow-right" class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform"></i>
+                        </a>
                     </div>
                 </div>
+                
+                <div class="bg-white rounded-2xl overflow-hidden card-hover shadow-lg">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="http://static.photos/technology/640/480?random=24" alt="Ascent - URC 2017" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Ascent</h3>
+                        <p class="text-gray-600 mb-4">URC 2017</p>
+                        <a href="robots.html" class="flex items-center text-[#c5050c] font-semibold group">
+                            <span>View all robots</span>
+                            <i data-feather="arrow-right" class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl overflow-hidden card-hover shadow-lg">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="http://static.photos/technology/640/480?random=25" alt="Insomnia - URC 2016" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Insomnia</h3>
+                        <p class="text-gray-600 mb-4">URC 2016</p>
+                        <a href="robots.html" class="flex items-center text-[#c5050c] font-semibold group">
+                            <span>View all robots</span>
+                            <i data-feather="arrow-right" class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meet the Subteams Section -->
+            <div class="text-center mb-12 mt-20">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+                    <span class="gradient-text">Meet the Subteams</span>
+                </h2>
+                <p class="text-base sm:text-lg md:text-xl text-black-700 max-w-3xl mx-auto leading-relaxed px-2 font-medium mb-10">
+                    Hover over each subteam to explore their unique contributions to Wisconsin Robotics.
+                </p>
+            </div>
+            
+            <!-- Flowing Menu -->
+            <div class="flowing-menu-wrap">
+                <nav class="flowing-menu" id="subteamsFlowingMenu"></nav>
             </div>
         </div>
     </section>
@@ -348,31 +528,83 @@ a.text-\[#ff6b35\]:hover,.text-\[#ff6b35\]:hover,.group:hover span {
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-12 sm:mb-16 md:mb-20">
                 <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6">
-                    <span class="gradient-text">Sponsors</span>
+                    <span class="gradient-text">Our Sponsors</span>
                 </h2>
                 <p class="text-base sm:text-lg md:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed px-2 font-medium">
                     We are grateful for the support of our sponsors who make our projects and competitions possible.
                 </p>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 items-center mb-12">
-                <div class="sponsor-logo flex items-center justify-center">
-                    <img src="http://static.photos/tech/320x240/4" alt="Sponsor 1" class="w-full h-24 object-contain">
-                </div>
-                <div class="sponsor-logo flex items-center justify-center">
-                    <img src="http://static.photos/tech/320x240/5" alt="Sponsor 2" class="w-full h-24 object-contain">
-                </div>
-                <div class="sponsor-logo flex items-center justify-center">
-                    <img src="http://static.photos/tech/320x240/6" alt="Sponsor 3" class="w-full h-24 object-contain">
-                </div>
-                <div class="sponsor-logo flex items-center justify-center">
-                    <img src="http://static.photos/tech/320x240/7" alt="Sponsor 4" class="w-full h-24 object-contain">
+                <div class="flex items-center justify-center mt-6">
+                    <span class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-[#c5050c] to-[#e00122] text-white font-bold text-sm rounded-full shadow-lg">
+                        <i data-feather="award" class="w-4 h-4 mr-2"></i>
+                        Diamond Sponsors
+                    </span>
                 </div>
             </div>
-            <div class="text-center">
-                <a href="#contact" class="inline-flex items-center text-[#ff6b35] font-semibold text-lg hover:text-[#e55a2b] transition-colors group">
-                    <span>Become a Sponsor</span>
-                    <i data-feather="arrow-right" class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform"></i>
+            
+            <!-- Diamond Sponsors Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <a href="https://engineering.wisc.edu/departments/mechanical-engineering/" target="_blank" rel="noopener noreferrer" class="bg-white p-6 rounded-2xl card-hover shadow-lg border-2 border-[#c5050c]/20 hover:border-[#c5050c]/50 transition-all group">
+                    <div class="flex items-start mb-3">
+                        <i data-feather="award" class="w-6 h-6 text-[#c5050c] mr-2 flex-shrink-0"></i>
+                        <h3 class="text-xl font-bold text-gray-800 group-hover:text-[#c5050c] transition-colors">UW-Madison Mechanical Engineering</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Long-time supporter providing workspace, travel funds, and mentorship.
+                    </p>
                 </a>
+                
+                <a href="https://engineering.wisc.edu/departments/electrical-computer-engineering/" target="_blank" rel="noopener noreferrer" class="bg-white p-6 rounded-2xl card-hover shadow-lg border-2 border-[#c5050c]/20 hover:border-[#c5050c]/50 transition-all group">
+                    <div class="flex items-start mb-3">
+                        <i data-feather="award" class="w-6 h-6 text-[#c5050c] mr-2 flex-shrink-0"></i>
+                        <h3 class="text-xl font-bold text-gray-800 group-hover:text-[#c5050c] transition-colors">UW-Madison ECE</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Providing lab equipment and technical resources for our projects.
+                    </p>
+                </a>
+                
+                <a href="https://www.altium.com/" target="_blank" rel="noopener noreferrer" class="bg-white p-6 rounded-2xl card-hover shadow-lg border-2 border-[#c5050c]/20 hover:border-[#c5050c]/50 transition-all group">
+                    <div class="flex items-start mb-3">
+                        <i data-feather="award" class="w-6 h-6 text-[#c5050c] mr-2 flex-shrink-0"></i>
+                        <h3 class="text-xl font-bold text-gray-800 group-hover:text-[#c5050c] transition-colors">Altium</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Providing Altium Designer and Altium 365 for PCB design and collaboration.
+                    </p>
+                </a>
+                
+                <a href="https://www.komatsu.com/" target="_blank" rel="noopener noreferrer" class="bg-white p-6 rounded-2xl card-hover shadow-lg border-2 border-[#c5050c]/20 hover:border-[#c5050c]/50 transition-all group">
+                    <div class="flex items-start mb-3">
+                        <i data-feather="award" class="w-6 h-6 text-[#c5050c] mr-2 flex-shrink-0"></i>
+                        <h3 class="text-xl font-bold text-gray-800 group-hover:text-[#c5050c] transition-colors">Komatsu</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Industry partner helping us invest in high-quality components and capabilities.
+                    </p>
+                </a>
+                
+                <a href="https://www.mastermold.com/" target="_blank" rel="noopener noreferrer" class="bg-white p-6 rounded-2xl card-hover shadow-lg border-2 border-[#c5050c]/20 hover:border-[#c5050c]/50 transition-all group">
+                    <div class="flex items-start mb-3">
+                        <i data-feather="award" class="w-6 h-6 text-[#c5050c] mr-2 flex-shrink-0"></i>
+                        <h3 class="text-xl font-bold text-gray-800 group-hover:text-[#c5050c] transition-colors">Mastermold</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Full-service OEM supplier of custom molded fiberglass reinforced composites.
+                    </p>
+                </a>
+            </div>
+
+            <!-- View All Sponsors Button -->
+            <div class="text-center">
+                <a href="sponsors.html" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#c5050c] to-[#e00122] text-white font-bold text-lg rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 group">
+                    <span>View All Sponsors</span>
+                    <i data-feather="arrow-right" class="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform"></i>
+                </a>
+                <p class="mt-6 text-gray-600">
+                    <a href="#contact" class="text-[#c5050c] font-semibold hover:text-[#b00000] transition-colors">
+                        Interested in becoming a sponsor? →
+                    </a>
+                </p>
             </div>
         </div>
     </section>
@@ -393,7 +625,7 @@ a.text-\[#ff6b35\]:hover,.text-\[#ff6b35\]:hover,.group:hover span {
                     <div class="aspect-video bg-gray-200 relative video-overlay">
                         <img src="http://static.photos/technology/640x360/8" alt="Robot Demo" class="w-full h-full object-cover">
                         <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-16 h-16 bg-[#ff6b35] rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
+                            <div class="w-16 h-16 bg-[#c5050c] rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
                                 <i data-feather="play" class="w-8 h-8 text-white ml-1"></i>
                             </div>
                         </div>
@@ -407,7 +639,7 @@ a.text-\[#ff6b35\]:hover,.text-\[#ff6b35\]:hover,.group:hover span {
                     <div class="aspect-video bg-gray-200 relative video-overlay">
                         <img src="http://static.photos/competition/640x360/9" alt="Competition" class="w-full h-full object-cover">
                         <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-16 h-16 bg-[#ff6b35] rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
+                            <div class="w-16 h-16 bg-[#c5050c] rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
                                 <i data-feather="play" class="w-8 h-8 text-white ml-1"></i>
                             </div>
                         </div>
@@ -421,7 +653,7 @@ a.text-\[#ff6b35\]:hover,.text-\[#ff6b35\]:hover,.group:hover span {
                     <div class="aspect-video bg-gray-200 relative video-overlay">
                         <img src="http://static.photos/workshop/640x360/10" alt="Workshop" class="w-full h-full object-cover">
                         <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-16 h-16 bg-[#ff6b35] rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
+                            <div class="w-16 h-16 bg-[#c5050c] rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
                                 <i data-feather="play" class="w-8 h-8 text-white ml-1"></i>
                             </div>
                         </div>
@@ -484,17 +716,17 @@ a.text-\[#ff6b35\]:hover,.text-\[#ff6b35\]:hover,.group:hover span {
                     <form class="space-y-6">
                         <div>
                             <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Name</label>
-                            <input type="text" id="name" class="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-[#ff6b35] focus:border-transparent transition-all">
+                            <input type="text" id="name" class="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-[#c5050c] focus:border-transparent transition-all">
                         </div>
                         <div>
                             <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-                            <input type="email" id="email" class="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-[#ff6b35] focus:border-transparent transition-all">
+                            <input type="email" id="email" class="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-[#c5050c] focus:border-transparent transition-all">
                         </div>
                         <div>
                             <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">Message</label>
-                            <textarea id="message" rows="4" class="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-[#ff6b35] focus:border-transparent transition-all"></textarea>
+                            <textarea id="message" rows="4" class="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-[#c5050c] focus:border-transparent transition-all"></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-gradient-to-r from-[#ff6b35] to-[#f7931e] text-white py-4 rounded-xl font-bold hover:shadow-2xl transition-all glow-button text-lg">
+                        <button type="submit" class="w-full bg-gradient-to-r from-[#c5050c] to-[#e00122] text-white py-4 rounded-xl font-bold hover:shadow-2xl transition-all glow-button text-lg">
                             <span class="relative z-10">Send Message</span>
                         </button>
                     </form>
@@ -509,7 +741,7 @@ a.text-\[#ff6b35\]:hover,.text-\[#ff6b35\]:hover,.group:hover span {
             <div class="grid md:grid-cols-4 gap-12">
                 <div>
                     <div class="flex items-center mb-4">
-                        <i data-feather="cpu" class="w-8 h-8 text-[#ff6b35] mr-3"></i>
+                        <i data-feather="cpu" class="w-8 h-8 text-[#c5050c] mr-3"></i>
                         <h3 class="text-xl font-bold">Wisconsin Robotics</h3>
                     </div>
                     <p class="text-gray-400 leading-relaxed">
@@ -519,25 +751,25 @@ a.text-\[#ff6b35\]:hover,.text-\[#ff6b35\]:hover,.group:hover span {
                 <div>
                     <h3 class="text-lg font-bold mb-4">Quick Links</h3>
                     <ul class="space-y-3">
-                        <li><a href="#about" class="text-gray-400 hover:text-[#ff6b35] transition-colors">About</a></li>
-                        <li><a href="#teams" class="text-gray-400 hover:text-[#ff6b35] transition-colors">Teams</a></li>
-                        <li><a href="#sponsors" class="text-gray-400 hover:text-[#ff6b35] transition-colors">Sponsors</a></li>
-                        <li><a href="meet-the-team.html" class="text-[#ff6b35] font-semibold hover:text-[#f7931e] transition-colors">Meet the Team</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-[#c5050c] transition-colors">About</a></li>
+                        <li><a href="#teams" class="text-gray-400 hover:text-[#c5050c] transition-colors">Teams</a></li>
+                        <li><a href="#sponsors" class="text-gray-400 hover:text-[#c5050c] transition-colors">Sponsors</a></li>
+                        <li><a href="meet-the-team.html" class="text-[#c5050c] font-semibold hover:text-[#e00122] transition-colors">Meet the Team</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="text-lg font-bold mb-4">Connect</h3>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#ff6b35] transition-all">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#c5050c] transition-all">
                             <i data-feather="facebook" class="w-5 h-5"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#ff6b35] transition-all">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#c5050c] transition-all">
                             <i data-feather="twitter" class="w-5 h-5"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#ff6b35] transition-all">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#c5050c] transition-all">
                             <i data-feather="instagram" class="w-5 h-5"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#ff6b35] transition-all">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#c5050c] transition-all">
                             <i data-feather="linkedin" class="w-5 h-5"></i>
                         </a>
                     </div>
@@ -545,8 +777,8 @@ a.text-\[#ff6b35\]:hover,.text-\[#ff6b35\]:hover,.group:hover span {
                 <div>
                     <h3 class="text-lg font-bold mb-4">Newsletter</h3>
                     <div class="flex">
-                        <input type="email" placeholder="Your email" class="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-l-xl focus:ring-2 focus:ring-[#ff6b35] focus:border-transparent transition-all">
-                        <button class="bg-gradient-to-r from-[#ff6b35] to-[#f7931e] px-5 py-3 rounded-r-xl hover:shadow-lg transition-all">
+                        <input type="email" placeholder="Your email" class="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-l-xl focus:ring-2 focus:ring-[#c5050c] focus:border-transparent transition-all">
+                        <button class="bg-gradient-to-r from-[#c5050c] to-[#e00122] px-5 py-3 rounded-r-xl hover:shadow-lg transition-all">
                             <i data-feather="send" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -673,6 +905,135 @@ a.text-\[#ff6b35\]:hover,.text-\[#ff6b35\]:hover,.group:hover span {
             card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(card);
         });
+
+        // Flowing Menu Implementation
+        const subteamsData = [
+            { 
+                link: 'meet-the-team.html#operations', 
+                text: 'Operations', 
+                image: 'http://static.photos/people/600/400?random=10' 
+            },
+            { 
+                link: 'meet-the-team.html#sciences', 
+                text: 'Sciences', 
+                image: 'http://static.photos/science/600/400?random=11' 
+            },
+            { 
+                link: 'meet-the-team.html#electrical', 
+                text: 'Electrical', 
+                image: 'http://static.photos/technology/600/400?random=12' 
+            },
+            { 
+                link: 'meet-the-team.html#software', 
+                text: 'Software', 
+                image: 'http://static.photos/technology/600/400?random=13' 
+            },
+            { 
+                link: 'meet-the-team.html#mechanical', 
+                text: 'Mechanical', 
+                image: 'http://static.photos/technology/600/400?random=14' 
+            }
+        ];
+
+        class FlowingMenu {
+            constructor(containerId, items) {
+                this.container = document.getElementById(containerId);
+                this.items = items;
+                this.animationDefaults = { duration: 0.6, ease: 'expo.out' };
+                this.init();
+            }
+
+            init() {
+                this.items.forEach((item) => {
+                    this.createMenuItem(item);
+                });
+            }
+
+            findClosestEdge(mouseX, mouseY, width, height) {
+                const topEdgeDist = this.distMetric(mouseX, mouseY, width / 2, 0);
+                const bottomEdgeDist = this.distMetric(mouseX, mouseY, width / 2, height);
+                return topEdgeDist < bottomEdgeDist ? 'top' : 'bottom';
+            }
+
+            distMetric(x, y, x2, y2) {
+                const xDiff = x - x2;
+                const yDiff = y - y2;
+                return xDiff * xDiff + yDiff * yDiff;
+            }
+
+            createMenuItem(item) {
+                const menuItem = document.createElement('div');
+                menuItem.className = 'flowing-menu__item';
+
+                const link = document.createElement('a');
+                link.className = 'flowing-menu__item-link';
+                link.href = item.link;
+                link.textContent = item.text;
+
+                const marquee = document.createElement('div');
+                marquee.className = 'flowing-menu__marquee';
+
+                const marqueeInnerWrap = document.createElement('div');
+                marqueeInnerWrap.className = 'flowing-menu__marquee-inner-wrap';
+
+                const marqueeInner = document.createElement('div');
+                marqueeInner.className = 'flowing-menu__marquee-inner';
+
+                for (let i = 0; i < 4; i++) {
+                    const span = document.createElement('span');
+                    span.textContent = item.text;
+                    marqueeInner.appendChild(span);
+
+                    const icon = document.createElement('div');
+                    icon.className = 'flowing-menu__icon';
+                    icon.style.backgroundImage = `url(${item.image})`;
+                    marqueeInner.appendChild(icon);
+                }
+
+                marqueeInnerWrap.appendChild(marqueeInner);
+                marquee.appendChild(marqueeInnerWrap);
+
+                link.addEventListener('mouseenter', (e) => {
+                    this.handleMouseEnter(e, menuItem, marquee, marqueeInnerWrap);
+                });
+
+                link.addEventListener('mouseleave', (e) => {
+                    this.handleMouseLeave(e, menuItem, marquee, marqueeInnerWrap);
+                });
+
+                menuItem.appendChild(link);
+                menuItem.appendChild(marquee);
+                this.container.appendChild(menuItem);
+            }
+
+            handleMouseEnter(ev, itemEl, marqueeEl, marqueeInnerEl) {
+                const rect = itemEl.getBoundingClientRect();
+                const x = ev.clientX - rect.left;
+                const y = ev.clientY - rect.top;
+                const edge = this.findClosestEdge(x, y, rect.width, rect.height);
+
+                gsap.timeline({ defaults: this.animationDefaults })
+                    .set(marqueeEl, { y: edge === 'top' ? '-101%' : '101%' }, 0)
+                    .set(marqueeInnerEl, { y: edge === 'top' ? '101%' : '-101%' }, 0)
+                    .to([marqueeEl, marqueeInnerEl], { y: '0%' }, 0);
+            }
+
+            handleMouseLeave(ev, itemEl, marqueeEl, marqueeInnerEl) {
+                const rect = itemEl.getBoundingClientRect();
+                const x = ev.clientX - rect.left;
+                const y = ev.clientY - rect.top;
+                const edge = this.findClosestEdge(x, y, rect.width, rect.height);
+
+                gsap.timeline({ defaults: this.animationDefaults })
+                    .to(marqueeEl, { y: edge === 'top' ? '-101%' : '101%' }, 0)
+                    .to(marqueeInnerEl, { y: edge === 'top' ? '101%' : '-101%' }, 0);
+            }
+        }
+
+        // Initialize the Flowing Menu
+        new FlowingMenu('subteamsFlowingMenu', subteamsData);
     </script>
+</body>
+</html>
 </body>
 </html>
