@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sponsors - Wisconsin Robotics</title>
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+* {
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* COLOR VARIABLES */
+:root {
+  --bg-primary: #000000;
+  --bg-card: #1a1a1a;
+  --text-primary: #f3f3f3;
+  --text-secondary: #b8b8b8;
+  --orange: #ff6b35;
+  --orange-soft: #f7931e;
+  --shadow: rgba(255,107,53,0.2);
+}
+.dark {
+  --bg-primary: #0e0f12;
+  --bg-card: #17191d;
+  --text-primary: #f3f3f3;
+  --text-secondary: #b8b8b8;
+  --shadow: rgba(255,107,53,0.1);
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* ANIMATIONS */
+@keyframes gradientShift {
+  0%,100% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+}
+.gradient-text {
+  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-soft) 50%, #c44536 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+.dark .gradient-text {
+  text-shadow: 0 0 8px rgba(255,107,53,0.6),
+               0 0 16px rgba(247,147,30,0.5);
+}
+
+/* NAVBAR */
+nav {
+  backdrop-filter: blur(10px);
+  background-color: rgba(20, 10, 6, 0.9);
+}
+
+/* CARDS */
+.card {
+  background: var(--bg-card);
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(255,107,53,0.25);
+}
+a.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+a.card-link:hover .card {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(255,107,53,0.25);
+}
+a.card-link .card {
+  cursor: pointer;
+}
+
+/* SPONSOR TIERS */
+.tier-badge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+.tier-diamond {
+  background: linear-gradient(135deg, #b9f2ff 0%, #00d4ff 100%);
+  color: #003d52;
+}
+.tier-gold {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #5c4d00;
+}
+.tier-silver {
+  background: linear-gradient(135deg, #e8e8e8 0%, #c0c0c0 100%);
+  color: #333;
+}
+.tier-bronze {
+  background: linear-gradient(135deg, #cd7f32 0%, #b87333 100%);
+  color: #fff;
+}
+
+/* SMOOTH APPEAR */
+.fade-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+}
+.fade-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* HERO BACKGROUND */
+.mars-bg {
+  background: linear-gradient(135deg,#2c1810,#5c3023,#8c4b3f);
+  background-size: 400% 400%;
+  animation: mars 15s ease infinite;
+}
+@keyframes mars {
+  0%,100%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+}
+
+/* Mobile menu */
+.mobile-menu {
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+}
+.mobile-menu.active {
+  transform: translateX(0);
+}
+
+/* CTA Section */
+.cta-section {
+  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-soft) 50%, #c44536 100%);
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  animation: pulse 8s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+  </style>
+</head>
+<body class="bg-black">
+
+<!-- NAVBAR -->
+<nav class="sticky top-0 z-50 shadow-lg w-full text-[#e8e6e3]">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6 h-16">
+    <a href="index.html" class="flex items-center space-x-2">
+      <i data-feather="cpu" class="w-6 h-6 text-[var(--orange)]"></i>
+      <span class="font-bold text-lg text-[var(--orange)]">Wisconsin Robotics</span>
+    </a>
+    <div class="hidden md:flex items-center space-x-6">
+      <a href="index.html#about" class="hover:text-[var(--orange)] transition">About</a>
+      <a href="index.html#teams" class="hover:text-[var(--orange)] transition">Teams</a>
+      <a href="sponsors.html" class="text-[var(--orange)]">Sponsors</a>
+      <a href="index.html#contact" class="hover:text-[var(--orange)] transition">Contact</a>
+      <button id="dark-toggle" class="hover:text-[var(--orange)] transition">
+        <i data-feather="moon" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <button id="mobile-toggle" class="md:hidden hover:text-[var(--orange)]">
+      <i data-feather="menu" class="w-6 h-6"></i>
+    </button>
+  </div>
+  
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu md:hidden fixed top-0 right-0 h-full w-64 bg-[#2c1810] shadow-2xl p-6">
+    <button id="mobile-close" class="absolute top-4 right-4 text-white">
+      <i data-feather="x" class="w-6 h-6"></i>
+    </button>
+    <div class="flex flex-col space-y-4 mt-12">
+      <a href="index.html#about" class="text-white hover:text-[var(--orange)] transition">About</a>
+      <a href="index.html#teams" class="text-white hover:text-[var(--orange)] transition">Teams</a>
+      <a href="sponsors.html" class="text-[var(--orange)]">Sponsors</a>
+      <a href="index.html#contact" class="text-white hover:text-[var(--orange)] transition">Contact</a>
+      <button id="dark-toggle-mobile" class="text-left text-white hover:text-[var(--orange)] transition">
+        <i data-feather="moon" class="w-5 h-5 inline"></i> Dark Mode
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="mars-bg text-center py-20 text-white">
+  <h1 class="text-5xl md:text-6xl font-extrabold mb-4">Our <span class="gradient-text">Sponsors</span></h1>
+  <p class="text-lg md:text-xl opacity-90">Partners who make our mission possible</p>
+</section>
+
+<!-- MISSION GOALS -->
+<section class="py-20 px-6 bg-[var(--bg-primary)] fade-section">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">Our Mission Goals</h2>
+    </div>
+    <div class="card p-8 md:p-12">
+      <p class="text-[var(--text-secondary)] text-lg leading-relaxed mb-6">
+        Wisconsin Robotics is a growing organization that travels to competitive events as far as Hanksville, Utah. We strive to provide our members the tools and equipment they need to excel and learn the skills they can use in their future endeavors. We also construct and upgrade our robots every year to stay on the cutting edge of technology, software, and research.
+      </p>
+      <p class="text-[var(--text-primary)] text-lg font-semibold mb-4">
+        Wisconsin Robotics depends on contributions from sponsors to provide:
+      </p>
+      <ul class="space-y-3 text-[var(--text-secondary)] text-lg">
+        <li class="flex items-start">
+          <i data-feather="check-circle" class="w-6 h-6 text-[var(--orange)] mr-3 flex-shrink-0 mt-1"></i>
+          <span>The opportunity for our members to travel</span>
+        </li>
+        <li class="flex items-start">
+          <i data-feather="check-circle" class="w-6 h-6 text-[var(--orange)] mr-3 flex-shrink-0 mt-1"></i>
+          <span>Sophisticated equipment such as single board computers, laser range finders, cameras, and motors</span>
+        </li>
+        <li class="flex items-start">
+          <i data-feather="check-circle" class="w-6 h-6 text-[var(--orange)] mr-3 flex-shrink-0 mt-1"></i>
+          <span>Materials including raw materials, mechanical components such as bearings/bushings, as well as tools for our workspace</span>
+        </li>
+        <li class="flex items-start">
+          <i data-feather="check-circle" class="w-6 h-6 text-[var(--orange)] mr-3 flex-shrink-0 mt-1"></i>
+          <span>Services such as machining, 3D printing, and PCB manufacturing</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SPONSORSHIPS INFO -->
+<section class="py-20 px-6 bg-[var(--bg-card)] fade-section">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-10">
+      <div class="card p-8">
+        <div class="w-16 h-16 bg-blue-500 rounded-xl flex items-center justify-center mb-6">
+          <i data-feather="briefcase" class="text-white w-8 h-8"></i>
+        </div>
+        <h3 class="text-3xl font-bold mb-4">Sponsorships</h3>
+        <p class="text-[var(--text-secondary)] leading-relaxed mb-4">
+          As an expanding organization, Wisconsin Robotics is seeking both financial and in-kind sponsorships. We value partnership with our sponsors and are seeking sponsors both financially and collaboratively.
+        </p>
+        <p class="text-[var(--text-secondary)] leading-relaxed">
+          We would like to work together with collaborative sponsors on research and development that would be mutually beneficial to our organizations. Additionally, we believe that both our students and your company would benefit from tours, demonstrations, and the opportunity for company exposure to like minded students and the public.
+        </p>
+      </div>
+      <div class="card p-8">
+        <div class="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center mb-6">
+          <i data-feather="heart" class="text-white w-8 h-8"></i>
+        </div>
+        <h3 class="text-3xl font-bold mb-4">Donations</h3>
+        <p class="text-[var(--text-secondary)] leading-relaxed mb-6">
+          All donations made through the University of Wisconsin Foundation are tax deductible! Donate on this form or contact us for more information.
+        </p>
+        <a href="index.html#contact" class="inline-block bg-[var(--orange)] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[var(--orange-soft)] transition-all shadow-lg">
+          Donate Now →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section py-16 px-6">
+  <div class="max-w-4xl mx-auto text-center relative z-10">
+    <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Sponsor Us</h2>
+    <p class="text-xl text-white/90 mb-8">
+      Please fill out our form on the Contact page for more information on becoming a sponsor, or take a look at our Sponsorship Package.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="index.html#contact" class="inline-block bg-white text-[var(--orange)] px-10 py-4 rounded-xl font-bold hover:bg-yellow-300 hover:scale-105 transition-all duration-300 shadow-2xl">
+        Contact Us
+      </a>
+      <a href="#" target="_blank" class="inline-block border-2 border-white text-white px-10 py-4 rounded-xl font-bold hover:bg-white hover:text-[var(--orange)] transition-all duration-300">
+        View Package
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- DIAMOND SPONSORS -->
+<section class="py-20 px-6 bg-[var(--bg-primary)] fade-section">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Our Sponsors</h2>
+      <div class="h-1 w-24 bg-gradient-to-r from-[var(--orange)] to-[var(--orange-soft)] mx-auto rounded-full"></div>
+    </div>
+    
+    <!-- Diamond Tier -->
+    <div class="mb-16">
+      <div class="flex items-center justify-center mb-8">
+        <span class="tier-badge tier-diamond">
+          <i data-feather="award" class="w-4 h-4 inline mr-1"></i>
+          Diamond Sponsors
+        </span>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <a href="https://engineering.wisc.edu/departments/mechanical-engineering/" target="_blank" rel="noopener noreferrer" class="card-link">
+          <div class="card p-8">
+            <h3 class="text-2xl font-bold mb-3">UW-Madison Department of Mechanical Engineering</h3>
+            <p class="text-[var(--text-secondary)]">
+              The Mechanical Engineering department of UW-Madison has been a long-time supporter of Wisconsin Robotics. They have provided us with a workspace, travel expense funds, and mentorship to help us succeed. We are grateful for their continued support.
+            </p>
+          </div>
+        </a>
+        <a href="https://engineering.wisc.edu/departments/electrical-computer-engineering/" target="_blank" rel="noopener noreferrer" class="card-link">
+          <div class="card p-8">
+            <h3 class="text-2xl font-bold mb-3">UW-Madison Department of Electrical & Computer Engineering</h3>
+            <p class="text-[var(--text-secondary)]">
+              The Electrical and Computer Engineering (ECE) department of UW-Madison has been a valuable supporter of Wisconsin Robotics. They have provided access to lab equipment and technical resources that have been instrumental in advancing our projects.
+            </p>
+          </div>
+        </a>
+        <a href="https://www.altium.com/" target="_blank" rel="noopener noreferrer" class="card-link">
+          <div class="card p-8">
+            <h3 class="text-2xl font-bold mb-3">Altium</h3>
+            <p class="text-[var(--text-secondary)]">
+              Altium has generously provided our team with Altium Designer and Altium 365. We use Altium Designer to create our PCBs and Altium 365 to collaborate on our designs.
+            </p>
+          </div>
+        </a>
+        <a href="https://www.komatsu.com/" target="_blank" rel="noopener noreferrer" class="card-link">
+          <div class="card p-8">
+            <h3 class="text-2xl font-bold mb-3">Komatsu</h3>
+            <p class="text-[var(--text-secondary)]">
+              Komatsu has been a generous industry partner to Wisconsin Robotics. Their contributions have helped us invest in high-quality components and enhance our technical capabilities. We are thankful for their continued support.
+            </p>
+          </div>
+        </a>
+        <a href="https://www.mastermold.com/" target="_blank" rel="noopener noreferrer" class="card-link">
+          <div class="card p-8">
+            <h3 class="text-2xl font-bold mb-3">Mastermold</h3>
+            <p class="text-[var(--text-secondary)]">
+              MasterMold is a full-service OEM supplier of custom molded fiberglass reinforced composites with capabilities that include compression/sheet molding, robotic machining/bonding, and robotic painting as well as parts assembly.
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Gold Tier -->
+    <div class="mb-16">
+      <div class="flex items-center justify-center mb-8">
+        <span class="tier-badge tier-gold">
+          <i data-feather="star" class="w-4 h-4 inline mr-1"></i>
+          Gold Sponsors
+        </span>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <a href="https://www.oshkoshcorp.com/" target="_blank" rel="noopener noreferrer" class="card-link">
+          <div class="card p-6">
+            <h3 class="text-xl font-bold mb-3">OshKosh</h3>
+            <p class="text-[var(--text-secondary)] text-sm">
+              OshKosh Corporation is an industrial technology company that focuses on creating vehicles and equipment. They are a global organization that is known for their innovative products. In this occasion, they were kind enough to give out a generous donation for the purposes of Wisconsin Robotics.
+            </p>
+          </div>
+        </a>
+        <a href="https://www.xes-inc.com/" target="_blank" rel="noopener noreferrer" class="card-link">
+          <div class="card p-6">
+            <h3 class="text-xl font-bold mb-3">Extreme Engineering Solutions</h3>
+            <p class="text-[var(--text-secondary)] text-sm">
+              Extreme Engineering Solutions is a leader in the design, manufacture, testing, and support of hardware and software solutions for the embedded computing market. They are a large employer in the UW-Madison area and have provided wonderful opportunities for some of our past and present members.
+            </p>
+          </div>
+        </a>
+        <a href="https://www.onshape.com/" target="_blank" rel="noopener noreferrer" class="card-link">
+          <div class="card p-6">
+            <h3 class="text-xl font-bold mb-3">Onshape</h3>
+            <p class="text-[var(--text-secondary)] text-sm">
+              Onshape is a cloud-native CAD software that we use to collaborate efficiently when designing and producing our mechanical systems. They graciously have supplied us with an Enterprise account which gives us access to advanced tools such as FEA and PCB integration.
+            </p>
+          </div>
+        </a>
+        <a href="https://www.polymaker.com/" target="_blank" rel="noopener noreferrer" class="card-link">
+          <div class="card p-6">
+            <h3 class="text-xl font-bold mb-3">Polymaker</h3>
+            <p class="text-[var(--text-secondary)] text-sm">
+              Polymaker creates top-of-the-line filaments for 3D printing. Polymaker graciously sponsors our team by providing high quality filament for all of our printing needs.
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Silver Tier -->
+    <div class="mb-16">
+      <div class="flex items-center justify-center mb-8">
+        <span class="tier-badge tier-silver">
+          <i data-feather="circle" class="w-4 h-4 inline mr-1"></i>
+          Silver Sponsors
+        </span>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <a href="https://www.protocase.com/" target="_blank" rel="noopener noreferrer" class="card-link">
+          <div class="card p-6">
+            <h3 class="text-xl font-bold mb-3">Protocase</h3>
+            <p class="text-[var(--text-secondary)] text-sm">
+              Protocase is a huge supporter of the University Rover Challenge, providing custom sheet metal enclosures and CNC machined parts to every team that competes. We greatly appreciate the support they have given to us, as well as the competition as a whole.
+            </p>
+          </div>
+        </a>
+        <a href="https://www.gdandtbasics.com/" target="_blank" rel="noopener noreferrer" class="card-link">
+          <div class="card p-6">
+            <h3 class="text-xl font-bold mb-3">GD&T Basics</h3>
+            <p class="text-[var(--text-secondary)] text-sm">
+              GD&T Basics is a company dedicated to simplifying and teaching Geometric Dimensioning and Tolerancing for professionals and teams in the engineering and manufacturing industries. They offer clear, practical training courses that break down complex GD&T concepts into easy-to-understand lessons.
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Bronze Tier -->
+    <div class="mb-16">
+      <div class="flex items-center justify-center mb-8">
+        <span class="tier-badge tier-bronze">
+          <i data-feather="hexagon" class="w-4 h-4 inline mr-1"></i>
+          Bronze Sponsors
+        </span>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <a href="https://www.andersonpower.com/" target="_blank" rel="noopener noreferrer" class="card-link">
+          <div class="card p-6">
+            <h3 class="text-xl font-bold mb-3">Anderson Power</h3>
+            <p class="text-[var(--text-secondary)] text-sm">
+              Anderson Power is an international leader in high-powered, interconnect solutions. They generously donate a majority of the connectors we use in our robots, and continue to be a fantastic supporter of the team.
+            </p>
+          </div>
+        </a>
+        <a href="https://www.timken.com/" target="_blank" rel="noopener noreferrer" class="card-link">
+          <div class="card p-6">
+            <h3 class="text-xl font-bold mb-3">Timken</h3>
+            <p class="text-[var(--text-secondary)] text-sm">
+              Timken is a globally recognized industrial leader that specializes in friction management, power transmission, and material science. They have also been considered as one of the world's most ethical companies for 13 years. We are grateful for their continued sponsorship and support.
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAST SPONSORS -->
+<section class="py-20 px-6 bg-[var(--bg-card)] fade-section">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold mb-4 gradient-text">Past Sponsors</h2>
+      <p class="text-[var(--text-secondary)] max-w-2xl mx-auto">
+        We are grateful for the support we've received throughout the years
+      </p>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <a href="https://www.landolakesinc.com/" target="_blank" rel="noopener noreferrer" class="card-link">
+        <div class="card p-6">
+          <h3 class="text-lg font-bold mb-2">Land O' Lakes Inc.</h3>
+          <p class="text-[var(--text-secondary)] text-sm">
+            Land O'Lakes, Inc. hosted Land O'Lakes Bot Shot, challenging STEM talent to design and build robots to shoot basketballs and square off in a game of H-O-R-S-E. Wisconsin Robotics tied for 1st place in this competition, both teams winning a prize of $10,000!
+          </p>
+        </div>
+      </a>
+      <a href="https://www.snapon.com/" target="_blank" rel="noopener noreferrer" class="card-link">
+        <div class="card p-6">
+          <h3 class="text-lg font-bold mb-2">Snap-On Inc.</h3>
+          <p class="text-[var(--text-secondary)] text-sm">
+            Snap-on has donated the majority of the tools that Wisconsin Robotics uses in manufacturing and assembly of our various projects. About two thirds of all fabrication work that we do can be done in-house thanks to Snap-on.
+          </p>
+        </div>
+      </a>
+      <a href="https://www.yaskawa.com/" target="_blank" rel="noopener noreferrer" class="card-link">
+        <div class="card p-6">
+          <h3 class="text-lg font-bold mb-2">Yaskawa America</h3>
+          <p class="text-[var(--text-secondary)] text-sm">
+            Yaskawa is a global leader in industrial automation and robotics known for quality and performance in the production of AC Inverter Drives, Servo and Motion Control, and Robotics Automation Systems. They have also given some of our members invaluable employment experience in the fields of mechanical and electrical engineering.
+          </p>
+        </div>
+      </a>
+      <a href="https://www.findorff.com/" target="_blank" rel="noopener noreferrer" class="card-link">
+        <div class="card p-6">
+          <h3 class="text-lg font-bold mb-2">Findorff</h3>
+          <p class="text-[var(--text-secondary)] text-sm">
+            Findorff is an industry-leading construction company that is working on many projects in the Madison area, including for the University of Wisconsin-Madison. They have generously contributed to the success of the team for the 2023 season.
+          </p>
+        </div>
+      </a>
+      <a href="https://www.bb7.com/" target="_blank" rel="noopener noreferrer" class="card-link">
+        <div class="card p-6">
+          <h3 class="text-lg font-bold mb-2">bb7</h3>
+          <p class="text-[var(--text-secondary)] text-sm">
+            bb7 is a comprehensive design and product development firm with a rich history in innovation and testing. They have kindly offered us their services, including opportunities to speak with qualified engineers to gain insight into design fundamentals that help us improve our robots.
+          </p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIAL THANKS -->
+<section class="py-16 px-6 bg-[var(--bg-primary)] fade-section">
+  <div class="max-w-5xl mx-auto text-center">
+    <h3 class="text-2xl font-bold mb-6 text-[var(--text-primary)]">And a special thanks to:</h3>
+    <div class="flex flex-wrap justify-center gap-4 text-[var(--text-secondary)]">
+      <span class="px-4 py-2 bg-[var(--bg-card)] rounded-lg">Clear Water Composites</span>
+      <span class="px-4 py-2 bg-[var(--bg-card)] rounded-lg">Knapp Bequest</span>
+      <span class="px-4 py-2 bg-[var(--bg-card)] rounded-lg">Cubermars</span>
+      <span class="px-4 py-2 bg-[var(--bg-card)] rounded-lg">Send Cut Send</span>
+      <span class="px-4 py-2 bg-[var(--bg-card)] rounded-lg">O-Drive Robotics</span>
+      <span class="px-4 py-2 bg-[var(--bg-card)] rounded-lg">Tramp Boards (Vescs)</span>
+      <span class="px-4 py-2 bg-[var(--bg-card)] rounded-lg">Battery Space</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[#111] text-gray-300 py-12">
+  <div class="max-w-7xl mx-auto px-6 text-center">
+    <div class="mb-6">
+      <img src="#" alt="Wisconsin Robotics Logo" class="h-16 mx-auto mb-4 opacity-80">
+    </div>
+    <p class="mb-2">Made with 🧀 by Wisconsin Robotics</p>
+    <p class="mb-4">
+      <a href="mailto:wisconsinrobotics@cae.wisc.edu" class="text-[var(--orange)] hover:underline">wisconsinrobotics@cae.wisc.edu</a>
+    </p>
+    <p class="text-sm text-gray-400">
+      Wisconsin Robotics<br>
+      1500 Engineering Drive, ERB 133<br>
+      Madison, WI 53706
+    </p>
+    <p class="mt-6 text-sm">&copy; 2025 Wisconsin Robotics. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+feather.replace();
+
+// Dark mode toggle
+const html = document.documentElement;
+const btn = document.getElementById("dark-toggle");
+const btnMobile = document.getElementById("dark-toggle-mobile");
+
+function toggleDark() {
+  html.classList.toggle("dark");
+  localStorage.setItem("theme", html.classList.contains("dark") ? "dark" : "light");
+  feather.replace();
+}
+
+btn.addEventListener("click", toggleDark);
+btnMobile.addEventListener("click", toggleDark);
+
+if(localStorage.getItem("theme") === "dark") {
+  html.classList.add("dark");
+}
+
+// Mobile menu
+const mobileToggle = document.getElementById("mobile-toggle");
+const mobileClose = document.getElementById("mobile-close");
+const mobileMenu = document.getElementById("mobile-menu");
+
+mobileToggle.addEventListener("click", () => {
+  mobileMenu.classList.add("active");
+  feather.replace();
+});
+
+mobileClose.addEventListener("click", () => {
+  mobileMenu.classList.remove("active");
+  feather.replace();
+});
+
+// Fade-in sections
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) e.target.classList.add("visible")
+  });
+}, {threshold: 0.2});
+
+document.querySelectorAll(".fade-section").forEach(sec => obs.observe(sec));
+</script>
+
+</body>
+</html>
+
