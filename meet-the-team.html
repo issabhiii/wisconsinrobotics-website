@@ -231,6 +231,7 @@ nav a.active::after {
   background-image: linear-gradient(145deg, #4e1616 0%, #c5050c44 100%);
   background-color: rgba(0, 0, 0, 0.9);
   transform: translate3d(0, 0, 0.01px);
+  isolation: isolate;
 }
 
 .pc-shine {
@@ -242,7 +243,7 @@ nav a.active::after {
   --angle: -45deg;
   transform: translate3d(0, 0, 1px);
   overflow: hidden;
-  z-index: 3;
+  z-index: 1;
   background: transparent;
   background-size: cover;
   background-position: center;
@@ -250,6 +251,7 @@ nav a.active::after {
   background-position: 0 var(--background-y), var(--background-x) var(--background-y), center;
   background-blend-mode: color, hard-light;
   background-size: 500% 500%, 300% 300%, 200% 200%;
+  pointer-events: none;
 }
 
 .pc-card:hover .pc-shine,
@@ -264,12 +266,15 @@ nav a.active::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 40%, 60%) 12%, hsla(0, 60%, 20%, 0.8) 90%);
   mix-blend-mode: overlay;
   filter: brightness(0.8) contrast(1.2);
-  z-index: 4;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .pc-avatar-content {
-  mix-blend-mode: screen;
   overflow: hidden;
+  isolation: isolate;
+  position: relative;
+  z-index: 10;
 }
 
 .pc-avatar-content .avatar {
@@ -278,7 +283,11 @@ nav a.active::after {
   left: 50%;
   transform: translateX(-50%) scale(1);
   bottom: 2px;
-  opacity: calc(1.75 - var(--pointer-from-center));
+  opacity: 1;
+  mix-blend-mode: normal;
+  filter: none;
+  isolation: isolate;
+  z-index: 10;
 }
 
 .pc-avatar-content::before {
@@ -286,9 +295,10 @@ nav a.active::after {
   position: absolute;
   inset: 0;
   z-index: 1;
-  backdrop-filter: blur(30px);
-  mask: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 1) 100%);
+  backdrop-filter: blur(20px);
+  mask: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.8) 92%, rgba(0, 0, 0, 1) 100%);
   pointer-events: none;
+  mix-blend-mode: normal;
 }
 
 .pc-content {
@@ -298,6 +308,9 @@ nav a.active::after {
   position: relative;
   transform: translate3d(calc(var(--pointer-from-left) * -6px + 3px), calc(var(--pointer-from-top) * -6px + 3px), 0.1px) !important;
   z-index: 5;
+}
+
+.pc-content:not(.pc-avatar-content) {
   mix-blend-mode: luminosity;
 }
 
@@ -599,29 +612,30 @@ nav a.active::after {
 // Team data
 const teamData = {
   leadership: [
-    { name: 'Kohler Zuehlke', title: 'President', avatar: 'https://picsum.photos/400/600?random=1', linkedin: 'https://www.linkedin.com' },
-    { name: 'Andy Li', title: 'Vice President', avatar: 'https://picsum.photos/400/600?random=2', linkedin: 'https://www.linkedin.com' },
-    { name: 'Reid Morauske', title: 'Project Director', avatar: 'https://picsum.photos/400/600?random=3', linkedin: 'https://www.linkedin.com' }
+    { name: 'Kohler Zuehlke', title: 'President', avatar: 'president.jpg', linkedin: 'https://www.linkedin.com/in/kohlerz/' },
+    { name: 'Andy Li', title: 'Vice President', avatar: 'vicepresident.jpg', linkedin: 'https://www.linkedin.com/in/andy-li-a721821b9/' },
+    { name: 'Reid Morauske', title: 'Project Director', avatar: 'projectdirector.jpg', linkedin: 'https://www.linkedin.com/in/reidmorauske/' }
   ],
   leads: [
-    { name: 'Kien Vu', title: 'Mechanical', avatar: 'https://picsum.photos/400/600?random=4', linkedin: 'https://www.linkedin.com' },
-    { name: 'Noah Gilbert', title: 'Mechanical', avatar: 'https://picsum.photos/400/600?random=5', linkedin: 'https://www.linkedin.com' },
-    { name: 'Mihir Sandbhor', title: 'Electrical', avatar: 'https://picsum.photos/400/600?random=6', linkedin: 'https://www.linkedin.com' },
-    { name: 'Miles Sierra', title: 'Electrical', avatar: 'https://picsum.photos/400/600?random=7', linkedin: 'https://www.linkedin.com' },
-    { name: 'Nicolas Greaves', title: 'Software', avatar: 'https://picsum.photos/400/600?random=8', linkedin: 'https://www.linkedin.com' },
-    { name: 'Jay Sangani', title: 'Software', avatar: 'https://picsum.photos/400/600?random=9', linkedin: 'https://www.linkedin.com' },
-    { name: 'Katie Perkins', title: 'Science', avatar: 'https://picsum.photos/400/600?random=10', linkedin: 'https://www.linkedin.com' },
-    { name: 'Robbie Marlow', title: 'Outreach', avatar: 'https://picsum.photos/400/600?random=11', linkedin: 'https://www.linkedin.com' }
+    { name: 'Kien Vu', title: 'Mechanical', avatar: '', linkedin: 'https://www.linkedin.com' },
+    { name: 'Noah Gilbert', title: 'Mechanical', avatar: '', linkedin: 'https://www.linkedin.com' },
+    { name: 'Mihir Sandbhor', title: 'Electrical', avatar: '', linkedin: 'https://www.linkedin.com' },
+    { name: 'Miles Sierra', title: 'Electrical', avatar: '', linkedin: 'https://www.linkedin.com' },
+    { name: 'Nicolas Greaves', title: 'Software', avatar: '', linkedin: 'https://www.linkedin.com' },
+    { name: 'Jay Sangani', title: 'Software', avatar: '', linkedin: 'https://www.linkedin.com' },
+    { name: 'Katie Perkins', title: 'Science', avatar: '', linkedin: 'https://www.linkedin.com' },
+    { name: 'Robbie Marlow', title: 'Outreach', avatar: '', linkedin: 'https://www.linkedin.com' }
   ],
   operations: [
-    { name: 'Ethan Mak', title: 'Events Coordinator', avatar: 'https://picsum.photos/400/600?random=12', linkedin: 'https://www.linkedin.com' },
-    { name: 'Chase Edwardson', title: 'Social Media', avatar: 'https://picsum.photos/400/600?random=13', linkedin: 'https://www.linkedin.com' },
-    { name: 'Jackson Hull', title: 'Industry Relations', avatar: 'https://picsum.photos/400/600?random=14', linkedin: 'https://www.linkedin.com' },
-    { name: 'Jeffery Liu', title: 'URC Logistics', avatar: 'https://picsum.photos/400/600?random=15', linkedin: 'https://www.linkedin.com' },
-    { name: 'Junwoo Lee', title: 'Website', avatar: 'https://picsum.photos/400/600?random=16', linkedin: 'https://www.linkedin.com' }
+    { name: 'Ethan Mak', title: 'Events Coordinator', avatar: '', linkedin: 'https://www.linkedin.com' },
+    { name: 'Chase Edwardson', title: 'Social Media', avatar: '', linkedin: 'https://www.linkedin.com' },
+    { name: 'Jackson Hull', title: 'Industry Relations', avatar: '', linkedin: 'https://www.linkedin.com' },
+    { name: 'Jeffery Liu', title: 'URC Logistics', avatar: 'jeffery.JPG', linkedin: 'https://www.linkedin.com' },
+    { name: 'Junwoo Lee', title: 'Website', avatar: '', linkedin: 'https://www.linkedin.com' },
+    { name: 'Mina Duden', title: 'Operations', avatar: 'mina.png', linkedin: 'https://www.linkedin.com/in/mina-duden-444424319/' }
   ],
   website: [
-    { name: 'Abhi', title: 'Website Developer', avatar: 'abhi.png', linkedin: 'https://www.linkedin.com' }
+    { name: 'Abhi', title: 'Website Developer', avatar: 'abhi.png', linkedin: 'https://www.linkedin.com/in/abhinav-jain-9881b8296/' }
   ]
 };
 
@@ -644,6 +658,10 @@ class ProfileCard3D {
   }
 
   createCard() {
+    const avatarHTML = this.data.avatar 
+      ? `<img class="avatar" src="${this.data.avatar}" alt="${this.data.name}" loading="lazy" onerror="this.style.display='none'">` 
+      : '';
+    
     this.wrapper.innerHTML = `
       <a href="${this.data.linkedin}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: block;">
         <section class="pc-card">
@@ -651,7 +669,7 @@ class ProfileCard3D {
             <div class="pc-shine"></div>
             <div class="pc-glare"></div>
             <div class="pc-content pc-avatar-content">
-              <img class="avatar" src="${this.data.avatar}" alt="${this.data.name}" loading="lazy">
+              ${avatarHTML}
             </div>
             <div class="pc-content">
               <div class="pc-details">
