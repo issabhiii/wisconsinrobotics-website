@@ -511,6 +511,19 @@ nav a.active::after {
   </div>
 </section>
 
+<!-- WEBSITE DEVELOPER -->
+<section class="py-20 px-6 bg-[var(--bg-primary)] fade-section">
+  <div class="max-w-7xl mx-auto text-center mb-16">
+    <h2 class="text-5xl font-bold mb-4 gradient-text">Website Developer</h2>
+    <div class="h-1 w-24 bg-gradient-to-r from-[var(--orange)] to-[var(--orange-soft)] mx-auto rounded-full"></div>
+  </div>
+  <div class="flex justify-center">
+    <div class="team-grid-website" style="max-width: 300px;">
+      <!-- Website developer card will be inserted by JS -->
+    </div>
+  </div>
+</section>
+
 <!-- JOIN SECTION -->
 <section class="py-24 px-6 bg-gradient-to-br from-[var(--orange)] via-[var(--orange-soft)] to-[#9b0000] relative overflow-hidden">
   <div class="absolute inset-0 opacity-10">
@@ -606,6 +619,9 @@ const teamData = {
     { name: 'Jackson Hull', title: 'Industry Relations', avatar: 'https://picsum.photos/400/600?random=14', linkedin: 'https://www.linkedin.com' },
     { name: 'Jeffery Liu', title: 'URC Logistics', avatar: 'https://picsum.photos/400/600?random=15', linkedin: 'https://www.linkedin.com' },
     { name: 'Junwoo Lee', title: 'Website', avatar: 'https://picsum.photos/400/600?random=16', linkedin: 'https://www.linkedin.com' }
+  ],
+  website: [
+    { name: 'Abhi', title: 'Website Developer', avatar: 'abhi.png', linkedin: 'https://www.linkedin.com' }
   ]
 };
 
@@ -823,6 +839,15 @@ function initializeTeamCards() {
     const wrapper = document.createElement('div');
     wrapper.className = 'pc-card-wrapper';
     operationsGrid.appendChild(wrapper);
+    new ProfileCard3D(wrapper, member);
+  });
+
+  // Website Developer
+  const websiteGrid = document.querySelector('.team-grid-website');
+  teamData.website.forEach(member => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'pc-card-wrapper';
+    websiteGrid.appendChild(wrapper);
     new ProfileCard3D(wrapper, member);
   });
 }
