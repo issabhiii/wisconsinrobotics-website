@@ -1,0 +1,1433 @@
+<html lang="en" class="scroll-smooth" style="scroll-behavior: smooth;"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operations - Wisconsin Robotics</title>
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script><style type="text/css" id="operaUserStyle"></style>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+* {
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* COLOR VARIABLES */
+:root {
+  --bg-primary: #f7f6f4;
+  --bg-secondary: #ebe9e7;
+  --bg-card: #ffffff;
+  --text-primary: #1f1f1f;
+  --text-secondary: #444;
+  --orange: #c5050c;
+  --orange-soft: #e00122;
+  --shadow: rgba(0,0,0,0.1);
+  
+  /* Profile Card Variables */
+  --pointer-x: 50%;
+  --pointer-y: 50%;
+  --pointer-from-center: 0;
+  --pointer-from-top: 0.5;
+  --pointer-from-left: 0.5;
+  --card-opacity: 0;
+  --rotate-x: 0deg;
+  --rotate-y: 0deg;
+  --background-x: 50%;
+  --background-y: 50%;
+  --card-radius: 20px;
+  --sunpillar-1: hsl(0, 100%, 40%);
+  --sunpillar-2: hsl(0, 90%, 50%);
+  --sunpillar-3: hsl(10, 95%, 45%);
+  --sunpillar-4: hsl(355, 100%, 35%);
+  --sunpillar-5: hsl(5, 85%, 55%);
+  --sunpillar-6: hsl(0, 100%, 30%);
+}
+
+.dark {
+  --bg-primary: #0e0f12;
+  --bg-secondary: #1a1d24;
+  --bg-card: #17191d;
+  --text-primary: #f3f3f3;
+  --text-secondary: #b8b8b8;
+  --shadow: rgba(197,5,12,0.1);
+}
+
+body {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+}
+
+/* ANIMATIONS */
+@keyframes gradientShift {
+  0%,100% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-soft) 50%, #9b0000 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+
+.gradient-text .split-char {
+  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-soft) 50%, #9b0000 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+
+/* NAVBAR */
+nav {
+  backdrop-filter: blur(10px);
+  background-color: rgba(20, 10, 6, 0.9);
+}
+
+/* HERO BACKGROUND */
+.mars-bg {
+  position: relative;
+  background: #000000;
+  overflow: hidden;
+}
+
+.glitch-canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.glitch-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-vignette-outer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,1) 100%);
+  z-index: 1;
+}
+
+.glitch-vignette-center {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 70%);
+  z-index: 1;
+}
+
+/* Mobile menu */
+.mobile-menu {
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.mobile-menu.active {
+  transform: translateX(0);
+}
+
+/* Active nav link */
+nav a.active {
+  color: var(--orange) !important;
+  position: relative;
+}
+
+nav a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #c5050c, #e00122);
+  border-radius: 2px;
+}
+
+/* SMOOTH APPEAR */
+.fade-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+}
+
+.fade-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* SPLIT TEXT ANIMATION */
+.split-text {
+  display: inline-block;
+  overflow: visible;
+}
+
+.split-char {
+  display: inline-block;
+  white-space: pre;
+  will-change: transform, opacity;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  font-smoothing: antialiased;
+}
+
+.split-word {
+  display: inline-block;
+  white-space: nowrap;
+  will-change: transform, opacity;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.card {
+  background: var(--bg-card);
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(197,5,12,0.25);
+}
+
+/* ===== PROFILE CARD 3D STYLES ===== */
+.pc-card-wrapper {
+  perspective: 500px;
+  transform: translate3d(0, 0, 0.1px);
+  position: relative;
+  touch-action: none;
+  margin: 0 auto;
+}
+
+.pc-card-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  background: inherit;
+  background-position: inherit;
+  border-radius: inherit;
+  transition: all 0.5s ease;
+  filter: contrast(2) saturate(2) blur(36px);
+  transform: scale(0.8) translate3d(0, 0, 0.1px);
+  background-size: 100% 100%;
+  background-image: radial-gradient(farthest-side circle at var(--pointer-x) var(--pointer-y), hsla(0,100%,50%,var(--card-opacity)) 4%, hsla(0,90%,45%,calc(var(--card-opacity) * 0.75)) 10%, hsla(0,80%,40%,calc(var(--card-opacity) * 0.5)) 50%, hsla(0,0%,60%,0) 100%), radial-gradient(35% 52% at 55% 20%, #ff1a1ac4 0%, #ff000000 100%), radial-gradient(100% 100% at 50% 50%, #c5050cff 1%, #c5050c00 76%), conic-gradient(from 124deg at 50% 50%, #c5050cff 0%, #e00122ff 40%, #e00122ff 60%, #c5050cff 100%);
+}
+
+.pc-card-wrapper:hover::before,
+.pc-card-wrapper.active::before {
+  filter: contrast(1) saturate(2) blur(40px) opacity(1);
+  transform: scale(0.9) translate3d(0, 0, 0.1px);
+}
+
+.pc-card-wrapper:hover,
+.pc-card-wrapper.active {
+  --card-opacity: 1;
+}
+
+.pc-card {
+  height: 400px;
+  display: grid;
+  aspect-ratio: 0.718;
+  border-radius: var(--card-radius);
+  position: relative;
+  background-blend-mode: color-dodge, normal, normal, normal;
+  animation: glow-bg 12s linear infinite;
+  box-shadow: rgba(0, 0, 0, 0.8) calc((var(--pointer-from-left) * 10px) - 3px) calc((var(--pointer-from-top) * 20px) - 6px) 20px -5px;
+  transition: transform 1s ease;
+  transform: translate3d(0, 0, 0.1px) rotateX(0deg) rotateY(0deg);
+  background-size: 100% 100%;
+  background-position: 0 0, 0 0, 50% 50%, 0 0;
+  background-image: radial-gradient(farthest-side circle at var(--pointer-x) var(--pointer-y), hsla(0, 100%, 50%, var(--card-opacity)) 4%, hsla(0, 90%, 45%, calc(var(--card-opacity) * 0.75)) 10%, hsla(0, 80%, 40%, calc(var(--card-opacity) * 0.5)) 50%, hsla(0, 0%, 60%, 0) 100%), radial-gradient(35% 52% at 55% 20%, #ff1a1ac4 0%, #ff000000 100%), radial-gradient(100% 100% at 50% 50%, #c5050cff 1%, #c5050c00 76%), conic-gradient(from 124deg at 50% 50%, #c5050cff 0%, #e00122ff 40%, #e00122ff 60%, #c5050cff 100%);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.pc-card:hover,
+.pc-card.active {
+  transition: none;
+  transform: translate3d(0, 0, 0.1px) rotateX(var(--rotate-y)) rotateY(var(--rotate-x));
+}
+
+.pc-card * {
+  display: grid;
+  grid-area: 1/-1;
+  border-radius: var(--card-radius);
+  transform: translate3d(0, 0, 0.1px);
+  pointer-events: none;
+}
+
+.pc-inside {
+  inset: 1px;
+  position: absolute;
+  background-image: linear-gradient(145deg, #4e1616 0%, #c5050c44 100%);
+  background-color: rgba(0, 0, 0, 0.9);
+  transform: translate3d(0, 0, 0.01px);
+  isolation: isolate;
+}
+
+.pc-shine {
+  transition: filter 0.6s ease;
+  filter: brightness(0.66) contrast(1.33) saturate(0.33) opacity(0.5);
+  animation: holo-bg 18s linear infinite;
+  mix-blend-mode: color-dodge;
+  --space: 5%;
+  --angle: -45deg;
+  transform: translate3d(0, 0, 1px);
+  overflow: hidden;
+  z-index: 1;
+  background: transparent;
+  background-size: cover;
+  background-position: center;
+  background-image: repeating-linear-gradient(0deg, var(--sunpillar-1) calc(var(--space) * 1), var(--sunpillar-2) calc(var(--space) * 2), var(--sunpillar-3) calc(var(--space) * 3), var(--sunpillar-4) calc(var(--space) * 4), var(--sunpillar-5) calc(var(--space) * 5), var(--sunpillar-6) calc(var(--space) * 6), var(--sunpillar-1) calc(var(--space) * 7)), repeating-linear-gradient(var(--angle), #1a0505 0%, hsl(0, 30%, 20%) 3.8%, hsl(0, 40%, 30%) 4.5%, hsl(0, 30%, 20%) 5.2%, #1a0505 10%, #1a0505 12%), radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 0%, 0.1) 12%, hsla(0, 0%, 0%, 0.15) 20%, hsla(0, 0%, 0%, 0.25) 120%);
+  background-position: 0 var(--background-y), var(--background-x) var(--background-y), center;
+  background-blend-mode: color, hard-light;
+  background-size: 500% 500%, 300% 300%, 200% 200%;
+  pointer-events: none;
+}
+
+.pc-card:hover .pc-shine,
+.pc-card.active .pc-shine {
+  filter: brightness(0.85) contrast(1.5) saturate(0.5);
+  animation: none;
+}
+
+.pc-glare {
+  transform: translate3d(0, 0, 1.1px);
+  overflow: hidden;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 40%, 60%) 12%, hsla(0, 60%, 20%, 0.8) 90%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.2);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.pc-avatar-content {
+  overflow: hidden;
+  isolation: isolate;
+  position: relative;
+  z-index: 10;
+}
+
+.pc-avatar-content .avatar {
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) scale(1);
+  bottom: 2px;
+  opacity: 1;
+  mix-blend-mode: normal;
+  filter: none;
+  isolation: isolate;
+  z-index: 10;
+}
+
+.pc-avatar-content::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  backdrop-filter: blur(20px);
+  mask: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.8) 92%, rgba(0, 0, 0, 1) 100%);
+  pointer-events: none;
+  mix-blend-mode: normal;
+}
+
+.pc-content {
+  max-height: 100%;
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+  transform: translate3d(calc(var(--pointer-from-left) * -6px + 3px), calc(var(--pointer-from-top) * -6px + 3px), 0.1px) !important;
+  z-index: 5;
+}
+
+.pc-content:not(.pc-avatar-content) {
+  mix-blend-mode: luminosity;
+}
+
+.pc-details {
+  width: 100%;
+  position: absolute;
+  top: 2em;
+  display: flex;
+  flex-direction: column;
+}
+
+.pc-details h3 {
+  font-weight: 600;
+  margin: 0;
+  font-size: min(4vh, 2.2em);
+  background-image: linear-gradient(to bottom, #fff, #e00122);
+  background-size: 1em 1.5em;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.pc-details p {
+  font-weight: 600;
+  position: relative;
+  top: -10px;
+  white-space: nowrap;
+  font-size: 14px;
+  margin: 0 auto;
+  width: min-content;
+  background-image: linear-gradient(to bottom, #fff, #c5050c);
+  background-size: 1em 1.5em;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+@keyframes glow-bg {
+  0% { --bgrotate: 0deg; }
+  100% { --bgrotate: 360deg; }
+}
+
+@keyframes holo-bg {
+  0% { background-position: 0 var(--background-y), 0 0, center; }
+  100% { background-position: 0 var(--background-y), 90% 90%, center; }
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .pc-card { height: 350px; }
+  .pc-details { top: 1.5em; }
+  .pc-details h3 { font-size: min(3.5vh, 1.8em); }
+  .pc-details p { font-size: 12px; top: -8px; }
+}
+
+@media (max-width: 480px) {
+  .pc-card { height: 300px; }
+  .pc-details { top: 1.2em; }
+  .pc-details h3 { font-size: min(3vh, 1.5em); }
+  .pc-details p { font-size: 11px; top: -6px; }
+  .team-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+}
+  </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.visible{visibility:visible}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.bottom-10{bottom:2.5rem}.left-10{left:2.5rem}.right-0{right:0px}.right-10{right:2.5rem}.right-4{right:1rem}.top-0{top:0px}.top-10{top:2.5rem}.top-4{top:1rem}.z-10{z-index:10}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-10{margin-bottom:2.5rem}.mb-12{margin-bottom:3rem}.mb-16{margin-bottom:4rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mr-3{margin-right:0.75rem}.mr-4{margin-right:1rem}.mt-12{margin-top:3rem}.mt-2{margin-top:0.5rem}.inline-block{display:inline-block}.inline{display:inline}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-1{height:0.25rem}.h-12{height:3rem}.h-16{height:4rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-72{height:18rem}.h-8{height:2rem}.h-96{height:24rem}.h-full{height:100%}.min-h-\[60vh\]{min-height:60vh}.w-12{width:3rem}.w-16{width:4rem}.w-24{width:6rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-64{width:16rem}.w-72{width:18rem}.w-8{width:2rem}.w-96{width:24rem}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}.max-w-4xl{max-width:56rem}.max-w-5xl{max-width:64rem}.max-w-6xl{max-width:72rem}.max-w-7xl{max-width:80rem}.flex-shrink-0{flex-shrink:0}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-12{gap:3rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-6 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1.5rem * var(--tw-space-x-reverse));margin-left:calc(1.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.scroll-smooth{scroll-behavior:smooth}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-\[\#c5050c\]\/20{border-color:rgb(197 5 12 / 0.2)}.border-gray-700{--tw-border-opacity:1;border-color:rgb(55 65 81 / var(--tw-border-opacity, 1))}.bg-\[\#2c1810\]{--tw-bg-opacity:1;background-color:rgb(44 24 16 / var(--tw-bg-opacity, 1))}.bg-\[var\(--bg-card\)\]{background-color:var(--bg-card)}.bg-\[var\(--bg-primary\)\]{background-color:var(--bg-primary)}.bg-orange-400{--tw-bg-opacity:1;background-color:rgb(251 146 60 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-yellow-300{--tw-bg-opacity:1;background-color:rgb(253 224 71 / var(--tw-bg-opacity, 1))}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-\[\#1a0f0a\]{--tw-gradient-from:#1a0f0a var(--tw-gradient-from-position);--tw-gradient-to:rgb(26 15 10 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-\[\#c5050c\]{--tw-gradient-from:#c5050c var(--tw-gradient-from-position);--tw-gradient-to:rgb(197 5 12 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-\[var\(--orange\)\]{--tw-gradient-from:var(--orange) var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 255 255 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-blue-500{--tw-gradient-from:#3b82f6 var(--tw-gradient-from-position);--tw-gradient-to:rgb(59 130 246 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-gray-900{--tw-gradient-from:#111827 var(--tw-gradient-from-position);--tw-gradient-to:rgb(17 24 39 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-green-500{--tw-gradient-from:#22c55e var(--tw-gradient-from-position);--tw-gradient-to:rgb(34 197 94 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-purple-500{--tw-gradient-from:#a855f7 var(--tw-gradient-from-position);--tw-gradient-to:rgb(168 85 247 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-\[\#2c1810\]{--tw-gradient-to:rgb(44 24 16 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #2c1810 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-\[var\(--orange-soft\)\]{--tw-gradient-to:rgb(255 255 255 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--orange-soft) var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-\[\#1a0f0a\]{--tw-gradient-to:#1a0f0a var(--tw-gradient-to-position)}.to-\[\#9b0000\]{--tw-gradient-to:#9b0000 var(--tw-gradient-to-position)}.to-\[\#e00122\]{--tw-gradient-to:#e00122 var(--tw-gradient-to-position)}.to-\[var\(--orange-soft\)\]{--tw-gradient-to:var(--orange-soft) var(--tw-gradient-to-position)}.to-blue-600{--tw-gradient-to:#2563eb var(--tw-gradient-to-position)}.to-gray-800{--tw-gradient-to:#1f2937 var(--tw-gradient-to-position)}.to-green-600{--tw-gradient-to:#16a34a var(--tw-gradient-to-position)}.to-purple-600{--tw-gradient-to:#9333ea var(--tw-gradient-to-position)}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-12{padding-left:3rem;padding-right:3rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-20{padding-top:5rem;padding-bottom:5rem}.py-24{padding-top:6rem;padding-bottom:6rem}.py-5{padding-top:1.25rem;padding-bottom:1.25rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-5xl{font-size:3rem;line-height:1}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.text-\[\#c5050c\]{--tw-text-opacity:1;color:rgb(197 5 12 / var(--tw-text-opacity, 1))}.text-\[\#e8e6e3\]{--tw-text-opacity:1;color:rgb(232 230 227 / var(--tw-text-opacity, 1))}.text-\[var\(--orange\)\]{color:var(--orange)}.text-\[var\(--text-secondary\)\]{color:var(--text-secondary)}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-white\/90{color:rgb(255 255 255 / 0.9)}.opacity-10{opacity:0.1}.opacity-90{opacity:0.9}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.blur-3xl{--tw-blur:blur(64px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.hover\:scale-105:hover{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:bg-yellow-300:hover{--tw-bg-opacity:1;background-color:rgb(253 224 71 / var(--tw-bg-opacity, 1))}.hover\:text-\[\#c44536\]:hover{--tw-text-opacity:1;color:rgb(196 69 54 / var(--tw-text-opacity, 1))}.hover\:text-\[\#c5050c\]:hover{--tw-text-opacity:1;color:rgb(197 5 12 / var(--tw-text-opacity, 1))}.hover\:text-\[var\(--orange\)\]:hover{color:var(--orange)}.hover\:shadow-yellow-300\/50:hover{--tw-shadow-color:rgb(253 224 71 / 0.5);--tw-shadow:var(--tw-shadow-colored)}@media (min-width: 640px){.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}}@media (min-width: 768px){.md\:flex{display:flex}.md\:hidden{display:none}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.md\:text-2xl{font-size:1.5rem;line-height:2rem}.md\:text-6xl{font-size:3.75rem;line-height:1}.md\:text-xl{font-size:1.25rem;line-height:1.75rem}}@media (min-width: 1024px){.lg\:px-8{padding-left:2rem;padding-right:2rem}}</style></head>
+<body style="">
+
+<!-- NAVBAR -->
+<nav class="bg-gradient-to-r from-[#1a0f0a] via-[#2c1810] to-[#1a0f0a] sticky top-0 z-50 shadow-lg w-full text-[#e8e6e3] border-b border-[#c5050c]/20">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6 h-16">
+    <a href="index.html" class="flex items-center space-x-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu w-6 h-6 text-[var(--orange)]"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+      <span class="font-bold text-lg text-[var(--orange)]">Wisconsin Robotics</span>
+    </a>
+    <div class="hidden md:flex items-center space-x-6">
+      <a href="index.html#about" class="hover:text-[var(--orange)] transition">About</a>
+      <a href="meet-the-team.html" class="hover:text-[var(--orange)] transition">Teams</a>
+      <a href="robots.html" class="hover:text-[var(--orange)] transition">Robots</a>
+      <a href="sponsors.html" class="hover:text-[var(--orange)] transition">Sponsors</a>
+      <a href="index.html#gallery" class="hover:text-[var(--orange)] transition">Gallery</a>
+      <a href="index.html#contact" class="hover:text-[var(--orange)] transition">Contact</a>
+      <button id="dark-toggle" class="hover:text-[var(--orange)] transition">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon w-5 h-5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+    </div>
+    <button id="mobile-toggle" class="md:hidden hover:text-[var(--orange)]">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu w-6 h-6"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+  </div>
+  
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu md:hidden fixed top-0 right-0 h-full w-64 bg-[#2c1810] shadow-2xl p-6">
+    <button id="mobile-close" class="absolute top-4 right-4 text-white">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x w-6 h-6"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    <div class="flex flex-col space-y-4 mt-12">
+      <a href="index.html#about" class="text-white hover:text-[var(--orange)] transition">About</a>
+      <a href="meet-the-team.html" class="text-white hover:text-[var(--orange)] transition">Teams</a>
+      <a href="robots.html" class="text-white hover:text-[var(--orange)] transition">Robots</a>
+      <a href="sponsors.html" class="text-white hover:text-[var(--orange)] transition">Sponsors</a>
+      <a href="index.html#contact" class="text-white hover:text-[var(--orange)] transition">Contact</a>
+      <button id="dark-toggle-mobile" class="text-left text-white hover:text-[var(--orange)] transition">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon w-5 h-5 inline"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> Dark Mode
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="mars-bg text-center text-white min-h-[60vh] flex items-center justify-center relative">
+  <div class="glitch-canvas-container">
+    <canvas id="glitchCanvas" class="glitch-canvas" width="1155" height="555" style="width: 924.8px; height: 444px;"></canvas>
+    <div class="glitch-vignette-outer"></div>
+    <div class="glitch-vignette-center"></div>
+  </div>
+  <div class="relative z-10 px-6">
+    <h1 class="text-5xl md:text-6xl font-extrabold mb-4" style="text-shadow: 0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6);">Subteam <span class="gradient-text split-text" data-split="true"><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">O</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">p</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">e</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">r</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">a</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">t</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">i</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">o</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">n</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">s</span></span></h1>
+    <p class="text-lg md:text-xl opacity-90 split-text" data-split="true" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8), 0 0 30px rgba(0,0,0,0.6);"><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">P</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">o</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">w</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">e</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">r</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">i</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">n</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">g</span><span class="split-char" style="width: 0.25em; opacity: 1; transform-origin: 50% 50%; transform: none;"> </span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">t</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">h</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">e</span><span class="split-char" style="width: 0.25em; opacity: 1; transform-origin: 50% 50%; transform: none;"> </span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">o</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">r</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">g</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">a</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">n</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">i</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">z</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">a</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">t</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">i</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">o</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">n</span><span class="split-char" style="width: 0.25em; opacity: 1; transform-origin: 50% 50%; transform: none;"> </span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">b</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">e</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">h</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">i</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">n</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">d</span><span class="split-char" style="width: 0.25em; opacity: 1; transform-origin: 50% 50%; transform: none;"> </span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">W</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">i</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">s</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">c</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">o</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">n</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">s</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">i</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">n</span><span class="split-char" style="width: 0.25em; opacity: 1; transform-origin: 50% 50%; transform: none;"> </span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">R</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">o</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">b</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">o</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">t</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">i</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">c</span><span class="split-char" style="opacity: 1; transform-origin: 50% 50%; transform: none;">s</span></p>
+  </div>
+</section>
+
+<!-- ABOUT OPERATIONS -->
+<section class="py-20 px-6 bg-[var(--bg-primary)] fade-section visible">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-5xl font-bold mb-6 gradient-text">What We Do</h2>
+      <p class="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed">
+        The Operations subteam is the backbone of Wisconsin Robotics, handling everything from event coordination and social media to industry relations and logistics. We ensure the team runs smoothly, maintains strong community engagement, and secures the resources needed for success.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div class="card p-8 text-center">
+        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar w-8 h-8 text-white"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">Events &amp; Outreach</h3>
+        <p class="text-[var(--text-secondary)]">
+          Planning and executing events, demos, and community outreach programs to inspire the next generation of engineers and roboticists.
+        </p>
+      </div>
+
+      <div class="card p-8 text-center">
+        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share-2 w-8 h-8 text-white"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">Media &amp; Communications</h3>
+        <p class="text-[var(--text-secondary)]">
+          Managing our social media presence, creating engaging content, and telling the story of Wisconsin Robotics to the world.
+        </p>
+      </div>
+
+      <div class="card p-8 text-center">
+        <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase w-8 h-8 text-white"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">Industry Relations</h3>
+        <p class="text-[var(--text-secondary)]">
+          Building partnerships with sponsors, securing funding, and maintaining relationships with industry leaders and alumni.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM MEMBERS -->
+<section class="py-20 px-6 bg-[var(--bg-card)] fade-section visible">
+  <div class="max-w-7xl mx-auto text-center mb-16">
+    <h2 class="text-5xl font-bold mb-4 gradient-text">Our Team</h2>
+    <div class="h-1 w-24 bg-gradient-to-r from-[var(--orange)] to-[var(--orange-soft)] mx-auto rounded-full"></div>
+  </div>
+  <div class="team-grid max-w-6xl mx-auto" id="operations-team">
+    <!-- Team member cards will be inserted by JS -->
+  <div class="pc-card-wrapper" style="--pointer-x: 50%; --pointer-y: 50%; --background-x: 50%; --background-y: 50%; --pointer-from-center: 0; --pointer-from-top: 0.5; --pointer-from-left: 0.5; --rotate-x: 0deg; --rotate-y: 0deg;">
+      <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: block;">
+        <section class="pc-card">
+          <div class="pc-inside">
+            <div class="pc-shine"></div>
+            <div class="pc-glare"></div>
+            <div class="pc-content pc-avatar-content">
+              
+            </div>
+            <div class="pc-content">
+              <div class="pc-details">
+                <h3>Ethan Mak</h3>
+                <p>Events Coordinator</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </a>
+    </div><div class="pc-card-wrapper" style="--pointer-x: 50%; --pointer-y: 50%; --background-x: 50%; --background-y: 50%; --pointer-from-center: 0; --pointer-from-top: 0.5; --pointer-from-left: 0.5; --rotate-x: 0deg; --rotate-y: 0deg;">
+      <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: block;">
+        <section class="pc-card">
+          <div class="pc-inside">
+            <div class="pc-shine"></div>
+            <div class="pc-glare"></div>
+            <div class="pc-content pc-avatar-content">
+              
+            </div>
+            <div class="pc-content">
+              <div class="pc-details">
+                <h3>Chase Edwardson</h3>
+                <p>Social Media</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </a>
+    </div><div class="pc-card-wrapper" style="--pointer-x: 50%; --pointer-y: 50%; --background-x: 50%; --background-y: 50%; --pointer-from-center: 0; --pointer-from-top: 0.5; --pointer-from-left: 0.5; --rotate-x: 0deg; --rotate-y: 0deg;">
+      <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: block;">
+        <section class="pc-card">
+          <div class="pc-inside">
+            <div class="pc-shine"></div>
+            <div class="pc-glare"></div>
+            <div class="pc-content pc-avatar-content">
+              
+            </div>
+            <div class="pc-content">
+              <div class="pc-details">
+                <h3>Jackson Hull</h3>
+                <p>Industry Relations</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </a>
+    </div><div class="pc-card-wrapper" style="--pointer-x: 50.00034843205575%; --pointer-y: 50.00025%; --background-x: 50%; --background-y: 50%; --pointer-from-center: 0.000008576826860233619; --pointer-from-top: 0.5000025; --pointer-from-left: 0.5000034843205575; --rotate-x: 0deg; --rotate-y: 0deg;">
+      <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: block;">
+        <section class="pc-card">
+          <div class="pc-inside">
+            <div class="pc-shine"></div>
+            <div class="pc-glare"></div>
+            <div class="pc-content pc-avatar-content">
+              <img class="avatar" src="jeffery.JPG" alt="Jeffery Liu" loading="lazy" onerror="this.style.display='none'" style="display: none;">
+            </div>
+            <div class="pc-content">
+              <div class="pc-details">
+                <h3>Jeffery Liu</h3>
+                <p>URC Logistics</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </a>
+    </div><div class="pc-card-wrapper" style="--pointer-x: 50%; --pointer-y: 50.00025%; --background-x: 50%; --background-y: 50%; --pointer-from-center: 0.000005000000000023874; --pointer-from-top: 0.5000025; --pointer-from-left: 0.5; --rotate-x: 0deg; --rotate-y: 0deg;">
+      <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: block;">
+        <section class="pc-card">
+          <div class="pc-inside">
+            <div class="pc-shine"></div>
+            <div class="pc-glare"></div>
+            <div class="pc-content pc-avatar-content">
+              
+            </div>
+            <div class="pc-content">
+              <div class="pc-details">
+                <h3>Junwoo Lee</h3>
+                <p>Website</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </a>
+    </div><div class="pc-card-wrapper" style="--pointer-x: 50%; --pointer-y: 50%; --background-x: 50%; --background-y: 50%; --pointer-from-center: 0; --pointer-from-top: 0.5; --pointer-from-left: 0.5; --rotate-x: 0deg; --rotate-y: 0deg;">
+      <a href="https://www.linkedin.com/in/mina-duden-444424319/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: block;">
+        <section class="pc-card">
+          <div class="pc-inside">
+            <div class="pc-shine"></div>
+            <div class="pc-glare"></div>
+            <div class="pc-content pc-avatar-content">
+              <img class="avatar" src="mina.png" alt="Mina Duden" loading="lazy" onerror="this.style.display='none'" style="display: none;">
+            </div>
+            <div class="pc-content">
+              <div class="pc-details">
+                <h3>Mina Duden</h3>
+                <p>Operations</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </a>
+    </div></div>
+</section>
+
+<!-- RESPONSIBILITIES -->
+<section class="py-20 px-6 bg-[var(--bg-primary)] fade-section">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="text-4xl font-bold mb-12 text-center gradient-text">Key Responsibilities</h2>
+    
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="card p-6">
+        <div class="flex items-start">
+          <div class="w-12 h-12 bg-gradient-to-br from-[#c5050c] to-[#e00122] rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users w-6 h-6 text-white"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">Event Coordination</h3>
+            <p class="text-[var(--text-secondary)]">Organize team meetings, demos, competitions, and public showcases</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <div class="flex items-start">
+          <div class="w-12 h-12 bg-gradient-to-br from-[#c5050c] to-[#e00122] rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle w-6 h-6 text-white"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">Social Media Management</h3>
+            <p class="text-[var(--text-secondary)]">Create content, manage platforms, and engage with our community online</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <div class="flex items-start">
+          <div class="w-12 h-12 bg-gradient-to-br from-[#c5050c] to-[#e00122] rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-up w-6 h-6 text-white"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">Sponsorship &amp; Fundraising</h3>
+            <p class="text-[var(--text-secondary)]">Secure partnerships, manage sponsor relationships, and coordinate funding</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <div class="flex items-start">
+          <div class="w-12 h-12 bg-gradient-to-br from-[#c5050c] to-[#e00122] rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-package w-6 h-6 text-white"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">Logistics &amp; Planning</h3>
+            <p class="text-[var(--text-secondary)]">Handle competition logistics, travel arrangements, and equipment management</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <div class="flex items-start">
+          <div class="w-12 h-12 bg-gradient-to-br from-[#c5050c] to-[#e00122] rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-code w-6 h-6 text-white"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">Website Development</h3>
+            <p class="text-[var(--text-secondary)]">Maintain and update the team website and digital presence</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <div class="flex items-start">
+          <div class="w-12 h-12 bg-gradient-to-br from-[#c5050c] to-[#e00122] rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart w-6 h-6 text-white"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">Team Culture</h3>
+            <p class="text-[var(--text-secondary)]">Foster a positive, inclusive environment and organize team-building activities</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN CTA -->
+<section class="py-24 px-6 bg-gradient-to-br from-[var(--orange)] via-[var(--orange-soft)] to-[#9b0000] relative overflow-hidden">
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-10 left-10 w-72 h-72 bg-orange-400 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-10 right-10 w-96 h-96 bg-yellow-300 rounded-full blur-3xl"></div>
+  </div>
+  
+  <div class="max-w-4xl mx-auto text-center relative z-10">
+    <h2 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+      Interested in Operations?
+    </h2>
+    <p class="text-xl md:text-2xl text-white/90 mb-10 max-w-2xl mx-auto">
+      Join our Operations team and help power Wisconsin Robotics from behind the scenes!
+    </p>
+    <a href="index.html#contact" class="inline-block bg-white text-[var(--orange)] px-12 py-5 rounded-2xl font-bold hover:bg-yellow-300 hover:text-[#c44536] hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-yellow-300/50 text-xl">
+      Get in Touch →
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-4 gap-12">
+            <div>
+                <div class="flex items-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu w-8 h-8 text-[#c5050c] mr-3"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+                    <h3 class="text-xl font-bold">Wisconsin Robotics</h3>
+                </div>
+                <p class="text-gray-400 leading-relaxed">
+                    University of Wisconsin Madison's premier robotics student organization.
+                </p>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                <ul class="space-y-3">
+                    <li><a href="index.html#about" class="text-gray-400 hover:text-[#c5050c] transition-colors">About</a></li>
+                    <li><a href="meet-the-team.html" class="text-gray-400 hover:text-[#c5050c] transition-colors">Teams</a></li>
+                    <li><a href="sponsors.html" class="text-gray-400 hover:text-[#c5050c] transition-colors">Sponsors</a></li>
+                    <li><a href="index.html#contact" class="text-gray-400 hover:text-[#c5050c] transition-colors">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold mb-4">Connect</h3>
+                <ul class="space-y-3">
+                    <li><a href="#" class="text-gray-400 hover:text-[#c5050c] transition-colors">Instagram</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-[#c5050c] transition-colors">LinkedIn</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-[#c5050c] transition-colors">GitHub</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-[#c5050c] transition-colors">YouTube</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold mb-4">Contact</h3>
+                <p class="text-gray-400 mb-3">
+                    <strong>Email:</strong><br>
+                    wisconsinrobotics@cae.wisc.edu
+                </p>
+                <p class="text-gray-400">
+                    <strong>Location:</strong><br>
+                    1500 Engineering Drive<br>
+                    ERB 133, Madison, WI 53706
+                </p>
+            </div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-gray-700 text-center text-gray-400">
+            <p>Made with 🧀 by Wisconsin Robotics</p>
+            <p class="mt-2">© 2025 Wisconsin Robotics. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Team data
+const operationsTeam = [
+  { name: 'Ethan Mak', title: 'Events Coordinator', avatar: '', linkedin: 'https://www.linkedin.com' },
+  { name: 'Chase Edwardson', title: 'Social Media', avatar: '', linkedin: 'https://www.linkedin.com' },
+  { name: 'Jackson Hull', title: 'Industry Relations', avatar: '', linkedin: 'https://www.linkedin.com' },
+  { name: 'Jeffery Liu', title: 'URC Logistics', avatar: 'jeffery.JPG', linkedin: 'https://www.linkedin.com' },
+  { name: 'Junwoo Lee', title: 'Website', avatar: '', linkedin: 'https://www.linkedin.com' },
+  { name: 'Mina Duden', title: 'Operations', avatar: 'mina.png', linkedin: 'https://www.linkedin.com/in/mina-duden-444424319/' }
+];
+
+// Profile Card 3D Tilt Class (same as meet-the-team.html)
+class ProfileCard3D {
+  constructor(wrapper, data) {
+    this.wrapper = wrapper;
+    this.card = null;
+    this.data = data;
+    this.rafId = null;
+    this.animationDefaults = { duration: 600, ease: 'cubic-bezier(0.16, 1, 0.3, 1)' };
+    
+    this.init();
+  }
+
+  init() {
+    this.createCard();
+    this.attachEventListeners();
+    this.initialAnimation();
+  }
+
+  createCard() {
+    const avatarHTML = this.data.avatar 
+      ? `<img class="avatar" src="${this.data.avatar}" alt="${this.data.name}" loading="lazy" onerror="this.style.display='none'">` 
+      : '';
+    
+    this.wrapper.innerHTML = `
+      <a href="${this.data.linkedin}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: block;">
+        <section class="pc-card">
+          <div class="pc-inside">
+            <div class="pc-shine"></div>
+            <div class="pc-glare"></div>
+            <div class="pc-content pc-avatar-content">
+              ${avatarHTML}
+            </div>
+            <div class="pc-content">
+              <div class="pc-details">
+                <h3>${this.data.name}</h3>
+                <p>${this.data.title}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </a>
+    `;
+    this.card = this.wrapper.querySelector('.pc-card');
+  }
+
+  clamp(value, min = 0, max = 100) {
+    return Math.min(Math.max(value, min), max);
+  }
+
+  round(value, precision = 3) {
+    return parseFloat(value.toFixed(precision));
+  }
+
+  adjust(value, fromMin, fromMax, toMin, toMax) {
+    return this.round(toMin + ((toMax - toMin) * (value - fromMin)) / (fromMax - fromMin));
+  }
+
+  easeInOutCubic(x) {
+    return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  }
+
+  updateCardTransform(offsetX, offsetY) {
+    const width = this.card.clientWidth;
+    const height = this.card.clientHeight;
+
+    const percentX = this.clamp((100 / width) * offsetX);
+    const percentY = this.clamp((100 / height) * offsetY);
+
+    const centerX = percentX - 50;
+    const centerY = percentY - 50;
+
+    const properties = {
+      '--pointer-x': `${percentX}%`,
+      '--pointer-y': `${percentY}%`,
+      '--background-x': `${this.adjust(percentX, 0, 100, 35, 65)}%`,
+      '--background-y': `${this.adjust(percentY, 0, 100, 35, 65)}%`,
+      '--pointer-from-center': `${this.clamp(Math.hypot(percentY - 50, percentX - 50) / 50, 0, 1)}`,
+      '--pointer-from-top': `${percentY / 100}`,
+      '--pointer-from-left': `${percentX / 100}`,
+      '--rotate-x': `${this.round(-(centerX / 5))}deg`,
+      '--rotate-y': `${this.round(centerY / 4)}deg`
+    };
+
+    Object.entries(properties).forEach(([property, value]) => {
+      this.wrapper.style.setProperty(property, value);
+    });
+  }
+
+  createSmoothAnimation(duration, startX, startY) {
+    const startTime = performance.now();
+    const targetX = this.wrapper.clientWidth / 2;
+    const targetY = this.wrapper.clientHeight / 2;
+
+    const animationLoop = currentTime => {
+      const elapsed = currentTime - startTime;
+      const progress = this.clamp(elapsed / duration);
+      const easedProgress = this.easeInOutCubic(progress);
+
+      const currentX = this.adjust(easedProgress, 0, 1, startX, targetX);
+      const currentY = this.adjust(easedProgress, 0, 1, startY, targetY);
+
+      this.updateCardTransform(currentX, currentY);
+
+      if (progress < 1) {
+        this.rafId = requestAnimationFrame(animationLoop);
+      }
+    };
+
+    if (this.rafId) {
+      cancelAnimationFrame(this.rafId);
+    }
+    this.rafId = requestAnimationFrame(animationLoop);
+  }
+
+  handlePointerMove = (event) => {
+    const rect = this.card.getBoundingClientRect();
+    this.updateCardTransform(event.clientX - rect.left, event.clientY - rect.top);
+  }
+
+  handlePointerEnter = () => {
+    if (this.rafId) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
+    this.wrapper.classList.add('active');
+    this.card.classList.add('active');
+  }
+
+  handlePointerLeave = (event) => {
+    const rect = this.card.getBoundingClientRect();
+    const offsetX = event.clientX - rect.left;
+    const offsetY = event.clientY - rect.top;
+    
+    this.createSmoothAnimation(this.animationDefaults.duration, offsetX, offsetY);
+    this.wrapper.classList.remove('active');
+    this.card.classList.remove('active');
+  }
+
+  handleDeviceOrientation = (event) => {
+    const { beta, gamma } = event;
+    if (!beta || !gamma) return;
+
+    const mobileTiltSensitivity = 5;
+    this.updateCardTransform(
+      this.card.clientHeight / 2 + gamma * mobileTiltSensitivity,
+      this.card.clientWidth / 2 + (beta - 20) * mobileTiltSensitivity
+    );
+  }
+
+  attachEventListeners() {
+    this.card.addEventListener('pointerenter', this.handlePointerEnter);
+    this.card.addEventListener('pointermove', this.handlePointerMove);
+    this.card.addEventListener('pointerleave', this.handlePointerLeave);
+    
+    this.card.addEventListener('click', (e) => {
+      if (typeof window.DeviceMotionEvent !== 'undefined' && typeof window.DeviceMotionEvent.requestPermission === 'function') {
+        e.preventDefault();
+        window.DeviceMotionEvent.requestPermission()
+          .then(state => {
+            if (state === 'granted') {
+              window.addEventListener('deviceorientation', this.handleDeviceOrientation);
+              setTimeout(() => {
+                window.location.href = this.data.linkedin;
+              }, 100);
+            }
+          })
+          .catch(err => console.error(err));
+      } else if (typeof window.DeviceOrientationEvent !== 'undefined') {
+        window.addEventListener('deviceorientation', this.handleDeviceOrientation);
+      }
+    });
+  }
+
+  initialAnimation() {
+    const initialX = this.wrapper.clientWidth - 70;
+    const initialY = 60;
+    this.updateCardTransform(initialX, initialY);
+    this.createSmoothAnimation(1500, initialX, initialY);
+  }
+
+  destroy() {
+    if (this.rafId) {
+      cancelAnimationFrame(this.rafId);
+    }
+    this.card.removeEventListener('pointerenter', this.handlePointerEnter);
+    this.card.removeEventListener('pointermove', this.handlePointerMove);
+    this.card.removeEventListener('pointerleave', this.handlePointerLeave);
+    window.removeEventListener('deviceorientation', this.handleDeviceOrientation);
+  }
+}
+
+// Initialize cards
+function initializeTeamCards() {
+  const grid = document.getElementById('operations-team');
+  operationsTeam.forEach(member => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'pc-card-wrapper';
+    grid.appendChild(wrapper);
+    new ProfileCard3D(wrapper, member);
+  });
+}
+
+// Initialize Feather Icons
+feather.replace();
+
+// Dark mode toggle
+const html = document.documentElement;
+const btn = document.getElementById("dark-toggle");
+const btnMobile = document.getElementById("dark-toggle-mobile");
+
+function toggleDarkMode() {
+  html.classList.toggle("dark");
+  localStorage.setItem("theme", html.classList.contains("dark") ? "dark" : "light");
+  feather.replace();
+}
+
+btn.addEventListener("click", toggleDarkMode);
+btnMobile.addEventListener("click", toggleDarkMode);
+
+if (localStorage.getItem("theme") === "dark") {
+  html.classList.add("dark");
+}
+
+// Mobile menu
+const mobileToggle = document.getElementById("mobile-toggle");
+const mobileMenu = document.getElementById("mobile-menu");
+const mobileClose = document.getElementById("mobile-close");
+
+mobileToggle.addEventListener("click", () => {
+  mobileMenu.classList.add("active");
+});
+
+mobileClose.addEventListener("click", () => {
+  mobileMenu.classList.remove("active");
+});
+
+// Fade-in sections
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add("visible");
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll(".fade-section").forEach(sec => obs.observe(sec));
+
+// Initialize cards when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  initializeTeamCards();
+  feather.replace();
+});
+
+// ==================== SPLIT TEXT ANIMATION ====================
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
+
+/**
+ * Vanilla JS SplitText Animation
+ * Splits text into characters and animates them with GSAP
+ */
+class SplitTextAnimator {
+  constructor(options = {}) {
+    this.options = {
+      delay: options.delay || 100,
+      duration: options.duration || 0.6,
+      ease: options.ease || 'power3.out',
+      splitType: options.splitType || 'chars',
+      from: options.from || { opacity: 0, y: 40 },
+      to: options.to || { opacity: 1, y: 0 },
+      threshold: options.threshold || 0.1,
+      rootMargin: options.rootMargin || '-100px',
+      onComplete: options.onComplete || null
+    };
+  }
+
+  splitText(element) {
+    const text = element.textContent;
+    const chars = text.split('');
+    
+    // Clear the element
+    element.textContent = '';
+    
+    // Create span for each character
+    const charElements = chars.map(char => {
+      const span = document.createElement('span');
+      span.className = 'split-char';
+      span.textContent = char;
+      // Preserve spaces
+      if (char === ' ') {
+        span.style.width = '0.25em';
+      }
+      element.appendChild(span);
+      return span;
+    });
+    
+    return charElements;
+  }
+
+  animate(element) {
+    // Wait for fonts to load
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        this.performAnimation(element);
+      });
+    } else {
+      // Fallback if fonts API is not available
+      setTimeout(() => {
+        this.performAnimation(element);
+      }, 100);
+    }
+  }
+
+  performAnimation(element) {
+    // Split the text into characters
+    const chars = this.splitText(element);
+    
+    // Calculate ScrollTrigger start position
+    const startPct = (1 - this.options.threshold) * 100;
+    const marginMatch = /^(-?\d+(?:\.\d+)?)(px|em|rem|%)?$/.exec(this.options.rootMargin);
+    const marginValue = marginMatch ? parseFloat(marginMatch[1]) : 0;
+    const marginUnit = marginMatch ? marginMatch[2] || 'px' : 'px';
+    const sign = marginValue === 0 
+      ? '' 
+      : marginValue < 0 
+        ? `-=${Math.abs(marginValue)}${marginUnit}` 
+        : `+=${marginValue}${marginUnit}`;
+    const start = `top ${startPct}%${sign}`;
+    
+    // Set initial state
+    gsap.set(chars, this.options.from);
+    
+    // Animate with GSAP
+    gsap.to(chars, {
+      ...this.options.to,
+      duration: this.options.duration,
+      ease: this.options.ease,
+      stagger: this.options.delay / 1000,
+      force3D: true,
+      transformOrigin: 'center center',
+      clearProps: 'transform',
+      scrollTrigger: {
+        trigger: element,
+        start: start,
+        once: true,
+        fastScrollEnd: true,
+      },
+      onComplete: () => {
+        // Clear transforms for crisp final state
+        chars.forEach(char => {
+          char.style.transform = 'none';
+        });
+        if (this.options.onComplete) {
+          this.options.onComplete();
+        }
+      }
+    });
+  }
+}
+
+// Initialize split text animations
+function initSplitTextAnimations() {
+  const elements = document.querySelectorAll('[data-split="true"]');
+  
+  elements.forEach((element, index) => {
+    const animator = new SplitTextAnimator({
+      delay: 50,
+      duration: 0.6,
+      ease: 'power3.out',
+      from: { opacity: 0, y: 40 },
+      to: { opacity: 1, y: 0 },
+      threshold: 0.1,
+      rootMargin: '-100px',
+      onComplete: () => {
+        console.log(`Animation complete for element ${index + 1}`);
+      }
+    });
+    
+    animator.animate(element);
+  });
+}
+
+// Run after DOM is fully loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initSplitTextAnimations);
+} else {
+  initSplitTextAnimations();
+}
+
+// ==================== LETTER GLITCH EFFECT ====================
+/**
+ * Vanilla JS LetterGlitch - Matrix-style glitch background
+ */
+class LetterGlitch {
+  constructor(canvasId, options = {}) {
+    this.canvas = document.getElementById(canvasId);
+    if (!this.canvas) return;
+    
+    this.ctx = this.canvas.getContext('2d');
+    this.options = {
+      glitchColors: options.glitchColors || ['#c5050c', '#e00122', '#9b0000', '#ff4444'],
+      glitchSpeed: options.glitchSpeed || 50,
+      smooth: options.smooth !== undefined ? options.smooth : true,
+      characters: options.characters || 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$&*()-_+=/[]{};:<>.,0123456789'
+    };
+    
+    this.fontSize = 16;
+    this.charWidth = 10;
+    this.charHeight = 20;
+    
+    this.letters = [];
+    this.grid = { columns: 0, rows: 0 };
+    this.animationFrame = null;
+    this.lastGlitchTime = Date.now();
+    this.lettersAndSymbols = Array.from(this.options.characters);
+    
+    this.init();
+  }
+  
+  init() {
+    this.resizeCanvas();
+    window.addEventListener('resize', () => this.handleResize());
+    this.animate();
+  }
+  
+  handleResize() {
+    clearTimeout(this.resizeTimeout);
+    this.resizeTimeout = setTimeout(() => {
+      if (this.animationFrame) {
+        cancelAnimationFrame(this.animationFrame);
+      }
+      this.resizeCanvas();
+      this.animate();
+    }, 100);
+  }
+  
+  resizeCanvas() {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = this.canvas.parentElement.getBoundingClientRect();
+    
+    this.canvas.width = rect.width * dpr;
+    this.canvas.height = rect.height * dpr;
+    this.canvas.style.width = `${rect.width}px`;
+    this.canvas.style.height = `${rect.height}px`;
+    
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    
+    const columns = Math.ceil(rect.width / this.charWidth);
+    const rows = Math.ceil(rect.height / this.charHeight);
+    
+    this.initializeLetters(columns, rows);
+    this.drawLetters();
+  }
+  
+  initializeLetters(columns, rows) {
+    this.grid = { columns, rows };
+    const totalLetters = columns * rows;
+    
+    this.letters = Array.from({ length: totalLetters }, () => ({
+      char: this.getRandomChar(),
+      color: this.getRandomColor(),
+      targetColor: this.getRandomColor(),
+      colorProgress: 1
+    }));
+  }
+  
+  getRandomChar() {
+    return this.lettersAndSymbols[Math.floor(Math.random() * this.lettersAndSymbols.length)];
+  }
+  
+  getRandomColor() {
+    return this.options.glitchColors[Math.floor(Math.random() * this.options.glitchColors.length)];
+  }
+  
+  hexToRgb(hex) {
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b);
+    
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
+  
+  interpolateColor(start, end, factor) {
+    const result = {
+      r: Math.round(start.r + (end.r - start.r) * factor),
+      g: Math.round(start.g + (end.g - start.g) * factor),
+      b: Math.round(start.b + (end.b - start.b) * factor)
+    };
+    return `rgb(${result.r}, ${result.g}, ${result.b})`;
+  }
+  
+  drawLetters() {
+    if (!this.ctx || this.letters.length === 0) return;
+    
+    const { width, height } = this.canvas.getBoundingClientRect();
+    this.ctx.clearRect(0, 0, width, height);
+    this.ctx.font = `${this.fontSize}px monospace`;
+    this.ctx.textBaseline = 'top';
+    
+    this.letters.forEach((letter, index) => {
+      const x = (index % this.grid.columns) * this.charWidth;
+      const y = Math.floor(index / this.grid.columns) * this.charHeight;
+      this.ctx.fillStyle = letter.color;
+      this.ctx.fillText(letter.char, x, y);
+    });
+  }
+  
+  updateLetters() {
+    if (!this.letters || this.letters.length === 0) return;
+    
+    const updateCount = Math.max(1, Math.floor(this.letters.length * 0.05));
+    
+    for (let i = 0; i < updateCount; i++) {
+      const index = Math.floor(Math.random() * this.letters.length);
+      if (!this.letters[index]) continue;
+      
+      this.letters[index].char = this.getRandomChar();
+      this.letters[index].targetColor = this.getRandomColor();
+      
+      if (!this.options.smooth) {
+        this.letters[index].color = this.letters[index].targetColor;
+        this.letters[index].colorProgress = 1;
+      } else {
+        this.letters[index].colorProgress = 0;
+      }
+    }
+  }
+  
+  handleSmoothTransitions() {
+    let needsRedraw = false;
+    
+    this.letters.forEach(letter => {
+      if (letter.colorProgress < 1) {
+        letter.colorProgress += 0.05;
+        if (letter.colorProgress > 1) letter.colorProgress = 1;
+        
+        const startRgb = this.hexToRgb(letter.color);
+        const endRgb = this.hexToRgb(letter.targetColor);
+        
+        if (startRgb && endRgb) {
+          letter.color = this.interpolateColor(startRgb, endRgb, letter.colorProgress);
+          needsRedraw = true;
+        }
+      }
+    });
+    
+    if (needsRedraw) {
+      this.drawLetters();
+    }
+  }
+  
+  animate() {
+    const now = Date.now();
+    
+    if (now - this.lastGlitchTime >= this.options.glitchSpeed) {
+      this.updateLetters();
+      this.drawLetters();
+      this.lastGlitchTime = now;
+    }
+    
+    if (this.options.smooth) {
+      this.handleSmoothTransitions();
+    }
+    
+    this.animationFrame = requestAnimationFrame(() => this.animate());
+  }
+  
+  destroy() {
+    if (this.animationFrame) {
+      cancelAnimationFrame(this.animationFrame);
+    }
+    window.removeEventListener('resize', this.handleResize);
+  }
+}
+
+// Initialize LetterGlitch on hero section
+function initLetterGlitch() {
+  const glitchCanvas = document.getElementById('glitchCanvas');
+  if (glitchCanvas) {
+    new LetterGlitch('glitchCanvas', {
+      glitchColors: ['#c5050c', '#e00122', '#9b0000', '#ff4444', '#ff0000'],
+      glitchSpeed: 50,
+      smooth: true,
+      characters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$&*()-_+=/[]{};:<>.,0123456789'
+    });
+  }
+}
+
+// Run after DOM is fully loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initLetterGlitch);
+} else {
+  initLetterGlitch();
+}
+</script>
+
+
+
+
+</body></html>
