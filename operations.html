@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meet the Team - Wisconsin Robotics</title>
+  <title>Operations - Wisconsin Robotics</title>
   <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
@@ -86,8 +88,13 @@ body {
   animation: gradientShift 3s ease infinite;
 }
 
-.dark .gradient-text {
-  text-shadow: 0 0 8px rgba(197,5,12,0.6), 0 0 16px rgba(224,1,34,0.5);
+.gradient-text .split-char {
+  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-soft) 50%, #9b0000 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
 }
 
 /* NAVBAR */
@@ -98,14 +105,46 @@ nav {
 
 /* HERO BACKGROUND */
 .mars-bg {
-  background: linear-gradient(135deg,#0e0f12,#1a0f0a,#2c1810,#c5050c);
-  background-size: 400% 400%;
-  animation: mars 15s ease infinite;
+  position: relative;
+  background: #000000;
+  overflow: hidden;
 }
 
-@keyframes mars {
-  0%,100%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
+.glitch-canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.glitch-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-vignette-outer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,1) 100%);
+  z-index: 1;
+}
+
+.glitch-vignette-center {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 70%);
+  z-index: 1;
 }
 
 /* Mobile menu */
@@ -145,6 +184,32 @@ nav a.active::after {
 .fade-section.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* SPLIT TEXT ANIMATION */
+.split-text {
+  display: inline-block;
+  overflow: visible;
+}
+
+.split-char {
+  display: inline-block;
+  white-space: pre;
+  will-change: transform, opacity;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  font-smoothing: antialiased;
+}
+
+.split-word {
+  display: inline-block;
+  white-space: nowrap;
+  will-change: transform, opacity;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .card {
@@ -194,7 +259,7 @@ nav a.active::after {
 }
 
 .pc-card {
-  height: 320px;
+  height: 400px;
   display: grid;
   aspect-ratio: 0.718;
   border-radius: var(--card-radius);
@@ -317,16 +382,15 @@ nav a.active::after {
 .pc-details {
   width: 100%;
   position: absolute;
-  top: 1em;
+  top: 2em;
   display: flex;
   flex-direction: column;
-  gap: 0.2em;
 }
 
 .pc-details h3 {
   font-weight: 600;
   margin: 0;
-  font-size: min(3.5vh, 1.8em);
+  font-size: min(4vh, 2.2em);
   background-image: linear-gradient(to bottom, #fff, #e00122);
   background-size: 1em 1.5em;
   -webkit-text-fill-color: transparent;
@@ -337,7 +401,7 @@ nav a.active::after {
 .pc-details p {
   font-weight: 600;
   position: relative;
-  top: -5px;
+  top: -10px;
   white-space: nowrap;
   font-size: 14px;
   margin: 0 auto;
@@ -359,76 +423,27 @@ nav a.active::after {
   100% { background-position: 0 var(--background-y), 90% 90%, center; }
 }
 
-/* Grid layouts for different sections */
-.team-grid-leadership {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2.5rem;
-  justify-content: center;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.team-grid-leads {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 3rem;
-  justify-content: center;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.team-grid-operations {
+.team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 2rem;
-  place-content: center;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-/* Responsive breakpoints for team grids */
-@media (max-width: 1200px) {
-  .team-grid-leads {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2.5rem;
-  }
-}
-
-@media (max-width: 900px) {
-  .team-grid-leads {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-  }
+  justify-content: center;
 }
 
 @media (max-width: 768px) {
-  .pc-card { height: 280px; }
-  .pc-details { top: 1em; }
-  .pc-details h3 { font-size: min(3vh, 1.6em); }
-  .pc-details p { font-size: 12px; top: -5px; }
-  .team-grid-leads {
-    gap: 2rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .team-grid-leads {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
+  .pc-card { height: 350px; }
+  .pc-details { top: 1.5em; }
+  .pc-details h3 { font-size: min(3.5vh, 1.8em); }
+  .pc-details p { font-size: 12px; top: -8px; }
 }
 
 @media (max-width: 480px) {
-  .pc-card { height: 260px; }
-  .pc-details { top: 0.8em; }
-  .pc-details h3 { font-size: min(2.5vh, 1.4em); }
-  .pc-details p { font-size: 11px; top: -5px; }
-  .team-grid-leadership, .team-grid-operations {
+  .pc-card { height: 300px; }
+  .pc-details { top: 1.2em; }
+  .pc-details h3 { font-size: min(3vh, 1.5em); }
+  .pc-details p { font-size: 11px; top: -6px; }
+  .team-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-  }
-  .team-grid-leads {
     gap: 1.5rem;
   }
 }
@@ -445,7 +460,7 @@ nav a.active::after {
     </a>
     <div class="hidden md:flex items-center space-x-6">
       <a href="index.html#about" class="hover:text-[var(--orange)] transition">About</a>
-      <a href="meet-the-team.html" class="active hover:text-[var(--orange)] transition">Teams</a>
+      <a href="meet-the-team.html" class="hover:text-[var(--orange)] transition">Teams</a>
       <a href="robots.html" class="hover:text-[var(--orange)] transition">Robots</a>
       <a href="sponsors.html" class="hover:text-[var(--orange)] transition">Sponsors</a>
       <a href="index.html#gallery" class="hover:text-[var(--orange)] transition">Gallery</a>
@@ -463,7 +478,7 @@ nav a.active::after {
     </button>
     <div class="flex flex-col space-y-4 mt-12">
       <a href="index.html#about" class="text-white hover:text-[var(--orange)] transition">About</a>
-      <a href="meet-the-team.html" class="active text-white hover:text-[var(--orange)] transition">Teams</a>
+      <a href="meet-the-team.html" class="text-white hover:text-[var(--orange)] transition">Teams</a>
       <a href="robots.html" class="text-white hover:text-[var(--orange)] transition">Robots</a>
       <a href="sponsors.html" class="text-white hover:text-[var(--orange)] transition">Sponsors</a>
       <a href="index.html#contact" class="text-white hover:text-[var(--orange)] transition">Contact</a>
@@ -472,97 +487,155 @@ nav a.active::after {
 </nav>
 
 <!-- HERO -->
-<section class="mars-bg text-center py-20 text-white">
-  <h1 class="text-5xl md:text-6xl font-extrabold mb-4">Meet <span class="gradient-text">The Team</span></h1>
-  <p class="text-lg md:text-xl opacity-90">A student-led effort at the University of Wisconsin–Madison</p>
+<section class="mars-bg text-center text-white min-h-[60vh] flex items-center justify-center relative">
+  <div class="glitch-canvas-container">
+    <canvas id="glitchCanvas" class="glitch-canvas"></canvas>
+    <div class="glitch-vignette-outer"></div>
+    <div class="glitch-vignette-center"></div>
+  </div>
+  <div class="relative z-10 px-6">
+    <h1 class="text-5xl md:text-6xl font-extrabold mb-4" style="text-shadow: 0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6);">Subteam <span class="gradient-text split-text" data-split="true">Operations</span></h1>
+    <p class="text-lg md:text-xl opacity-90 split-text" data-split="true" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8), 0 0 30px rgba(0,0,0,0.6);">Powering the organization behind Wisconsin Robotics</p>
+  </div>
 </section>
 
-<!-- STRUCTURE -->
+<!-- ABOUT OPERATIONS -->
 <section class="py-20 px-6 bg-[var(--bg-primary)] fade-section">
-  <div class="max-w-7xl mx-auto text-center mb-16">
-    <h2 class="text-5xl font-bold mb-4 gradient-text">Structure</h2>
-    <p class="text-[var(--text-secondary)] max-w-2xl mx-auto">
-      Wisconsin Robotics is made of teams, each contributing to the development of the rover and our mission.
-    </p>
-  </div>
-  <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-    <div class="card p-10 text-left">
-      <div class="w-16 h-16 bg-blue-500 rounded-xl flex items-center justify-center mb-6">
-        <i data-feather="cpu" class="text-white w-8 h-8"></i>
-      </div>
-      <h3 class="text-2xl font-bold mb-3">Technical Teams</h3>
-      <p class="text-[var(--text-secondary)]">
-        Our sub-teams encompassing electrical, software, and mechanical disciplines collaborate to design, develop, and construct our rover.
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-5xl font-bold mb-6 gradient-text">What We Do</h2>
+      <p class="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed">
+        The Operations subteam is the backbone of Wisconsin Robotics, handling everything from event coordination and social media to industry relations and logistics. We ensure the team runs smoothly, maintains strong community engagement, and secures the resources needed for success.
       </p>
     </div>
-    <div class="card p-10 text-left">
-      <div class="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center mb-6">
-        <i data-feather="users" class="text-white w-8 h-8"></i>
+
+    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div class="card p-8 text-center">
+        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-6">
+          <i data-feather="calendar" class="w-8 h-8 text-white"></i>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">Events & Outreach</h3>
+        <p class="text-[var(--text-secondary)]">
+          Planning and executing events, demos, and community outreach programs to inspire the next generation of engineers and roboticists.
+        </p>
       </div>
-      <h3 class="text-2xl font-bold mb-3">Outreach & Operations</h3>
-      <p class="text-[var(--text-secondary)]">
-        Engages communities to bring interest in robotics, handling sponsorships, finances, and recruitment year-round.
-      </p>
-    </div>
-    <div class="card p-10 text-left">
-      <div class="w-16 h-16 bg-purple-500 rounded-xl flex items-center justify-center mb-6">
-        <i data-feather="award" class="text-white w-8 h-8"></i>
+
+      <div class="card p-8 text-center">
+        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-6">
+          <i data-feather="share-2" class="w-8 h-8 text-white"></i>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">Media & Communications</h3>
+        <p class="text-[var(--text-secondary)]">
+          Managing our social media presence, creating engaging content, and telling the story of Wisconsin Robotics to the world.
+        </p>
       </div>
-      <h3 class="text-2xl font-bold mb-3">Leadership</h3>
-      <p class="text-[var(--text-secondary)]">
-        Guides the entire organization, ensuring smooth operation and strategic direction across all projects and initiatives.
-      </p>
+
+      <div class="card p-8 text-center">
+        <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-6">
+          <i data-feather="briefcase" class="w-8 h-8 text-white"></i>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">Industry Relations</h3>
+        <p class="text-[var(--text-secondary)]">
+          Building partnerships with sponsors, securing funding, and maintaining relationships with industry leaders and alumni.
+        </p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- LEADERSHIP -->
+<!-- TEAM MEMBERS -->
 <section class="py-20 px-6 bg-[var(--bg-card)] fade-section">
   <div class="max-w-7xl mx-auto text-center mb-16">
-    <h2 class="text-5xl font-bold mb-4 gradient-text">Leadership</h2>
+    <h2 class="text-5xl font-bold mb-4 gradient-text">Our Team</h2>
     <div class="h-1 w-24 bg-gradient-to-r from-[var(--orange)] to-[var(--orange-soft)] mx-auto rounded-full"></div>
   </div>
-  <div class="team-grid-leadership">
-    <!-- Leadership cards will be inserted by JS -->
+  <div class="team-grid max-w-6xl mx-auto" id="operations-team">
+    <!-- Team member cards will be inserted by JS -->
   </div>
 </section>
 
-<!-- TEAM LEADS -->
+<!-- RESPONSIBILITIES -->
 <section class="py-20 px-6 bg-[var(--bg-primary)] fade-section">
-  <div class="max-w-7xl mx-auto text-center mb-16">
-    <h2 class="text-5xl font-bold mb-4 gradient-text">Team Leads</h2>
-    <div class="h-1 w-24 bg-gradient-to-r from-[var(--orange)] to-[var(--orange-soft)] mx-auto rounded-full"></div>
-  </div>
-  <div class="team-grid-leads max-w-6xl mx-auto">
-    <!-- Team leads cards will be inserted by JS -->
-  </div>
-</section>
+  <div class="max-w-5xl mx-auto">
+    <h2 class="text-4xl font-bold mb-12 text-center gradient-text">Key Responsibilities</h2>
+    
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="card p-6">
+        <div class="flex items-start">
+          <div class="w-12 h-12 bg-gradient-to-br from-[#c5050c] to-[#e00122] rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+            <i data-feather="users" class="w-6 h-6 text-white"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">Event Coordination</h3>
+            <p class="text-[var(--text-secondary)]">Organize team meetings, demos, competitions, and public showcases</p>
+          </div>
+        </div>
+      </div>
 
-<!-- OPERATIONS -->
-<section class="py-20 px-6 bg-[var(--bg-card)] fade-section">
-  <div class="max-w-7xl mx-auto text-center mb-16">
-    <h2 class="text-5xl font-bold mb-4 gradient-text">Operations</h2>
-    <div class="h-1 w-24 bg-gradient-to-r from-[var(--orange)] to-[var(--orange-soft)] mx-auto rounded-full"></div>
-  </div>
-  <div class="team-grid-operations">
-    <!-- Operations cards will be inserted by JS -->
-  </div>
-</section>
+      <div class="card p-6">
+        <div class="flex items-start">
+          <div class="w-12 h-12 bg-gradient-to-br from-[#c5050c] to-[#e00122] rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+            <i data-feather="message-circle" class="w-6 h-6 text-white"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">Social Media Management</h3>
+            <p class="text-[var(--text-secondary)]">Create content, manage platforms, and engage with our community online</p>
+          </div>
+        </div>
+      </div>
 
-<!-- WEBSITE DEVELOPER -->
-<section class="py-20 px-6 bg-[var(--bg-primary)] fade-section">
-  <div class="max-w-7xl mx-auto text-center mb-16">
-    <h2 class="text-5xl font-bold mb-4 gradient-text">Website Developer</h2>
-    <div class="h-1 w-24 bg-gradient-to-r from-[var(--orange)] to-[var(--orange-soft)] mx-auto rounded-full"></div>
-  </div>
-  <div class="flex justify-center">
-    <div class="team-grid-website" style="max-width: 300px;">
-      <!-- Website developer card will be inserted by JS -->
+      <div class="card p-6">
+        <div class="flex items-start">
+          <div class="w-12 h-12 bg-gradient-to-br from-[#c5050c] to-[#e00122] rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+            <i data-feather="trending-up" class="w-6 h-6 text-white"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">Sponsorship & Fundraising</h3>
+            <p class="text-[var(--text-secondary)]">Secure partnerships, manage sponsor relationships, and coordinate funding</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <div class="flex items-start">
+          <div class="w-12 h-12 bg-gradient-to-br from-[#c5050c] to-[#e00122] rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+            <i data-feather="package" class="w-6 h-6 text-white"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">Logistics & Planning</h3>
+            <p class="text-[var(--text-secondary)]">Handle competition logistics, travel arrangements, and equipment management</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <div class="flex items-start">
+          <div class="w-12 h-12 bg-gradient-to-br from-[#c5050c] to-[#e00122] rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+            <i data-feather="code" class="w-6 h-6 text-white"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">Website Development</h3>
+            <p class="text-[var(--text-secondary)]">Maintain and update the team website and digital presence</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <div class="flex items-start">
+          <div class="w-12 h-12 bg-gradient-to-br from-[#c5050c] to-[#e00122] rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+            <i data-feather="heart" class="w-6 h-6 text-white"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-2">Team Culture</h3>
+            <p class="text-[var(--text-secondary)]">Foster a positive, inclusive environment and organize team-building activities</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- JOIN SECTION -->
+<!-- JOIN CTA -->
 <section class="py-24 px-6 bg-gradient-to-br from-[var(--orange)] via-[var(--orange-soft)] to-[#9b0000] relative overflow-hidden">
   <div class="absolute inset-0 opacity-10">
     <div class="absolute top-10 left-10 w-72 h-72 bg-orange-400 rounded-full blur-3xl"></div>
@@ -571,10 +644,10 @@ nav a.active::after {
   
   <div class="max-w-4xl mx-auto text-center relative z-10">
     <h2 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
-      Interested in Joining?
+      Interested in Operations?
     </h2>
     <p class="text-xl md:text-2xl text-white/90 mb-10 max-w-2xl mx-auto">
-      We welcome passionate students from all disciplines. Join us in building the future of robotics!
+      Join our Operations team and help power Wisconsin Robotics from behind the scenes!
     </p>
     <a href="index.html#contact" class="inline-block bg-white text-[var(--orange)] px-12 py-5 rounded-2xl font-bold hover:bg-yellow-300 hover:text-[#c44536] hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-yellow-300/50 text-xl">
       Get in Touch →
@@ -635,40 +708,16 @@ nav a.active::after {
 
 <script>
 // Team data
-const teamData = {
-  leadership: [
-    { name: 'Nicolas Greaves', title: 'President', avatar: 'nicolas.jpg', linkedin: 'https://www.linkedin.com' },
-    { name: 'Patrick Monahan', title: 'Vice President', avatar: 'Patrick.jpg', linkedin: 'https://www.linkedin.com' },
-    { name: 'Jeffrey Liu', title: 'Treasurer', avatar: 'Jeffrey.png', linkedin: 'https://www.linkedin.com' },
-    { name: 'Alex Gitnik', title: 'Project Director', avatar: 'Alex.jpg', linkedin: 'https://www.linkedin.com' }
-  ],
-  leads: [
-    { name: 'Chase Edwardson', title: 'Mechanical', avatar: 'Chase.png', linkedin: 'https://www.linkedin.com' },
-    { name: 'George Vandersluis', title: 'Mechanical', avatar: 'George.jpg', linkedin: 'https://www.linkedin.com' },
-    { name: 'Miles Sierra', title: 'Electrical', avatar: 'miles.jpg', linkedin: 'https://www.linkedin.com' },
-    { name: 'Evan Briggs', title: 'Electrical', avatar: 'Evan Briggs.JPG', linkedin: 'https://www.linkedin.com' },
-    { name: 'Sungkar Bolar', title: 'Software', avatar: 'Sungkar.png', linkedin: 'https://www.linkedin.com' },
-    { name: 'Devansh Gupta', title: 'Software', avatar: 'Devansh.jpg', linkedin: 'https://www.linkedin.com' },
-    { name: 'Tessara Clark', title: 'Science', avatar: 'Tessera.jpg', linkedin: 'https://www.linkedin.com' },
-    { name: 'Evan Tian', title: 'Science', avatar: 'Evan Tian.jpg', linkedin: 'https://www.linkedin.com' },
-    { name: 'Vikram Bangalore', title: 'Outreach', avatar: 'vikram.jpg', linkedin: 'https://www.linkedin.com' },
-    { name: 'Charles Ding', title: 'Outreach', avatar: 'charles.jpg', linkedin: 'https://www.linkedin.com' }
-  ],
-  operations: [
-    { name: 'Bohan Jia', title: 'Campus Relations Coordinator', avatar: 'Bohan.jpg', linkedin: 'https://www.linkedin.com' },
-    { name: 'Christian Greaves', title: 'Social Media Coordinator', avatar: '', linkedin: 'https://www.linkedin.com' },
-    { name: 'Ethan Mak', title: 'Events Coordinator', avatar: 'Ethan.jpg', linkedin: 'https://www.linkedin.com' },
-    { name: 'Yash Datar', title: 'Grant Writer', avatar: 'Yash.jpg', linkedin: 'https://www.linkedin.com' },
-    { name: 'Tyler Dalpe', title: 'URC Logistics', avatar: '', linkedin: 'https://www.linkedin.com' },
-    { name: 'Katie Perkins', title: 'Senior Design Coordinator', avatar: 'Katie.jpg', linkedin: 'https://www.linkedin.com' },
-    { name: 'Mina Duden', title: 'Operations', avatar: 'mina.png', linkedin: 'https://www.linkedin.com/in/mina-duden-444424319/' }
-  ],
-  website: [
-    { name: 'Abhi', title: 'Website Developer', avatar: 'abhi.png', linkedin: 'https://www.linkedin.com/in/abhinav-jain-9881b8296/' }
-  ]
-};
+const operationsTeam = [
+  { name: 'Ethan Mak', title: 'Events Coordinator', avatar: '', linkedin: 'https://www.linkedin.com' },
+  { name: 'Chase Edwardson', title: 'Social Media', avatar: '', linkedin: 'https://www.linkedin.com' },
+  { name: 'Jackson Hull', title: 'Industry Relations', avatar: '', linkedin: 'https://www.linkedin.com' },
+  { name: 'Jeffery Liu', title: 'URC Logistics', avatar: 'jeffery.JPG', linkedin: 'https://www.linkedin.com' },
+  { name: 'Junwoo Lee', title: 'Website', avatar: '', linkedin: 'https://www.linkedin.com' },
+  { name: 'Mina Duden', title: 'Operations', avatar: 'mina.png', linkedin: 'https://www.linkedin.com/in/mina-duden-444424319/' }
+];
 
-// Profile Card 3D Tilt Class
+// Profile Card 3D Tilt Class (same as meet-the-team.html)
 class ProfileCard3D {
   constructor(wrapper, data) {
     this.wrapper = wrapper;
@@ -822,7 +871,6 @@ class ProfileCard3D {
     this.card.addEventListener('pointermove', this.handlePointerMove);
     this.card.addEventListener('pointerleave', this.handlePointerLeave);
     
-    // Enable mobile tilt
     this.card.addEventListener('click', (e) => {
       if (typeof window.DeviceMotionEvent !== 'undefined' && typeof window.DeviceMotionEvent.requestPermission === 'function') {
         e.preventDefault();
@@ -860,41 +908,13 @@ class ProfileCard3D {
   }
 }
 
-// Initialize all cards
+// Initialize cards
 function initializeTeamCards() {
-  // Leadership
-  const leadershipGrid = document.querySelector('.team-grid-leadership');
-  teamData.leadership.forEach(member => {
+  const grid = document.getElementById('operations-team');
+  operationsTeam.forEach(member => {
     const wrapper = document.createElement('div');
     wrapper.className = 'pc-card-wrapper';
-    leadershipGrid.appendChild(wrapper);
-    new ProfileCard3D(wrapper, member);
-  });
-
-  // Team Leads
-  const leadsGrid = document.querySelector('.team-grid-leads');
-  teamData.leads.forEach(member => {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'pc-card-wrapper';
-    leadsGrid.appendChild(wrapper);
-    new ProfileCard3D(wrapper, member);
-  });
-
-  // Operations
-  const operationsGrid = document.querySelector('.team-grid-operations');
-  teamData.operations.forEach(member => {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'pc-card-wrapper';
-    operationsGrid.appendChild(wrapper);
-    new ProfileCard3D(wrapper, member);
-  });
-
-  // Website Developer
-  const websiteGrid = document.querySelector('.team-grid-website');
-  teamData.website.forEach(member => {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'pc-card-wrapper';
-    websiteGrid.appendChild(wrapper);
+    grid.appendChild(wrapper);
     new ProfileCard3D(wrapper, member);
   });
 }
@@ -932,7 +952,354 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeTeamCards();
   feather.replace();
 });
+
+// ==================== SPLIT TEXT ANIMATION ====================
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
+
+/**
+ * Vanilla JS SplitText Animation
+ * Splits text into characters and animates them with GSAP
+ */
+class SplitTextAnimator {
+  constructor(options = {}) {
+    this.options = {
+      delay: options.delay || 100,
+      duration: options.duration || 0.6,
+      ease: options.ease || 'power3.out',
+      splitType: options.splitType || 'chars',
+      from: options.from || { opacity: 0, y: 40 },
+      to: options.to || { opacity: 1, y: 0 },
+      threshold: options.threshold || 0.1,
+      rootMargin: options.rootMargin || '-100px',
+      onComplete: options.onComplete || null
+    };
+  }
+
+  splitText(element) {
+    const text = element.textContent;
+    const chars = text.split('');
+    
+    // Clear the element
+    element.textContent = '';
+    
+    // Create span for each character
+    const charElements = chars.map(char => {
+      const span = document.createElement('span');
+      span.className = 'split-char';
+      span.textContent = char;
+      // Preserve spaces
+      if (char === ' ') {
+        span.style.width = '0.25em';
+      }
+      element.appendChild(span);
+      return span;
+    });
+    
+    return charElements;
+  }
+
+  animate(element) {
+    // Wait for fonts to load
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        this.performAnimation(element);
+      });
+    } else {
+      // Fallback if fonts API is not available
+      setTimeout(() => {
+        this.performAnimation(element);
+      }, 100);
+    }
+  }
+
+  performAnimation(element) {
+    // Split the text into characters
+    const chars = this.splitText(element);
+    
+    // Calculate ScrollTrigger start position
+    const startPct = (1 - this.options.threshold) * 100;
+    const marginMatch = /^(-?\d+(?:\.\d+)?)(px|em|rem|%)?$/.exec(this.options.rootMargin);
+    const marginValue = marginMatch ? parseFloat(marginMatch[1]) : 0;
+    const marginUnit = marginMatch ? marginMatch[2] || 'px' : 'px';
+    const sign = marginValue === 0 
+      ? '' 
+      : marginValue < 0 
+        ? `-=${Math.abs(marginValue)}${marginUnit}` 
+        : `+=${marginValue}${marginUnit}`;
+    const start = `top ${startPct}%${sign}`;
+    
+    // Set initial state
+    gsap.set(chars, this.options.from);
+    
+    // Animate with GSAP
+    gsap.to(chars, {
+      ...this.options.to,
+      duration: this.options.duration,
+      ease: this.options.ease,
+      stagger: this.options.delay / 1000,
+      force3D: true,
+      transformOrigin: 'center center',
+      clearProps: 'transform',
+      scrollTrigger: {
+        trigger: element,
+        start: start,
+        once: true,
+        fastScrollEnd: true,
+      },
+      onComplete: () => {
+        // Clear transforms for crisp final state
+        chars.forEach(char => {
+          char.style.transform = 'none';
+        });
+        if (this.options.onComplete) {
+          this.options.onComplete();
+        }
+      }
+    });
+  }
+}
+
+// Initialize split text animations
+function initSplitTextAnimations() {
+  const elements = document.querySelectorAll('[data-split="true"]');
+  
+  elements.forEach((element, index) => {
+    const animator = new SplitTextAnimator({
+      delay: 50,
+      duration: 0.6,
+      ease: 'power3.out',
+      from: { opacity: 0, y: 40 },
+      to: { opacity: 1, y: 0 },
+      threshold: 0.1,
+      rootMargin: '-100px',
+      onComplete: () => {
+        console.log(`Animation complete for element ${index + 1}`);
+      }
+    });
+    
+    animator.animate(element);
+  });
+}
+
+// Run after DOM is fully loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initSplitTextAnimations);
+} else {
+  initSplitTextAnimations();
+}
+
+// ==================== LETTER GLITCH EFFECT ====================
+/**
+ * Vanilla JS LetterGlitch - Matrix-style glitch background
+ */
+class LetterGlitch {
+  constructor(canvasId, options = {}) {
+    this.canvas = document.getElementById(canvasId);
+    if (!this.canvas) return;
+    
+    this.ctx = this.canvas.getContext('2d');
+    this.options = {
+      glitchColors: options.glitchColors || ['#c5050c', '#e00122', '#9b0000', '#ff4444'],
+      glitchSpeed: options.glitchSpeed || 50,
+      smooth: options.smooth !== undefined ? options.smooth : true,
+      characters: options.characters || 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$&*()-_+=/[]{};:<>.,0123456789'
+    };
+    
+    this.fontSize = 16;
+    this.charWidth = 10;
+    this.charHeight = 20;
+    
+    this.letters = [];
+    this.grid = { columns: 0, rows: 0 };
+    this.animationFrame = null;
+    this.lastGlitchTime = Date.now();
+    this.lettersAndSymbols = Array.from(this.options.characters);
+    
+    this.init();
+  }
+  
+  init() {
+    this.resizeCanvas();
+    window.addEventListener('resize', () => this.handleResize());
+    this.animate();
+  }
+  
+  handleResize() {
+    clearTimeout(this.resizeTimeout);
+    this.resizeTimeout = setTimeout(() => {
+      if (this.animationFrame) {
+        cancelAnimationFrame(this.animationFrame);
+      }
+      this.resizeCanvas();
+      this.animate();
+    }, 100);
+  }
+  
+  resizeCanvas() {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = this.canvas.parentElement.getBoundingClientRect();
+    
+    this.canvas.width = rect.width * dpr;
+    this.canvas.height = rect.height * dpr;
+    this.canvas.style.width = `${rect.width}px`;
+    this.canvas.style.height = `${rect.height}px`;
+    
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    
+    const columns = Math.ceil(rect.width / this.charWidth);
+    const rows = Math.ceil(rect.height / this.charHeight);
+    
+    this.initializeLetters(columns, rows);
+    this.drawLetters();
+  }
+  
+  initializeLetters(columns, rows) {
+    this.grid = { columns, rows };
+    const totalLetters = columns * rows;
+    
+    this.letters = Array.from({ length: totalLetters }, () => ({
+      char: this.getRandomChar(),
+      color: this.getRandomColor(),
+      targetColor: this.getRandomColor(),
+      colorProgress: 1
+    }));
+  }
+  
+  getRandomChar() {
+    return this.lettersAndSymbols[Math.floor(Math.random() * this.lettersAndSymbols.length)];
+  }
+  
+  getRandomColor() {
+    return this.options.glitchColors[Math.floor(Math.random() * this.options.glitchColors.length)];
+  }
+  
+  hexToRgb(hex) {
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b);
+    
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
+  
+  interpolateColor(start, end, factor) {
+    const result = {
+      r: Math.round(start.r + (end.r - start.r) * factor),
+      g: Math.round(start.g + (end.g - start.g) * factor),
+      b: Math.round(start.b + (end.b - start.b) * factor)
+    };
+    return `rgb(${result.r}, ${result.g}, ${result.b})`;
+  }
+  
+  drawLetters() {
+    if (!this.ctx || this.letters.length === 0) return;
+    
+    const { width, height } = this.canvas.getBoundingClientRect();
+    this.ctx.clearRect(0, 0, width, height);
+    this.ctx.font = `${this.fontSize}px monospace`;
+    this.ctx.textBaseline = 'top';
+    
+    this.letters.forEach((letter, index) => {
+      const x = (index % this.grid.columns) * this.charWidth;
+      const y = Math.floor(index / this.grid.columns) * this.charHeight;
+      this.ctx.fillStyle = letter.color;
+      this.ctx.fillText(letter.char, x, y);
+    });
+  }
+  
+  updateLetters() {
+    if (!this.letters || this.letters.length === 0) return;
+    
+    const updateCount = Math.max(1, Math.floor(this.letters.length * 0.05));
+    
+    for (let i = 0; i < updateCount; i++) {
+      const index = Math.floor(Math.random() * this.letters.length);
+      if (!this.letters[index]) continue;
+      
+      this.letters[index].char = this.getRandomChar();
+      this.letters[index].targetColor = this.getRandomColor();
+      
+      if (!this.options.smooth) {
+        this.letters[index].color = this.letters[index].targetColor;
+        this.letters[index].colorProgress = 1;
+      } else {
+        this.letters[index].colorProgress = 0;
+      }
+    }
+  }
+  
+  handleSmoothTransitions() {
+    let needsRedraw = false;
+    
+    this.letters.forEach(letter => {
+      if (letter.colorProgress < 1) {
+        letter.colorProgress += 0.05;
+        if (letter.colorProgress > 1) letter.colorProgress = 1;
+        
+        const startRgb = this.hexToRgb(letter.color);
+        const endRgb = this.hexToRgb(letter.targetColor);
+        
+        if (startRgb && endRgb) {
+          letter.color = this.interpolateColor(startRgb, endRgb, letter.colorProgress);
+          needsRedraw = true;
+        }
+      }
+    });
+    
+    if (needsRedraw) {
+      this.drawLetters();
+    }
+  }
+  
+  animate() {
+    const now = Date.now();
+    
+    if (now - this.lastGlitchTime >= this.options.glitchSpeed) {
+      this.updateLetters();
+      this.drawLetters();
+      this.lastGlitchTime = now;
+    }
+    
+    if (this.options.smooth) {
+      this.handleSmoothTransitions();
+    }
+    
+    this.animationFrame = requestAnimationFrame(() => this.animate());
+  }
+  
+  destroy() {
+    if (this.animationFrame) {
+      cancelAnimationFrame(this.animationFrame);
+    }
+    window.removeEventListener('resize', this.handleResize);
+  }
+}
+
+// Initialize LetterGlitch on hero section
+function initLetterGlitch() {
+  const glitchCanvas = document.getElementById('glitchCanvas');
+  if (glitchCanvas) {
+    new LetterGlitch('glitchCanvas', {
+      glitchColors: ['#c5050c', '#e00122', '#9b0000', '#ff4444', '#ff0000'],
+      glitchSpeed: 50,
+      smooth: true,
+      characters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$&*()-_+=/[]{};:<>.,0123456789'
+    });
+  }
+}
+
+// Run after DOM is fully loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initLetterGlitch);
+} else {
+  initLetterGlitch();
+}
 </script>
 
 </body>
 </html>
+
