@@ -95,12 +95,13 @@ scanned/CAD rover instead of the procedural model, export a `.glb`, drop it in
 
 This is a static SPA — `npm run build` outputs to `dist/`.
 
-- **Vercel / Netlify (recommended):** point the project at this repo, build command
-  `npm run build`, output directory `dist`. Add an SPA rewrite so client-side routes
-  work: send all paths to `/index.html`.
-- **GitHub Pages:** because routing uses `BrowserRouter`, deep links like `/team` need
-  an SPA fallback (a `404.html` copy of `index.html`) or switch to `HashRouter`. Set
-  Vite's `base` to `/<repo-name>/` if deploying to a project page.
+- **Vercel / Netlify (recommended):** point the platform at this repo — build command
+  `npm run build`, output directory `dist`. SPA routing is already handled:
+  [`vercel.json`](./vercel.json) rewrites for Vercel and [`public/_redirects`](./public/_redirects)
+  for Netlify both send unknown paths to `/index.html`, so deep links like `/team` work.
+- **GitHub Pages:** because routing uses `BrowserRouter`, deep links like `/team` would
+  need an SPA fallback (a `404.html` copy of `index.html`) or a switch to `HashRouter`,
+  plus Vite's `base` set to `/<repo-name>/` for a project page.
 
 ## Housekeeping notes
 
