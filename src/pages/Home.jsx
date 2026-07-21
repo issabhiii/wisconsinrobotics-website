@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Hero from "../components/Hero";
+import IntroStack from "../components/IntroStack";
 import SectionHeading from "../components/SectionHeading";
 import Reveal from "../components/motion/Reveal";
 import CountUp from "../components/motion/CountUp";
@@ -8,7 +8,8 @@ import TiltedCard from "../components/TiltedCard";
 import Marquee from "../components/Marquee";
 import Icon from "../components/Icon";
 import Contact from "../components/Contact";
-import { stats, pillars, rovers, subteams, sponsorTiers } from "../data/site";
+import SubteamGrid from "../components/SubteamGrid";
+import { stats, pillars, rovers, sponsorTiers } from "../data/site";
 
 export default function Home() {
   const featured = rovers.find((r) => r.featured) ?? rovers[0];
@@ -16,7 +17,7 @@ export default function Home() {
 
   return (
     <>
-      <Hero />
+      <IntroStack />
 
       {/* STATS */}
       <section className="border-y border-white/[0.06] bg-ink-900/50">
@@ -118,20 +119,8 @@ export default function Home() {
             accent="one rover."
             subtitle="Every discipline has a home here — and they all integrate into a single machine that has to survive the desert."
           />
-          <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {subteams.map((t, i) => (
-              <Reveal key={t.id} delay={i * 0.06}>
-                <SpotlightCard className="flex h-full items-start gap-4 p-6">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.03]">
-                    <Icon name={t.icon} className="h-5 w-5 text-badger-bright" />
-                  </span>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">{t.name}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-chalk-soft">{t.blurb}</p>
-                  </div>
-                </SpotlightCard>
-              </Reveal>
-            ))}
+          <div className="mt-16">
+            <SubteamGrid />
           </div>
         </div>
       </section>

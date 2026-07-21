@@ -104,39 +104,154 @@ export const subteams = [
     id: "mechanical",
     name: "Mechanical",
     icon: "cog",
+    to: "/team/mechanical",
     blurb: "Chassis, drivetrain, suspension, and the robotic arm.",
   },
   {
     id: "electrical",
     name: "Electrical",
     icon: "cpu",
+    to: "/team/electrical",
     blurb: "Power systems, custom PCBs, and motor control.",
   },
   {
     id: "software",
     name: "Software",
     icon: "code-2",
+    to: "/team/software",
     blurb: "Autonomy, computer vision, controls, and the ground station.",
   },
   {
     id: "science",
     name: "Science",
     icon: "flask-conical",
+    to: "/team/science",
     blurb: "Sample collection, spectrometry, and life-detection assays.",
   },
   {
     id: "operations",
     name: "Operations",
     icon: "briefcase",
+    to: "/team/operations",
     blurb: "Sponsorship, finance, logistics, media, and recruitment.",
   },
   {
     id: "outreach",
     name: "Outreach",
     icon: "megaphone",
+    to: "/team/outreach",
     blurb: "Bringing robotics to the community and inspiring future engineers.",
   },
 ];
+
+// Per-subteam page content. focus = 3 highlight cards, practice = tools/skills grid.
+export const subteamContent = {
+  mechanical: {
+    intro:
+      "The Mechanical subteam turns raw stock into a rover — designing the chassis, drivetrain, suspension, and the robotic arm that all have to survive the Utah desert.",
+    focus: [
+      { icon: "box", title: "Chassis & Structure", body: "Lightweight, rigid frames engineered to take a beating on Mars-analog terrain." },
+      { icon: "cog", title: "Drivetrain & Suspension", body: "Six-wheel rocker-bogie systems that keep every wheel planted over rocks." },
+      { icon: "bot", title: "Robotic Arm", body: "A multi-DOF manipulator for typing, turning valves, and collecting samples." },
+    ],
+    practice: {
+      title: "Tools & skills",
+      items: [
+        { icon: "pen-tool", title: "CAD", body: "Full-assembly design and simulation in Onshape." },
+        { icon: "wrench", title: "Fabrication", body: "In-house CNC machining, mill, and lathe work." },
+        { icon: "layers", title: "Composites & printing", body: "Carbon-fiber layups and rapid 3D-printed prototypes." },
+      ],
+    },
+  },
+  electrical: {
+    intro:
+      "The Electrical subteam keeps the rover alive — designing power systems, custom PCBs, and the motor control that drives every actuator.",
+    focus: [
+      { icon: "zap", title: "Power Systems", body: "Battery packs and distribution that survive long, dusty field days." },
+      { icon: "cpu", title: "Custom PCBs", body: "Boards designed in Altium for sensing, control, and communication." },
+      { icon: "radio", title: "Comms & Telemetry", body: "Reliable long-range links between the rover and ground station." },
+    ],
+    practice: {
+      title: "Tools & skills",
+      items: [
+        { icon: "cpu", title: "Altium Designer", body: "Schematic capture and multi-layer PCB layout." },
+        { icon: "battery-charging", title: "Power electronics", body: "Regulators, motor drivers, and safe battery management." },
+        { icon: "wrench", title: "Bring-up & debug", body: "Soldering, oscilloscopes, and hardware validation." },
+      ],
+    },
+  },
+  software: {
+    intro:
+      "The Software subteam makes the rover think — building autonomy, computer vision, controls, and the ground station that ties it all together.",
+    focus: [
+      { icon: "navigation", title: "Autonomy & Navigation", body: "Path planning and GPS-denied navigation across open terrain." },
+      { icon: "eye", title: "Computer Vision", body: "Detecting AR tags, objects, and terrain from onboard cameras." },
+      { icon: "monitor", title: "Ground Station", body: "The operator interface for driving, telemetry, and diagnostics." },
+    ],
+    practice: {
+      title: "Tools & skills",
+      items: [
+        { icon: "terminal", title: "ROS · C++ · Python", body: "A robotics stack built on ROS with real-time control." },
+        { icon: "git-branch", title: "Git & CI", body: "Reviewed pull requests and automated testing." },
+        { icon: "cpu", title: "Embedded", body: "Firmware bridging software commands to the hardware." },
+      ],
+    },
+  },
+  science: {
+    intro:
+      "The Science subteam chases the question that drives the whole mission: is there life? We build the systems that collect and analyze Martian-analog samples.",
+    focus: [
+      { icon: "test-tube", title: "Sample Collection", body: "Coring and caching regolith and soil from the field site." },
+      { icon: "flask-conical", title: "Spectrometry", body: "Characterizing sample composition on the rover." },
+      { icon: "leaf", title: "Life Detection", body: "Assays that screen samples for signatures of life." },
+    ],
+    practice: {
+      title: "Tools & skills",
+      items: [
+        { icon: "microscope", title: "Lab analysis", body: "Sample prep and instrumentation." },
+        { icon: "droplet", title: "Biochemical assays", body: "Reagent-based tests for organic markers." },
+        { icon: "clipboard-list", title: "Field protocols", body: "Rigorous, competition-grade procedures." },
+      ],
+    },
+  },
+  operations: {
+    intro:
+      "Operations is the engine behind the team — coordinating events, media, industry relations, and logistics so the engineers can focus on the rover.",
+    focus: [
+      { icon: "calendar", title: "Events & Outreach", body: "Planning demos and events that inspire future engineers." },
+      { icon: "share-2", title: "Media & Comms", body: "Running our social channels and telling the team's story." },
+      { icon: "briefcase", title: "Industry Relations", body: "Building sponsor partnerships and securing funding." },
+    ],
+    practice: {
+      title: "What we own",
+      items: [
+        { icon: "users", title: "Event coordination", body: "Meetings, demos, competitions, and public showcases." },
+        { icon: "message-circle", title: "Social media", body: "Content creation and community engagement online." },
+        { icon: "trending-up", title: "Sponsorship & fundraising", body: "Partnerships, relationships, and funding." },
+        { icon: "package", title: "Logistics & planning", body: "Competition logistics, travel, and equipment." },
+        { icon: "code", title: "Website development", body: "Maintaining the team's digital presence." },
+        { icon: "heart", title: "Team culture", body: "A positive, inclusive environment and team building." },
+      ],
+    },
+  },
+  outreach: {
+    intro:
+      "The Outreach subteam brings robotics to the community — running events, teaching STEM, and building demo bots that get the next generation hooked.",
+    focus: [
+      { icon: "graduation-cap", title: "STEM Education", body: "Hands-on workshops for K–12 and community groups." },
+      { icon: "calendar", title: "Community Events", body: "Demos, expos, and campus events across Madison." },
+      { icon: "bot", title: "Demo Robots", body: "Special bots built purely to delight and teach." },
+    ],
+    practice: {
+      title: "What we do",
+      items: [
+        { icon: "users", title: "School visits", body: "Bringing rovers and robots into classrooms." },
+        { icon: "sparkles", title: "Public demos", body: "Showing what a student-built rover can do." },
+        { icon: "megaphone", title: "Recruitment", body: "Welcoming new members from every major." },
+      ],
+    },
+  },
+};
 
 const li = "https://www.linkedin.com";
 
@@ -235,6 +350,20 @@ export const nav = [
   { label: "Home", to: "/" },
   { label: "Team", to: "/team" },
   { label: "Robots", to: "/robots" },
-  { label: "Operations", to: "/operations" },
   { label: "Sponsors", to: "/sponsors" },
 ];
+
+// Resolve the members shown on a subteam page from the roster.
+export function getSubteamMembers(id) {
+  if (id === "operations") return team.operations;
+  const labels = {
+    mechanical: "Mechanical",
+    electrical: "Electrical",
+    software: "Software",
+    science: "Science",
+    outreach: "Outreach",
+  };
+  const label = labels[id];
+  if (!label) return [];
+  return team.leads.filter((l) => l.role.startsWith(label));
+}

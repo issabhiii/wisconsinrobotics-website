@@ -60,7 +60,9 @@ npm run preview    # serve the production build locally
 
 ```
 public/
-  images/            team headshots + rover photos
+  images/            team headshots, rover photos, scroll sequences
+    intro-sequence/  Mars intro scroll frames (intro-001.png …)
+    hero-sequence/   Hero terraforming scroll frames (hero-001.png …)
   docs/              sponsorship PDF
   favicon.svg
 src/
