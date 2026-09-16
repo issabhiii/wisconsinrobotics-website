@@ -11,23 +11,19 @@ export const org = {
   meetings: "Tuesdays & Thursdays · 6:00 PM",
   donateUrl:
     "https://secure.supportuw.org/give/?id=27af2aec-297d-4161-a007-afd7739c03e7",
-  video: "https://www.youtube.com/watch?v=ipPe0j_YZGk",
+  video: "https://www.youtube.com/watch?v=fZ5lqiTug2U",
   socials: [
     { label: "Instagram", href: "#", icon: "instagram" },
     { label: "LinkedIn", href: "#", icon: "linkedin" },
     { label: "GitHub", href: "#", icon: "github" },
-    { label: "YouTube", href: org_video(), icon: "youtube" },
+    { label: "YouTube", href: "https://www.youtube.com/watch?v=fZ5lqiTug2U", icon: "youtube" },
   ],
 };
-
-function org_video() {
-  return "https://www.youtube.com/watch?v=ipPe0j_YZGk";
-}
 
 export const stats = [
   { value: 25, suffix: "", label: "Years active" },
   { value: 60, suffix: "+", label: "Team members" },
-  { value: 6, suffix: "+", label: "Mars rovers built" },
+  { value: 7, suffix: "+", label: "Mars rovers built" },
   { value: 50, suffix: "+", label: "Community events" },
 ];
 
@@ -49,54 +45,156 @@ export const pillars = [
   },
 ];
 
-// Rover history — only robots we have real imagery for.
+// Rover history — URC competition robots (featured = latest build).
+export const urcIntro =
+  "Held annually in the desert of southern Utah in the United States, URC is an international college robotics competition that challenges student teams to design and build the next generation of Mars rovers that will one day work alongside astronauts exploring the Red Planet. We've been participating in URC since 2016, competing among hundreds of top university teams around the world.";
+
 export const rovers = [
+  {
+    name: "Nebula",
+    year: "2024",
+    competition: "URC 2024",
+    image: "/images/robots/nebula.png",
+    featured: true,
+    blurb:
+      "We're proud to present our latest robot, Nebula, which we've spent the past year building for URC 2024. Take a look at our System Acceptance Review (SAR) submission to see Nebula in action!",
+  },
+  {
+    name: "Forward",
+    year: "2026",
+    competition: "URC 2026",
+    image: "/images/robots/forward.png",
+    blurb: "Our URC 2026 competition rover — currently in development.",
+  },
   {
     name: "Eclipse",
     year: "2023",
     competition: "URC 2023",
-    image: "/images/eclipse.jpg",
-    featured: true,
-    blurb:
-      "Our most recent competition rover — a full redesign of the drivetrain and arm for the University Rover Challenge.",
+    image: "/images/robots/eclipse.jpg",
+    blurb: "A full redesign of the drivetrain and arm for the University Rover Challenge.",
   },
   {
     name: "Horizon",
     year: "2019",
     competition: "URC 2019",
-    image: "/images/horizon.jpg",
+    image: "/images/robots/horizon.jpg",
     blurb: "Refined suspension and a more capable science payload.",
   },
   {
     name: "Ascent MkII",
     year: "2018",
     competition: "URC 2018",
-    image: "/images/ascent-mkii.jpg",
+    image: "/images/robots/ascent mkII.jpg",
     blurb: "Second-generation Ascent platform with an upgraded manipulator.",
   },
   {
     name: "Ascent",
     year: "2017",
     competition: "URC 2017",
-    image: "/images/ascent.jpg",
+    image: "/images/robots/ascent.jpg",
     blurb: "A lighter chassis built for the Utah terrain.",
   },
   {
     name: "Insomnia",
     year: "2016",
     competition: "URC 2016",
-    image: "/images/insomnia.jpg",
+    image: "/images/robots/insomnia.jpg",
     blurb: "Our first University Rover Challenge campaign.",
   },
 ];
 
 export const outreachBots = [
-  { name: "Rumblebot", icon: "gamepad-2", note: "Crowd-favorite demo bot" },
-  { name: "Robotic Arm", icon: "bot", note: "Teaches manipulation & kinematics" },
-  { name: "Drawing Box", icon: "pen-tool", note: "Plots art from code" },
-  { name: "Bumblebot", icon: "bug", note: "Line-following intro build" },
-  { name: "TankBot", icon: "shield", note: "Tracked outreach platform" },
-  { name: "Atlas", icon: "orbit", note: "Experimental walker" },
+  {
+    name: "Rumblebot",
+    image: "/images/robots/outreach_rumblebot.jpg",
+    badge: "new",
+    note: "Crowd-favorite demo bot",
+  },
+  {
+    name: "Robotic Arm",
+    image: "/images/robots/outreach_arm.jpg",
+    note: "Teaches manipulation & kinematics",
+  },
+  {
+    name: "Drawing Box",
+    image: "/images/robots/outreach_drawingbox.jpg",
+    note: "Plots art from code",
+  },
+  {
+    name: "Bumblebot",
+    image: "/images/robots/outreach_bumble.jpg",
+    note: "Line-following intro build",
+  },
+  {
+    name: "TankBot",
+    image: "/images/robots/outreach_tank.jpg",
+    badge: "retired",
+    note: "Tracked outreach platform",
+  },
+  {
+    name: "Atlas",
+    image: "/images/robots/outreach_atlas.jpg",
+    badge: "retired",
+    note: "Experimental walker",
+  },
+  {
+    name: "Turtlebot & Rocket",
+    image: "/images/robots/outreach_turtle_and_rocket.jpg",
+    badge: "retired",
+    note: "Retired outreach platform",
+  },
+];
+
+export const outreachEvents = [
+  {
+    name: "Engineering Expo",
+    body: "Engineering Expo is an event hosted by the College of Engineering, showcasing various student organizations and engineering companies on the engineering campus. Usually hosted in the later half of the academic year's second semester, we use Expo as a great opportunity to show off our latest work.",
+    images: ["/images/robots/outreach_expo.jpg"],
+  },
+  {
+    name: "Maker Faire Milwaukee",
+    body: 'Maker Faire Milwaukee is an annually held event, open to the Milwaukee public. Various exhibitors, known as "makers", are invited to show off their work. Wisconsin Robotics attends and demonstrates our current projects to the public.',
+    images: [
+      "/images/robots/outreach_makerfaire1.jpg",
+      "/images/robots/outreach_makerfaire2.jpg",
+    ],
+  },
+  {
+    name: "Wisconsin Science Festival",
+    body: "Wisconsin Science Festival is an annual event hosted by the Wisconsin Institute of Discovery, seeking to showcase various organizations and their work for the public to see. Wisconsin Robotics has regularly attended, having a booth to allow us to demonstrate our robots to the public.",
+    images: [
+      "/images/robots/outreach_sciencefest1.jpg",
+      "/images/robots/outreach_sciencefest2.jpg",
+    ],
+  },
+  {
+    name: "Robot Block Party",
+    body: "The Museum of Science and Industry in Chicago, IL hosts a yearly event called the Robot Block Party. Various robotic-based student organizations are invited to attend. Wisconsin Robotics brings our latest competition robot prototype and demonstrates it to the public.",
+    images: ["/images/robots/outreach_blockparty.jpg"],
+  },
+  {
+    name: "The Community",
+    body: "In addition to our larger events, Wisconsin Robotics regularly hosts events with smaller groups, including girl scouts and K-12 students. We demonstrate our projects while also answering questions about the various fields of STEM, hoping to inspire younger students in the same way many of our members were when they were younger.",
+    images: ["/images/robots/outreach_community.jpg"],
+  },
+];
+
+export const otherRobots = [
+  {
+    name: "Prime",
+    competition: "BotShot 2019",
+    image: "/images/robots/prime.jpg",
+  },
+  {
+    name: "Scorpio",
+    competition: "RASC-AL 2014",
+    image: "/images/robots/scorpio.jpg",
+  },
+  {
+    name: "Singularity",
+    competition: "IGVC 2013",
+    image: "/images/robots/singularity.jpg",
+  },
 ];
 
 export const subteams = [
@@ -257,34 +355,28 @@ const li = "https://www.linkedin.com";
 
 export const team = {
   leadership: [
-    { name: "Nicolas Greaves", role: "President", avatar: "/images/nicolas.jpg", linkedin: li },
-    { name: "Patrick Monahan", role: "Vice President", avatar: "/images/patrick.jpg", linkedin: li },
-    { name: "Jeffrey Liu", role: "Treasurer", avatar: "/images/jeffrey.png", linkedin: li },
-    { name: "Alex Gitnik", role: "Project Director", avatar: "/images/alex.jpg", linkedin: li },
+    { name: "George Vandersluis", role: "President", avatar: "/images/george.jpg", linkedin: li },
+    { name: "Miles Sierra", role: "Vice President", avatar: "/images/miles.jpg", linkedin: li },
+    { name: "Evan Tian", role: "Treasurer", avatar: "/images/evan-tian.jpg", linkedin: li },
+    { name: "Devansh Gupta", role: "Project Director", avatar: "/images/devansh.jpg", linkedin: li },
   ],
   leads: [
-    { name: "Chase Edwardson", role: "Mechanical Lead", avatar: "/images/chase.png", linkedin: li },
-    { name: "George Vandersluis", role: "Mechanical Lead", avatar: "/images/george.jpg", linkedin: li },
-    { name: "Miles Sierra", role: "Electrical Lead", avatar: "/images/miles.jpg", linkedin: li },
-    { name: "Evan Briggs", role: "Electrical Lead", avatar: "/images/evan-briggs.jpg", linkedin: li },
-    { name: "Sungkar Bolar", role: "Software Lead", avatar: "/images/sungkar.png", linkedin: li },
-    { name: "Devansh Gupta", role: "Software Lead", avatar: "/images/devansh.jpg", linkedin: li },
-    { name: "Tessara Clark", role: "Science Lead", avatar: "/images/tessera.jpg", linkedin: li },
-    { name: "Evan Tian", role: "Science Lead", avatar: "/images/evan-tian.jpg", linkedin: li },
-    { name: "Vikram Bangalore", role: "Outreach Lead", avatar: "/images/vikram.jpg", linkedin: li },
-    { name: "Charles Ding", role: "Outreach Lead", avatar: "/images/charles.jpg", linkedin: li },
-  ],
-  operations: [
-    { name: "Bohan Jia", role: "Campus Relations", avatar: "/images/bohan.jpg", linkedin: li },
-    { name: "Christian Greaves", role: "Social Media", avatar: "", linkedin: li },
-    { name: "Ethan Mak", role: "Events", avatar: "/images/ethan.jpg", linkedin: li },
-    { name: "Yash Datar", role: "Grant Writer", avatar: "/images/yash.jpg", linkedin: li },
-    { name: "Tyler Dalpe", role: "URC Logistics", avatar: "", linkedin: li },
-    { name: "Katie Perkins", role: "Senior Design", avatar: "/images/katie.jpg", linkedin: li },
-    { name: "Mina Duden", role: "Operations", avatar: "/images/mina.png", linkedin: "https://www.linkedin.com/in/mina-duden-444424319/" },
-  ],
-  website: [
-    { name: "Abhi", role: "Website Developer", avatar: "/images/abhi.png", linkedin: "https://www.linkedin.com/in/abhinav-jain-9881b8296/" },
+    { name: "Amelia Stalter", role: "Mechanical", avatar: "/images/astalter.png", linkedin: li },
+    { name: "Luke Olson", role: "Mechanical", avatar: "/images/lolson.jpg", linkedin: li },
+    { name: "Evan Briggs", role: "Electrical", avatar: "/images/evan-briggs.jpg", linkedin: li },
+    { name: "Joseph Cicalese", role: "Electrical", avatar: "/images/Jcicalese.jpg", linkedin: li },
+    { name: "Aditya Dharap", role: "Software", avatar: "/images/adharap.jpg", linkedin: li },
+    { name: "David Wang", role: "Software", avatar: "/images/dwang.jpg", linkedin: li },
+    { name: "Landon Colaresi", role: "Science", avatar: "/images/lcolaresi.jpg", linkedin: li },
+    { name: "Tessara Clark", role: "Science", avatar: "/images/tessera.jpg", linkedin: li },
+    { name: "Vikram Bangalore", role: "Outreach", avatar: "/images/vikram.jpg", linkedin: li },
+    { name: "Matthew Suri", role: "Outreach", avatar: "/images/msuri.jpg", linkedin: li },
+    {
+      name: "Abhinav Jain",
+      role: "Technical",
+      avatar: "/images/abhi.png",
+      linkedin: "https://www.linkedin.com/in/abhinav-jain-9881b8296/",
+    },
   ],
 };
 
@@ -293,47 +385,155 @@ export const sponsorTiers = [
     tier: "Diamond",
     accent: "#8ce9ff",
     items: [
-      { name: "UW–Madison Mechanical Engineering", href: "https://engineering.wisc.edu/departments/mechanical-engineering/", blurb: "Long-time supporter providing workspace, travel funds, and mentorship." },
-      { name: "UW–Madison Electrical & Computer Engineering", href: "https://engineering.wisc.edu/departments/electrical-computer-engineering/", blurb: "Access to lab equipment and technical resources for our projects." },
-      { name: "Altium", href: "https://www.altium.com/", blurb: "Altium Designer and Altium 365 for PCB design and collaboration." },
-      { name: "Komatsu", href: "https://www.komatsu.com/", blurb: "Industry partner helping us invest in high-quality components." },
-      { name: "Mastermold", href: "https://www.mastermold.com/", blurb: "OEM supplier of custom molded fiberglass reinforced composites." },
+      {
+        name: "UW–Madison Department of Mechanical Engineering",
+        href: "https://engineering.wisc.edu/departments/mechanical-engineering/",
+        blurb:
+          "The Mechanical Engineering department of UW-Madison has been a long-time supporter of Wisconsin Robotics. They have provided us with a workspace, travel expense funds, and mentorship to help us succeed. We are grateful for their continued support.",
+      },
+      {
+        name: "UW–Madison Department of Electrical & Computer Engineering",
+        href: "https://engineering.wisc.edu/departments/electrical-computer-engineering/",
+        blurb:
+          "The Electrical and Computer Engineering (ECE) department of UW-Madison has been a valuable supporter of Wisconsin Robotics. They have provided access to lab equipment and technical resources that have been instrumental in advancing our projects.",
+      },
+      {
+        name: "Altium",
+        href: "https://www.altium.com/",
+        blurb:
+          "Altium has generously provided our team with Altium Designer and Altium 365. We use Altium Designer to create our PCBs and Altium 365 to collaborate on our designs.",
+      },
+      {
+        name: "Komatsu",
+        href: "https://www.komatsu.com/",
+        blurb:
+          "Komatsu has been a generous industry partner to Wisconsin Robotics. Their contributions have helped us invest in high-quality components and enhance our technical capabilities. We are thankful for their continued support.",
+      },
+      {
+        name: "Mastermold",
+        href: "https://www.mastermold.com/",
+        blurb:
+          "MasterMold is a full-service OEM supplier of custom molded fiberglass reinforced composites with capabilities that include compression/sheet molding, robotic machining/bonding, and robotic painting as well as parts assembly.",
+      },
     ],
   },
   {
     tier: "Gold",
     accent: "#ffd75a",
     items: [
-      { name: "Oshkosh", href: "https://www.oshkoshcorp.com/", blurb: "Industrial technology company; generous donation to the team." },
-      { name: "Extreme Engineering Solutions", href: "https://www.xes-inc.com/", blurb: "Embedded computing leader and local employer of our members." },
-      { name: "Onshape", href: "https://www.onshape.com/", blurb: "Cloud-native CAD with an Enterprise account for FEA & PCB integration." },
-      { name: "Polymaker", href: "https://www.polymaker.com/", blurb: "High-quality 3D-printing filament for all our printing needs." },
+      {
+        name: "OshKosh",
+        href: "https://www.oshkoshcorp.com/",
+        blurb:
+          "OshKosh Corporation is an industrial technology company that focuses on creating vehicles and equipment. They are a global organization known for their innovative products. They kindly gave a generous donation for the purposes of Wisconsin Robotics.",
+      },
+      {
+        name: "Milwaukee Electric",
+        href: "https://www.milwaukeeelectronics.com/",
+        blurb:
+          "Milwaukee Electronics is an electronic manufacturing company offering circuit board design, PCBA assembly, and on-demand manufacturing. They were kind enough to give a generous donation for the purposes of Wisconsin Robotics.",
+      },
+      {
+        name: "Extreme Engineering Solutions",
+        href: "https://www.xes-inc.com/",
+        blurb:
+          "Extreme Engineering Solutions is a leader in the design, manufacture, testing, and support of hardware and software solutions for the embedded computing market. They are a large employer in the UW-Madison area and have provided wonderful opportunities for some of our past and present members.",
+      },
+      {
+        name: "Onshape",
+        href: "https://www.onshape.com/",
+        blurb:
+          "Onshape is a cloud-native CAD software that we use to collaborate efficiently when designing and producing our mechanical systems. They graciously have supplied us with an Enterprise account which gives us access to advanced tools such as FEA and PCB integration.",
+      },
+      {
+        name: "Polymaker",
+        href: "https://www.polymaker.com/",
+        blurb:
+          "Polymaker creates top-of-the-line filaments for 3D printing. Polymaker graciously sponsors our team by providing high quality filament for all of our printing needs.",
+      },
     ],
   },
   {
     tier: "Silver",
     accent: "#d6d8dd",
     items: [
-      { name: "Protocase", href: "https://www.protocase.com/", blurb: "Custom sheet-metal enclosures and CNC parts for URC teams." },
-      { name: "GD&T Basics", href: "https://www.gdandtbasics.com/", blurb: "Practical training in geometric dimensioning and tolerancing." },
+      {
+        name: "Protocase",
+        href: "https://www.protocase.com/",
+        blurb:
+          "Protocase is a huge supporter of the University Rover Challenge, providing custom sheet metal enclosures and CNC machined parts to every team that competes. We greatly appreciate the support they have given to us, as well as the competition as a whole.",
+      },
+      {
+        name: "GD&T Basics",
+        href: "https://www.gdandtbasics.com/",
+        blurb:
+          "GD&T Basics is a company dedicated to simplifying and teaching Geometric Dimensioning and Tolerancing for professionals and teams in the engineering and manufacturing industries. They offer clear, practical training courses that break down complex GD&T concepts into easy-to-understand lessons.",
+      },
+      {
+        name: "KHK Gears",
+        href: "https://khkgears.net/",
+        blurb:
+          "KHK Gears is a gear manufacturing company, dedicated to high quality precision metric gears. They have generously discounted their product line for us.",
+      },
+      {
+        name: "RoboDK",
+        href: "https://robodk.com/",
+        blurb:
+          "RoboDK has provided generous use of their simulation software for the development of our arm.",
+      },
     ],
   },
   {
     tier: "Bronze",
     accent: "#d69a5c",
     items: [
-      { name: "Anderson Power", href: "https://www.andersonpower.com/", blurb: "High-power interconnect solutions used across our rovers." },
-      { name: "Timken", href: "https://www.timken.com/", blurb: "Friction management, power transmission, and material science." },
+      {
+        name: "Anderson Power",
+        href: "https://www.andersonpower.com/",
+        blurb:
+          "Anderson Power is an international leader in high-powered, interconnect solutions. They generously donate a majority of the connectors we use in our robots, and continue to be a fantastic supporter of the team.",
+      },
+      {
+        name: "Timken",
+        href: "https://www.timken.com/",
+        blurb:
+          "Timken is a globally recognized industrial leader that specializes in friction management, power transmission, and material science. They have also been considered as one of the world's most ethical companies for 13 years. We are grateful for their continued sponsorship and support.",
+      },
     ],
   },
 ];
 
 export const pastSponsors = [
-  { name: "Land O'Lakes Inc.", href: "https://www.landolakesinc.com/", blurb: "Hosted the Bot Shot challenge — we tied for 1st place ($10,000 prize)." },
-  { name: "Snap-On Inc.", href: "https://www.snapon.com/", blurb: "Donated most of the tools we use in manufacturing and assembly." },
-  { name: "Yaskawa America", href: "https://www.yaskawa.com/", blurb: "Automation leader; gave members invaluable engineering experience." },
-  { name: "Findorff", href: "https://www.findorff.com/", blurb: "Construction leader that supported our 2023 season." },
-  { name: "bb7", href: "https://www.bb7.com/", blurb: "Design and product-development firm offering engineering mentorship." },
+  {
+    name: "Land O'Lakes Inc.",
+    href: "https://www.landolakesinc.com/",
+    blurb:
+      "Land O'Lakes, Inc. hosted Land O'Lakes Bot Shot, challenging STEM talent to design and build robots to shoot basketballs and square off in a game of H-O-R-S-E. Wisconsin Robotics tied for 1st place in this competition, both teams winning a prize of $10,000!",
+  },
+  {
+    name: "Snap-On Inc.",
+    href: "https://www.snapon.com/",
+    blurb:
+      "Snap-on has donated the majority of the tools that Wisconsin Robotics uses in manufacturing and assembly of our various projects. About two thirds of all fabrication work that we do can be done in-house thanks to Snap-on.",
+  },
+  {
+    name: "Yaskawa America",
+    href: "https://www.yaskawa.com/",
+    blurb:
+      "Yaskawa is a global leader in industrial automation and robotics known for quality and performance in the production of AC Inverter Drives, Servo and Motion Control, and Robotics Automation Systems. They have also given some of our members invaluable employment experience in the fields of mechanical and electrical engineering.",
+  },
+  {
+    name: "Findorff",
+    href: "https://www.findorff.com/",
+    blurb:
+      "Findorff is an industry-leading construction company that is working on many projects in the Madison area, including for the University of Wisconsin-Madison. They have generously contributed to the success of the team for the 2023 season.",
+  },
+  {
+    name: "bb7",
+    href: "https://www.bb7.com/",
+    blurb:
+      "bb7 is a comprehensive design and product development firm with a rich history in innovation and testing. They have kindly offered us their services, including opportunities to speak with qualified engineers to gain insight into design fundamentals that help us improve our robots.",
+  },
 ];
 
 export const specialThanks = [
@@ -342,7 +542,7 @@ export const specialThanks = [
   "Cubermars",
   "Send Cut Send",
   "O-Drive Robotics",
-  "Tramp Boards (VESCs)",
+  "Tramp Boards (Vescs)",
   "Battery Space",
 ];
 
@@ -355,7 +555,6 @@ export const nav = [
 
 // Resolve the members shown on a subteam page from the roster.
 export function getSubteamMembers(id) {
-  if (id === "operations") return team.operations;
   const labels = {
     mechanical: "Mechanical",
     electrical: "Electrical",

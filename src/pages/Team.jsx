@@ -24,7 +24,7 @@ export default function Team() {
         eyebrow="The people"
         title="Meet the"
         accent="team"
-        subtitle="A student-led effort at UW–Madison — leadership, technical leads, and the operations crew who keep us running."
+        subtitle="A student-led effort at UW–Madison — leadership and technical leads building the next Mars rover."
       />
 
       <div className="container-x space-y-24 pb-28 pt-20 sm:pt-24">
@@ -43,30 +43,16 @@ export default function Team() {
         </section>
 
         <section>
-          <SectionHeading align="left" eyebrow="Leadership" title="Steering the org" />
+          <SectionHeading align="left" title="Leadership" />
           <div className="mt-10">
             <Grid people={team.leadership} />
           </div>
         </section>
 
         <section>
-          <SectionHeading align="left" eyebrow="Technical leads" title="Running the subteams" />
+          <SectionHeading align="left" title="Team Leads" />
           <div className="mt-10">
             <Grid people={team.leads} />
-          </div>
-        </section>
-
-        <section>
-          <SectionHeading align="left" eyebrow="Operations" title="Behind the scenes" />
-          <div className="mt-10">
-            <Grid people={team.operations} />
-          </div>
-        </section>
-
-        <section>
-          <SectionHeading align="left" eyebrow="Built by" title="Website" />
-          <div className="mt-10 max-w-[220px]">
-            <Grid people={team.website} cols="" />
           </div>
         </section>
       </div>

@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import useFrameWindowPreload from "../hooks/useFrameWindowPreload";
 
 function useIsNarrow(breakpoint = 768) {
   const [narrow, setNarrow] = useState(() =>
@@ -65,7 +66,9 @@ export default function ScrollImageSequence({
     : {
         startX: imageStartX,
         endX: imageEndX,
-        endY: imageEndY,
+        // Locked vertical offset — no downward drift on laptop
+        endY: 12,
+        lockY: true,
         scale: imageScale,
         fit: objectFit,
         objectPosition: "center center",
@@ -113,12 +116,10 @@ export default function ScrollImageSequence({
       );
       const finalIndex = totalFrames - 1;
 
+      // Continuous (float) indices so adjacent frames can crossfade.
       if (clampedProgress <= thresholds.early) {
         const local = clampedProgress / thresholds.early;
-        return Math.min(
-          earlyFrameEnd,
-          Math.max(0, Math.floor(local * (earlyFrameEnd + 1)))
-        );
+        return Math.min(earlyFrameEnd, local * earlyFrameEnd);
       }
 
       if (clampedProgress <= thresholds.hold) {
@@ -129,49 +130,31 @@ export default function ScrollImageSequence({
         const local =
           (clampedProgress - thresholds.hold) /
           (thresholds.finalStart - thresholds.hold);
+        const span = Math.max(1, finalRangeStart - 1 - earlyFrameEnd);
         return Math.min(
           finalRangeStart - 1,
-          Math.max(
-            earlyFrameEnd,
-            Math.floor(
-              earlyFrameEnd +
-                local * Math.max(1, finalRangeStart - 1 - earlyFrameEnd)
-            )
-          )
+          earlyFrameEnd + local * span
         );
       }
 
       const local =
         (clampedProgress - thresholds.finalStart) /
         (1 - thresholds.finalStart || 1);
-      return Math.min(
-        finalIndex,
-        Math.max(
-          finalRangeStart,
-          Math.floor(
-            finalRangeStart + local * (finalIndex - finalRangeStart + 1)
-          )
-        )
-      );
+      const span = Math.max(1, finalIndex - finalRangeStart);
+      return Math.min(finalIndex, finalRangeStart + local * span);
     };
   }, [frames.length, thresholds]);
 
   const scrollProgress = Math.min(1, Math.max(0, progress));
-  const frameIndex = getFrameIndexForProgress(scrollProgress);
+  const frameIndex = Math.min(
+    frames.length - 1,
+    Math.max(0, Math.round(getFrameIndexForProgress(scrollProgress)))
+  );
   const activeFrame = frames[frameIndex];
 
-  // Preload frames once
-  const preloaded = useRef(false);
-  useEffect(() => {
-    if (preloaded.current || typeof window === "undefined") return;
-    preloaded.current = true;
-    frames.forEach((item) => {
-      if (!item?.src) return;
-      const img = new window.Image();
-      img.src = item.src;
-      if (item.srcSet) img.srcset = item.srcSet;
-    });
-  }, [frames]);
+  // Preload all frames (set is small after WebP compression)
+  const displayIndex = useFrameWindowPreload(frames, frameIndex);
+  const shownFrame = frames[displayIndex] ?? activeFrame;
 
   const firstTextProgress = useMemo(() => {
     if (scrollProgress <= thresholds.hold) return 1;
@@ -198,10 +181,17 @@ export default function ScrollImageSequence({
 
   const imageMotion = useMemo(() => {
     const x = motion.startX + (motion.endX - motion.startX) * easedMotionProgress;
-    const yCurve = Math.pow(easedMotionProgress, 1.35);
-    const y = motion.endY * yCurve;
+    const y = motion.lockY
+      ? motion.endY
+      : motion.endY * Math.pow(easedMotionProgress, 1.35);
     return { x, y };
-  }, [motion.startX, motion.endX, motion.endY, easedMotionProgress]);
+  }, [
+    motion.startX,
+    motion.endX,
+    motion.endY,
+    motion.lockY,
+    easedMotionProgress,
+  ]);
 
   return (
     <div
@@ -212,7 +202,7 @@ export default function ScrollImageSequence({
         className="pointer-events-none absolute inset-0 flex items-center justify-center"
         style={{ background }}
       >
-        {activeFrame?.src ? (
+        {shownFrame?.src ? (
           <>
             <div
               className="will-change-transform"
@@ -223,9 +213,9 @@ export default function ScrollImageSequence({
               }}
             >
               <img
-                src={activeFrame.src}
-                srcSet={activeFrame.srcSet}
-                alt={activeFrame.alt || ""}
+                src={shownFrame.src}
+                srcSet={shownFrame.srcSet}
+                alt={shownFrame.alt || ""}
                 draggable={false}
                 className="block h-full w-full"
                 style={{ objectFit: motion.fit, objectPosition: motion.objectPosition }}
@@ -274,7 +264,20 @@ export default function ScrollImageSequence({
                         }
                   }
                 >
-                  {firstText}
+                  <div>{firstText}</div>
+                  <img
+                    src="/images/WRlogo.png"
+                    alt=""
+                    aria-hidden
+                    draggable={false}
+                    className="mt-4 block w-[min(100%,220px)] object-contain sm:mt-5 sm:w-[min(100%,260px)]"
+                    style={{
+                      marginLeft:
+                        isNarrow || firstTextSide === "right" ? "auto" : 0,
+                      marginRight:
+                        isNarrow || firstTextSide === "left" ? "auto" : 0,
+                    }}
+                  />
                 </div>
 
                 <div

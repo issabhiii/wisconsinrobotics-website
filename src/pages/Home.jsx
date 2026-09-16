@@ -64,7 +64,7 @@ export default function Home() {
         <div className="container-x">
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <Reveal>
-              <TiltedCard className="overflow-hidden rounded-3xl border border-white/10">
+              <TiltedCard className="overflow-hidden rounded-3xl border border-badger/40">
                 <div className="relative aspect-[4/3]">
                   <img
                     src={featured.image}

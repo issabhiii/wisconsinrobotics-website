@@ -37,7 +37,7 @@ export default function Sponsors() {
           <div className="grid gap-3 sm:grid-cols-2">
             {provides.map((p, i) => (
               <Reveal key={p.text} delay={i * 0.06}>
-                <div className="flex h-full items-start gap-3 rounded-xl border border-white/[0.08] bg-white/[0.02] p-4">
+                <div className="flex h-full items-start gap-3 rounded-xl border border-badger/40 bg-white/[0.02] p-4">
                   <Icon name={p.icon} className="mt-0.5 h-5 w-5 shrink-0 text-badger-bright" />
                   <p className="text-sm text-chalk-soft">{p.text}</p>
                 </div>

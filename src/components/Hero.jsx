@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import Button from "./Button";
 import Icon from "./Icon";
+import useFrameWindowPreload from "../hooks/useFrameWindowPreload";
 import { org } from "../data/site";
 import heroFrames from "../data/heroFrames.json";
 
@@ -15,9 +16,12 @@ export default function Hero({ progress = 0 }) {
   const frames = heroFrames;
   const frameIndex = Math.min(
     frames.length - 1,
-    Math.max(0, Math.floor(p * (frames.length - 1)))
+    Math.max(0, Math.round(p * (frames.length - 1)))
   );
   const activeSrc = frames[frameIndex];
+
+  const displayIndex = useFrameWindowPreload(frames, frameIndex);
+  const shownSrc = frames[displayIndex] ?? activeSrc;
 
   // Frames 1–50: only first line. 50–100: both lines (fade second in over ~8%).
   const secondLine = useMemo(() => {
@@ -27,19 +31,9 @@ export default function Hero({ progress = 0 }) {
 
   const revealed = secondLine > 0.02;
 
-  const preloaded = useRef(false);
-  useEffect(() => {
-    if (preloaded.current || typeof window === "undefined") return;
-    preloaded.current = true;
-    frames.forEach((src) => {
-      const img = new window.Image();
-      img.src = src;
-    });
-  }, [frames]);
-
-  const planet = activeSrc ? (
+  const planet = shownSrc ? (
     <img
-      src={activeSrc}
+      src={shownSrc}
       alt=""
       draggable={false}
       className="h-full w-full object-contain object-center lg:object-contain lg:object-right"
@@ -48,13 +42,13 @@ export default function Hero({ progress = 0 }) {
 
   return (
     <section className="relative flex h-[100svh] min-h-[100svh] overflow-hidden bg-ink-950">
-      {/* Black center, faint red only on the far sides — no muddy mid-glow */}
+      {/* Soft side wash only — keep the text column clear of heavy vignette */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 70% 90% at 50% 50%, #0b0c0f 0%, #0b0c0f 55%, transparent 100%), linear-gradient(90deg, rgba(197,5,12,0.22) 0%, transparent 18%, transparent 82%, rgba(197,5,12,0.18) 100%)",
+            "linear-gradient(90deg, rgba(197,5,12,0.12) 0%, transparent 14%, transparent 86%, rgba(197,5,12,0.1) 100%)",
         }}
       />
 
@@ -77,7 +71,6 @@ export default function Hero({ progress = 0 }) {
               style={{
                 opacity: secondLine,
                 transform: `translateY(${(1 - secondLine) * 14}px)`,
-                filter: secondLine === 0 ? "none" : `blur(${(1 - secondLine) * 6}px)`,
                 visibility: secondLine === 0 ? "hidden" : "visible",
               }}
               aria-hidden={secondLine < 0.05}

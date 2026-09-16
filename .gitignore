@@ -30,3 +30,5 @@ build/
 *.min.js
 *.min.css
 
+.vercel
+.env*

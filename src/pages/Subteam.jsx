@@ -83,7 +83,7 @@ export default function Subteam() {
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {content.practice.items.map((r, i) => (
               <Reveal key={r.title} delay={(i % 3) * 0.06}>
-                <div className="flex h-full items-start gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6">
+                <div className="flex h-full items-start gap-4 rounded-2xl border border-badger/40 bg-white/[0.02] p-6">
                   <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-badger to-badger-dark">
                     <Icon name={r.icon} className="h-5 w-5 text-white" />
                   </span>

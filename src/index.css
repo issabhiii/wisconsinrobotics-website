@@ -49,9 +49,13 @@
     @apply mx-auto w-full max-w-container px-5 sm:px-8 lg:px-12;
   }
 
-  /* Used sparingly — the ONE gradient accent, not on every heading */
+  /* Bright brand accent — solid enough to read on black, soft red halo for edge definition */
   .text-gradient {
-    @apply bg-gradient-to-r from-badger-bright via-badger to-badger-dark bg-clip-text text-transparent;
+    color: #e00122;
+    text-shadow:
+      0 0 1px rgba(224, 1, 34, 0.9),
+      0 0 10px rgba(197, 5, 12, 0.55),
+      0 0 22px rgba(197, 5, 12, 0.35);
   }
 
   .eyebrow {
@@ -60,7 +64,7 @@
   }
 
   .card-surface {
-    @apply rounded-2xl border border-white/[0.08] bg-white/[0.02];
+    @apply rounded-2xl border border-badger/40 bg-white/[0.02];
   }
 
   .hairline {

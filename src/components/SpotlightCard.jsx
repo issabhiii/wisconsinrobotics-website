@@ -26,7 +26,7 @@ export default function SpotlightCard({
       onMouseMove={onMove}
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
-      className={`group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] transition-colors duration-300 hover:border-white/20 ${className}`}
+      className={`group relative overflow-hidden rounded-2xl border border-badger/40 bg-white/[0.02] transition-colors duration-300 hover:border-badger/70 ${className}`}
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300"

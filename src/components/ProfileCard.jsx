@@ -43,9 +43,9 @@ export default function ProfileCard({ name, role, avatar, linkedin }) {
         onMouseMove={onMove}
         onMouseLeave={onLeave}
         style={{ transform: "rotateX(var(--rx,0)) rotateY(var(--ry,0))" }}
-        className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/10 bg-ink-800
+        className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-badger/40 bg-ink-800
           transition-[transform,border-color] duration-200 ease-out [transform-style:preserve-3d]
-          group-hover:border-badger/50 group-focus-visible:border-badger"
+          group-hover:border-badger/70 group-focus-visible:border-badger"
       >
         {avatar ? (
           <img

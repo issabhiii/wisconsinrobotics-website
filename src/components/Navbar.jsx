@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Icon from "./Icon";
 import Button from "./Button";
+import BrandLogo from "./BrandLogo";
 import { nav } from "../data/site";
 
 export default function Navbar() {
@@ -29,13 +30,8 @@ export default function Navbar() {
         }`}
       >
         <nav className="container-x flex h-16 items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5">
-            <span className="grid h-9 w-9 place-items-center rounded-xl border border-badger/40 bg-badger/10">
-              <Icon name="bot" className="h-5 w-5 text-badger-bright" />
-            </span>
-            <span className="font-display text-[15px] font-semibold tracking-tight text-white">
-              Wisconsin Robotics
-            </span>
+          <Link to="/" className="flex items-center" aria-label="Wisconsin Robotics home">
+            <BrandLogo className="h-10 w-auto max-w-[200px] sm:max-w-none" />
           </Link>
 
           {/* Dock-style desktop nav */}

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Icon from "./Icon";
+import BrandLogo from "./BrandLogo";
 import { org, nav } from "../data/site";
 
 export default function Footer() {
@@ -7,14 +8,9 @@ export default function Footer() {
     <footer className="relative border-t border-white/[0.06] bg-ink-950">
       <div className="container-x grid gap-10 py-16 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <div className="flex items-center gap-2.5">
-            <span className="grid h-9 w-9 place-items-center rounded-xl border border-badger/40 bg-badger/10">
-              <Icon name="bot" className="h-5 w-5 text-badger-bright" />
-            </span>
-            <span className="font-display text-[15px] font-semibold text-white">
-              {org.name}
-            </span>
-          </div>
+          <Link to="/" className="inline-flex" aria-label={`${org.name} home`}>
+            <BrandLogo className="h-12 w-auto max-w-[240px]" />
+          </Link>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-chalk-dim">
             {org.school}'s student-led Mars rover team. We design, build, and
             compete — and bring robotics to our community.

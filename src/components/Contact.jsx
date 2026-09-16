@@ -4,8 +4,13 @@ import Reveal from "./motion/Reveal";
 import Icon from "./Icon";
 import { org } from "../data/site";
 
-// If you set up Formspree/EmailJS, drop the endpoint here to POST instead of mailto.
-const FORM_ENDPOINT = "";
+/**
+ * Google Apps Script web-app URL that appends rows to the contact spreadsheet.
+ * Paste the deployed URL here after running scripts/contact-to-sheet.gs
+ * (or set VITE_CONTACT_FORM_URL in .env).
+ */
+const FORM_ENDPOINT =
+  import.meta.env.VITE_CONTACT_FORM_URL || "";
 
 const details = [
   { icon: "mail", label: "Email", value: org.email, href: `mailto:${org.email}` },
@@ -15,24 +20,38 @@ const details = [
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState("idle"); // idle | sending | sent | error
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (FORM_ENDPOINT) {
-      await fetch(FORM_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      setSent(true);
+
+    if (!FORM_ENDPOINT) {
+      // No sheet endpoint yet — fall back to mailto.
+      const subject = encodeURIComponent(`Website inquiry from ${form.name || "a visitor"}`);
+      const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
+      window.location.href = `mailto:${org.email}?subject=${subject}&body=${body}`;
+      setStatus("sent");
       return;
     }
-    // No backend configured — hand off to the user's mail client.
-    const subject = encodeURIComponent(`Website inquiry from ${form.name || "a visitor"}`);
-    const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
-    window.location.href = `mailto:${org.email}?subject=${subject}&body=${body}`;
-    setSent(true);
+
+    setStatus("sending");
+    try {
+      // text/plain + no-cors avoids a CORS preflight; Apps Script still receives the JSON body.
+      await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+        }),
+      });
+      setForm({ name: "", email: "", message: "" });
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
   };
 
   const field =
@@ -53,7 +72,7 @@ export default function Contact() {
           <div className="space-y-4">
             {details.map((d, i) => (
               <Reveal key={d.label} delay={i * 0.08}>
-                <div className="flex items-start gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">
+                <div className="flex items-start gap-4 rounded-2xl border border-badger/40 bg-white/[0.02] p-5">
                   <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-badger/30 bg-badger/10">
                     <Icon name={d.icon} className="h-5 w-5 text-badger-bright" />
                   </span>
@@ -77,7 +96,7 @@ export default function Contact() {
           <Reveal delay={0.1}>
             <form
               onSubmit={onSubmit}
-              className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8"
+              className="rounded-2xl border border-badger/40 bg-white/[0.02] p-6 sm:p-8"
             >
               <div className="grid gap-4 sm:grid-cols-2">
                 <input
@@ -104,17 +123,25 @@ export default function Contact() {
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
               />
-              <div className="mt-5 flex items-center gap-4">
+              <div className="mt-5 flex flex-wrap items-center gap-4">
                 <button
                   type="submit"
-                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-badger px-6 py-3 text-sm font-semibold text-white shadow-[0_8px_30px_-8px_rgba(197,5,12,0.7)] transition-all duration-200 hover:bg-badger-bright active:scale-[0.98]"
+                  disabled={status === "sending"}
+                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-badger px-6 py-3 text-sm font-semibold text-white shadow-[0_8px_30px_-8px_rgba(197,5,12,0.7)] transition-all duration-200 hover:bg-badger-bright active:scale-[0.98] disabled:cursor-wait disabled:opacity-70"
                 >
-                  Send message
+                  {status === "sending" ? "Sending…" : "Send message"}
                   <Icon name="send" className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </button>
-                {sent && (
+                {status === "sent" && (
                   <span className="text-sm text-chalk-soft">
-                    Thanks — opening your email client…
+                    {FORM_ENDPOINT
+                      ? "Thanks — we got your message."
+                      : "Thanks — opening your email client…"}
+                  </span>
+                )}
+                {status === "error" && (
+                  <span className="text-sm text-badger-bright">
+                    Something went wrong — email us at {org.email}.
                   </span>
                 )}
               </div>
