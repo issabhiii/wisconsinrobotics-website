@@ -6,9 +6,9 @@ export const org = {
   school: "University of Wisconsin–Madison",
   tagline: "Student engineers building Mars rovers.",
   email: "wisconsinrobotics@cae.wisc.edu",
-  address: ["1500 Engineering Drive", "ERB 133", "Madison, WI 53706"],
+  address: ["1513 University Avenue", "ME B1190", "Madison, WI 53706"],
   // NOTE: confirm meeting cadence — legacy pages disagreed (Tue/Thu vs Mon/Wed/Thu).
-  meetings: "Tuesdays & Thursdays · 6:00 PM",
+  meetings: "Mondays, Wednesdays, & Thursdays · 6:00 PM",
   donateUrl:
     "https://secure.supportuw.org/give/?id=27af2aec-297d-4161-a007-afd7739c03e7",
   video: "https://www.youtube.com/watch?v=fZ5lqiTug2U",
@@ -51,20 +51,21 @@ export const urcIntro =
 
 export const rovers = [
   {
-    name: "Nebula",
-    year: "2024",
-    competition: "URC 2024",
-    image: "/images/robots/nebula.png",
-    featured: true,
-    blurb:
-      "We're proud to present our latest robot, Nebula, which we've spent the past year building for URC 2024. Take a look at our System Acceptance Review (SAR) submission to see Nebula in action!",
-  },
-  {
     name: "Forward",
     year: "2026",
     competition: "URC 2026",
     image: "/images/robots/forward.png",
-    blurb: "Our URC 2026 competition rover — currently in development.",
+    featured: true,
+    blurb:
+      "We're proud to present our latest robot, Forward — our competition rover for URC 2026.",
+  },
+  {
+    name: "Nebula",
+    year: "2024",
+    competition: "URC 2024",
+    image: "/images/robots/nebula.png",
+    blurb:
+      "Our URC 2024 rover. Take a look at our System Acceptance Review (SAR) submission to see Nebula in action!",
   },
   {
     name: "Eclipse",

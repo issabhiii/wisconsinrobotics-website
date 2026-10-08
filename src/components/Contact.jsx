@@ -4,13 +4,15 @@ import Reveal from "./motion/Reveal";
 import Icon from "./Icon";
 import { org } from "../data/site";
 
-/**
- * Google Apps Script web-app URL that appends rows to the contact spreadsheet.
- * Paste the deployed URL here after running scripts/contact-to-sheet.gs
- * (or set VITE_CONTACT_FORM_URL in .env).
- */
-const FORM_ENDPOINT =
-  import.meta.env.VITE_CONTACT_FORM_URL || "";
+// Public Google Form → linked Sheet (UW Workspace). No Apps Script needed.
+const GOOGLE_FORM_ACTION =
+  "https://docs.google.com/forms/d/e/1FAIpQLSdLZDdc19LcEpCpK6YYYLNXpo0_YGQNKzndL2YTmGczec98gw/formResponse";
+
+const GOOGLE_FORM_ENTRIES = {
+  name: "entry.1389815108",
+  email: "entry.664550397",
+  message: "entry.2053857167",
+};
 
 const details = [
   { icon: "mail", label: "Email", value: org.email, href: `mailto:${org.email}` },
@@ -24,28 +26,19 @@ export default function Contact() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    if (!FORM_ENDPOINT) {
-      // No sheet endpoint yet — fall back to mailto.
-      const subject = encodeURIComponent(`Website inquiry from ${form.name || "a visitor"}`);
-      const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
-      window.location.href = `mailto:${org.email}?subject=${subject}&body=${body}`;
-      setStatus("sent");
-      return;
-    }
-
     setStatus("sending");
+
     try {
-      // text/plain + no-cors avoids a CORS preflight; Apps Script still receives the JSON body.
-      await fetch(FORM_ENDPOINT, {
+      // Google Forms accepts public POSTs; no-cors so the browser doesn't block on CORS.
+      await fetch(GOOGLE_FORM_ACTION, {
         method: "POST",
         mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          message: form.message,
-        }),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          [GOOGLE_FORM_ENTRIES.name]: form.name,
+          [GOOGLE_FORM_ENTRIES.email]: form.email,
+          [GOOGLE_FORM_ENTRIES.message]: form.message,
+        }).toString(),
       });
       setForm({ name: "", email: "", message: "" });
       setStatus("sent");
@@ -134,9 +127,7 @@ export default function Contact() {
                 </button>
                 {status === "sent" && (
                   <span className="text-sm text-chalk-soft">
-                    {FORM_ENDPOINT
-                      ? "Thanks — we got your message."
-                      : "Thanks — opening your email client…"}
+                    Thanks — we got your message.
                   </span>
                 )}
                 {status === "error" && (

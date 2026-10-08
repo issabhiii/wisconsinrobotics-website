@@ -50,8 +50,13 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-chalk-dim">
-            Contact
+          <h4 className="font-mono text-xs uppercase tracking-[0.2em]">
+            <Link
+              to="/#contact"
+              className="text-chalk-dim underline underline-offset-4 decoration-white/25 transition-colors hover:text-white hover:decoration-white/60"
+            >
+              Contact
+            </Link>
           </h4>
           <ul className="mt-4 space-y-3 text-sm text-chalk-soft">
             <li>
