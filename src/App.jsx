@@ -7,6 +7,7 @@ import Team from "./pages/Team";
 import Subteam from "./pages/Subteam";
 import Robots from "./pages/Robots";
 import Sponsors from "./pages/Sponsors";
+import NotFound from "./pages/NotFound";
 
 // Reset scroll on route change; honor #hash anchors (e.g. /#contact).
 function ScrollManager() {
@@ -38,7 +39,7 @@ export default function App() {
           <Route path="/sponsors" element={<Sponsors />} />
           {/* Legacy path — Operations is now a subteam page */}
           <Route path="/operations" element={<Navigate to="/team/operations" replace />} />
-          <Route path="*" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
