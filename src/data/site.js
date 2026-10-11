@@ -371,7 +371,7 @@ export const team = {
     { name: "Landon Colaresi", role: "Science", avatar: "/images/lcolaresi.jpg", linkedin: li },
     { name: "Tessara Clark", role: "Science", avatar: "/images/tessera.jpg", linkedin: li },
     { name: "Vikram Bangalore", role: "Outreach", avatar: "/images/vikram.jpg", linkedin: li },
-    { name: "Matthew Suri", role: "Outreach", avatar: "/images/msuri.jpg", linkedin: li },
+    { name: "Bennet Ross", role: "Outreach", avatar: "/images/bennet_ross.png", linkedin: li },
     {
       name: "Abhinav Jain",
       role: "Technical",
