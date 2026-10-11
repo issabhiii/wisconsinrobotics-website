@@ -9,6 +9,10 @@ cursor-lit grid and refined motion. Rebuilt from the ground up with React + Vite
 
 `React 18` · `Vite 5` · `Tailwind CSS 3` · `Framer Motion` · `React Three Fiber`
 
+[Instagram](https://www.instagram.com/wi_robotics/) ·
+[LinkedIn](https://www.linkedin.com/company/wisconsin-robotics/) ·
+[GitHub](https://github.com/WisconsinRobotics)
+
 </div>
 
 ---
@@ -20,10 +24,14 @@ set of hand-written HTML pages (archived in [`legacy/`](./legacy)); this version
 component-driven React app with a single source of truth for all content, one
 consistent motion language, and an interactive React Bits `CursorGrid` background.
 
+Live site: [wisconsinrobotics.org](https://wisconsinrobotics.org)  
+Repo: [WisconsinRobotics/website](https://github.com/WisconsinRobotics/website)
+
 ## Features
 
 - **Interactive grid background** — a cursor-lit `CursorGrid` (React Bits) powers the
   hero and every page header, with a click-pulse effect.
+- **Scroll image sequences** — Mars intro + hero terraforming frames scrubbed by scroll.
 - **One motion language** — scroll reveals, word-by-word `SplitText` headlines, and
   animated stat counters, all sharing the same easing.
 - **Interactive UI** — dock-style navigation, spotlight cards, 3D tilt cards, and
@@ -31,8 +39,8 @@ consistent motion language, and an interactive React Bits `CursorGrid` backgroun
 - **Optional 3D hero** — a React Three Fiber rover scene lives in [`src/three/`](./src/three),
   ready to re-enable (see below).
 - **Content-driven** — team, rovers, sponsors, and stats all come from one data file.
-- **Accessible & fast** — respects `prefers-reduced-motion`, lazy-loads heavy assets,
-  and ships proper meta/OG tags.
+- **Contact form** — posts to a Google Form linked to the team spreadsheet.
+- **Custom 404** — unknown routes render an interactive not-found page.
 
 ## Tech stack
 
@@ -44,6 +52,8 @@ consistent motion language, and an interactive React Bits `CursorGrid` backgroun
 | 3D | React Three Fiber + drei (optional hero) |
 | Routing | React Router 6 |
 | Icons | lucide-react |
+| Contact | Google Forms → Sheet |
+| Hosting | Cloudflare Pages (GitHub `main`) |
 
 ## Getting started
 
@@ -60,11 +70,12 @@ npm run preview    # serve the production build locally
 
 ```
 public/
-  images/            team headshots, rover photos, scroll sequences
-    intro-sequence/  Mars intro scroll frames (intro-001.png …)
-    hero-sequence/   Hero terraforming scroll frames (hero-001.png …)
+  images/            team headshots, rover photos, scroll sequences, WR logo
+    intro-sequence/  Mars intro scroll frames (webp)
+    hero-sequence/   Hero terraforming scroll frames (webp)
+    robots/          rover + outreach imagery
   docs/              sponsorship PDF
-  favicon.svg
+  _redirects         SPA fallback for Cloudflare / Netlify
 src/
   main.jsx           app entry
   App.jsx            routes + scroll management
@@ -76,19 +87,25 @@ src/
     Navbar / Footer / Hero / Contact / ...
     motion/          Reveal, SplitText, CountUp
   three/             Rover.jsx, RoverScene.jsx (optional 3D hero)
-  pages/             Home, Team, Robots, Operations, Sponsors
+  pages/             Home, Team, Subteam, Robots, Sponsors, NotFound
 legacy/              the previous static HTML site (archived)
 ```
 
 ## Editing content
 
-Almost everything — team roster, rovers, sponsors, stats, and contact info — lives in
-[`src/data/site.js`](./src/data/site.js). Edit it there and every page stays in sync.
+Almost everything — team roster, rovers, sponsors, stats, socials, and contact info —
+lives in [`src/data/site.js`](./src/data/site.js). Edit it there and every page stays in sync.
+
+Social links (footer):
+
+- Instagram: https://www.instagram.com/wi_robotics/
+- LinkedIn: https://www.linkedin.com/company/wisconsin-robotics/
+- GitHub: https://github.com/WisconsinRobotics
 
 ## Re-enabling the 3D rover hero
 
-The interactive 3D rover is currently disabled in favor of the cursor grid. To bring it
-back, render `<RoverScene />` inside [`src/components/Hero.jsx`](./src/components/Hero.jsx)
+The interactive 3D rover is currently disabled in favor of the image-sequence hero. To
+bring it back, render `<RoverScene />` inside [`src/components/Hero.jsx`](./src/components/Hero.jsx)
 (the scene component is already built in `src/three/RoverScene.jsx`). To use a real
 scanned/CAD rover instead of the procedural model, export a `.glb`, drop it in
 `public/models/`, and load it with drei's `useGLTF`.
@@ -97,25 +114,17 @@ scanned/CAD rover instead of the procedural model, export a `.glb`, drop it in
 
 This is a static SPA — `npm run build` outputs to `dist/`.
 
-- **Vercel / Netlify (recommended):** point the platform at this repo — build command
-  `npm run build`, output directory `dist`. SPA routing is already handled:
-  [`vercel.json`](./vercel.json) rewrites for Vercel and [`public/_redirects`](./public/_redirects)
-  for Netlify both send unknown paths to `/index.html`, so deep links like `/team` work.
-- **GitHub Pages:** because routing uses `BrowserRouter`, deep links like `/team` would
-  need an SPA fallback (a `404.html` copy of `index.html`) or a switch to `HashRouter`,
-  plus Vite's `base` set to `/<repo-name>/` for a project page.
+- **Cloudflare Pages (production):** connected to
+  [`WisconsinRobotics/website`](https://github.com/WisconsinRobotics/website) `main`.
+  Typical settings: build `npm run build`, output `dist`, root `/`.
+  SPA fallback via [`public/_redirects`](./public/_redirects).
+- **Vercel / Netlify:** also supported — [`vercel.json`](./vercel.json) rewrites for
+  Vercel; `_redirects` for Netlify.
 
-## Housekeeping notes
-
-A few things are intentionally left as placeholders — search `site.js` and update:
-
-- **Meeting time** — the legacy pages disagreed; confirm the real cadence.
-- **Social + LinkedIn links** — currently `#` / generic profiles.
-- **Contact form** — falls back to `mailto:`. To collect submissions, set
-  `FORM_ENDPOINT` in `src/components/Contact.jsx` (e.g. a Formspree URL).
+Push to `main` on the club repo to trigger a production deploy.
 
 ---
 
 <div align="center">
-Built by students at UW–Madison 🦡
+Built by students at UW–Madison
 </div>

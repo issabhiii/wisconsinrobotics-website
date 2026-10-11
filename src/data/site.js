@@ -13,9 +13,13 @@ export const org = {
     "https://secure.supportuw.org/give/?id=27af2aec-297d-4161-a007-afd7739c03e7",
   video: "https://www.youtube.com/watch?v=fZ5lqiTug2U",
   socials: [
-    { label: "Instagram", href: "#", icon: "instagram" },
-    { label: "LinkedIn", href: "#", icon: "linkedin" },
-    { label: "GitHub", href: "#", icon: "github" },
+    { label: "Instagram", href: "https://www.instagram.com/wi_robotics/", icon: "instagram" },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/company/wisconsin-robotics/",
+      icon: "linkedin",
+    },
+    { label: "GitHub", href: "https://github.com/WisconsinRobotics", icon: "github" },
     { label: "YouTube", href: "https://www.youtube.com/watch?v=fZ5lqiTug2U", icon: "youtube" },
   ],
 };
@@ -381,6 +385,8 @@ export const team = {
   ],
 };
 
+const LOGO = "/images/sponsors/sponsors";
+
 export const sponsorTiers = [
   {
     tier: "Diamond",
@@ -389,30 +395,35 @@ export const sponsorTiers = [
       {
         name: "UW–Madison Department of Mechanical Engineering",
         href: "https://engineering.wisc.edu/departments/mechanical-engineering/",
+        logo: `${LOGO}/dept_me.png`,
         blurb:
           "The Mechanical Engineering department of UW-Madison has been a long-time supporter of Wisconsin Robotics. They have provided us with a workspace, travel expense funds, and mentorship to help us succeed. We are grateful for their continued support.",
       },
       {
         name: "UW–Madison Department of Electrical & Computer Engineering",
         href: "https://engineering.wisc.edu/departments/electrical-computer-engineering/",
+        logo: `${LOGO}/ece.png`,
         blurb:
           "The Electrical and Computer Engineering (ECE) department of UW-Madison has been a valuable supporter of Wisconsin Robotics. They have provided access to lab equipment and technical resources that have been instrumental in advancing our projects.",
       },
       {
         name: "Altium",
         href: "https://www.altium.com/",
+        logo: `${LOGO}/altium.png`,
         blurb:
           "Altium has generously provided our team with Altium Designer and Altium 365. We use Altium Designer to create our PCBs and Altium 365 to collaborate on our designs.",
       },
       {
         name: "Komatsu",
         href: "https://www.komatsu.com/",
+        logo: `${LOGO}/komatsu.png`,
         blurb:
           "Komatsu has been a generous industry partner to Wisconsin Robotics. Their contributions have helped us invest in high-quality components and enhance our technical capabilities. We are thankful for their continued support.",
       },
       {
         name: "Mastermold",
         href: "https://www.mastermold.com/",
+        logo: `${LOGO}/mastermold.png`,
         blurb:
           "MasterMold is a full-service OEM supplier of custom molded fiberglass reinforced composites with capabilities that include compression/sheet molding, robotic machining/bonding, and robotic painting as well as parts assembly.",
       },
@@ -425,30 +436,35 @@ export const sponsorTiers = [
       {
         name: "OshKosh",
         href: "https://www.oshkoshcorp.com/",
+        logo: `${LOGO}/oshkosh.png`,
         blurb:
           "OshKosh Corporation is an industrial technology company that focuses on creating vehicles and equipment. They are a global organization known for their innovative products. They kindly gave a generous donation for the purposes of Wisconsin Robotics.",
       },
       {
         name: "Milwaukee Electric",
         href: "https://www.milwaukeeelectronics.com/",
+        logo: `${LOGO}/melectric.png`,
         blurb:
           "Milwaukee Electronics is an electronic manufacturing company offering circuit board design, PCBA assembly, and on-demand manufacturing. They were kind enough to give a generous donation for the purposes of Wisconsin Robotics.",
       },
       {
         name: "Extreme Engineering Solutions",
         href: "https://www.xes-inc.com/",
+        logo: `${LOGO}/xes.png`,
         blurb:
           "Extreme Engineering Solutions is a leader in the design, manufacture, testing, and support of hardware and software solutions for the embedded computing market. They are a large employer in the UW-Madison area and have provided wonderful opportunities for some of our past and present members.",
       },
       {
         name: "Onshape",
         href: "https://www.onshape.com/",
+        logo: `${LOGO}/onshape.png`,
         blurb:
           "Onshape is a cloud-native CAD software that we use to collaborate efficiently when designing and producing our mechanical systems. They graciously have supplied us with an Enterprise account which gives us access to advanced tools such as FEA and PCB integration.",
       },
       {
         name: "Polymaker",
         href: "https://www.polymaker.com/",
+        logo: `${LOGO}/polymaker.png`,
         blurb:
           "Polymaker creates top-of-the-line filaments for 3D printing. Polymaker graciously sponsors our team by providing high quality filament for all of our printing needs.",
       },
@@ -461,24 +477,28 @@ export const sponsorTiers = [
       {
         name: "Protocase",
         href: "https://www.protocase.com/",
+        logo: `${LOGO}/protocase.png`,
         blurb:
           "Protocase is a huge supporter of the University Rover Challenge, providing custom sheet metal enclosures and CNC machined parts to every team that competes. We greatly appreciate the support they have given to us, as well as the competition as a whole.",
       },
       {
         name: "GD&T Basics",
         href: "https://www.gdandtbasics.com/",
+        logo: `${LOGO}/gdt.png`,
         blurb:
           "GD&T Basics is a company dedicated to simplifying and teaching Geometric Dimensioning and Tolerancing for professionals and teams in the engineering and manufacturing industries. They offer clear, practical training courses that break down complex GD&T concepts into easy-to-understand lessons.",
       },
       {
         name: "KHK Gears",
         href: "https://khkgears.net/",
+        logo: `${LOGO}/khk.png`,
         blurb:
           "KHK Gears is a gear manufacturing company, dedicated to high quality precision metric gears. They have generously discounted their product line for us.",
       },
       {
         name: "RoboDK",
         href: "https://robodk.com/",
+        logo: `${LOGO}/robodk.png`,
         blurb:
           "RoboDK has provided generous use of their simulation software for the development of our arm.",
       },
@@ -491,12 +511,14 @@ export const sponsorTiers = [
       {
         name: "Anderson Power",
         href: "https://www.andersonpower.com/",
+        logo: `${LOGO}/andersonpower.png`,
         blurb:
           "Anderson Power is an international leader in high-powered, interconnect solutions. They generously donate a majority of the connectors we use in our robots, and continue to be a fantastic supporter of the team.",
       },
       {
         name: "Timken",
         href: "https://www.timken.com/",
+        logo: `${LOGO}/timken.png`,
         blurb:
           "Timken is a globally recognized industrial leader that specializes in friction management, power transmission, and material science. They have also been considered as one of the world's most ethical companies for 13 years. We are grateful for their continued sponsorship and support.",
       },
@@ -508,30 +530,35 @@ export const pastSponsors = [
   {
     name: "Land O'Lakes Inc.",
     href: "https://www.landolakesinc.com/",
+    logo: `${LOGO}/landolakesinc.png`,
     blurb:
       "Land O'Lakes, Inc. hosted Land O'Lakes Bot Shot, challenging STEM talent to design and build robots to shoot basketballs and square off in a game of H-O-R-S-E. Wisconsin Robotics tied for 1st place in this competition, both teams winning a prize of $10,000!",
   },
   {
     name: "Snap-On Inc.",
     href: "https://www.snapon.com/",
+    logo: `${LOGO}/snapon.png`,
     blurb:
       "Snap-on has donated the majority of the tools that Wisconsin Robotics uses in manufacturing and assembly of our various projects. About two thirds of all fabrication work that we do can be done in-house thanks to Snap-on.",
   },
   {
     name: "Yaskawa America",
     href: "https://www.yaskawa.com/",
+    logo: `${LOGO}/yaskawa.png`,
     blurb:
       "Yaskawa is a global leader in industrial automation and robotics known for quality and performance in the production of AC Inverter Drives, Servo and Motion Control, and Robotics Automation Systems. They have also given some of our members invaluable employment experience in the fields of mechanical and electrical engineering.",
   },
   {
     name: "Findorff",
     href: "https://www.findorff.com/",
+    logo: `${LOGO}/findorff.png`,
     blurb:
       "Findorff is an industry-leading construction company that is working on many projects in the Madison area, including for the University of Wisconsin-Madison. They have generously contributed to the success of the team for the 2023 season.",
   },
   {
     name: "bb7",
     href: "https://www.bb7.com/",
+    logo: `${LOGO}/bb7.png`,
     blurb:
       "bb7 is a comprehensive design and product development firm with a rich history in innovation and testing. They have kindly offered us their services, including opportunities to speak with qualified engineers to gain insight into design fundamentals that help us improve our robots.",
   },

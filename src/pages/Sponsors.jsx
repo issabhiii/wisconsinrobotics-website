@@ -73,6 +73,16 @@ export default function Sponsors() {
                           className="absolute inset-x-0 top-0 h-px"
                           style={{ background: `linear-gradient(90deg, transparent, ${tier.accent}, transparent)` }}
                         />
+                        {s.logo && (
+                          <div className="mb-5 flex h-16 items-center justify-center rounded-xl bg-white px-4 py-3">
+                            <img
+                              src={s.logo}
+                              alt=""
+                              className="max-h-10 max-w-full object-contain"
+                              loading="lazy"
+                            />
+                          </div>
+                        )}
                         <div className="flex items-start justify-between gap-3">
                           <h3 className="text-lg font-semibold text-white">{s.name}</h3>
                           <Icon name="arrow-up-right" className="h-4 w-4 shrink-0 text-chalk-dim" />
@@ -118,6 +128,16 @@ export default function Sponsors() {
               <Reveal key={s.name} delay={(i % 3) * 0.06}>
                 <a href={s.href} target="_blank" rel="noopener noreferrer">
                   <SpotlightCard className="h-full p-5">
+                    {s.logo && (
+                      <div className="mb-4 flex h-14 items-center justify-center rounded-xl bg-white px-3 py-2">
+                        <img
+                          src={s.logo}
+                          alt=""
+                          className="max-h-9 max-w-full object-contain"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
                     <h4 className="font-semibold text-white">{s.name}</h4>
                     <p className="mt-2 text-sm text-chalk-dim">{s.blurb}</p>
                   </SpotlightCard>

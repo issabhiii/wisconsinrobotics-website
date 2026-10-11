@@ -13,7 +13,7 @@ import { stats, pillars, rovers, sponsorTiers } from "../data/site";
 
 export default function Home() {
   const featured = rovers.find((r) => r.featured) ?? rovers[0];
-  const allSponsors = sponsorTiers.flatMap((t) => t.items.map((i) => i.name));
+  const allSponsors = sponsorTiers.flatMap((t) => t.items);
 
   return (
     <>
@@ -126,25 +126,40 @@ export default function Home() {
       </section>
 
       {/* SPONSORS MARQUEE */}
-      <section className="border-y border-white/[0.06] bg-ink-900/40 py-16">
+      <section className="border-y border-white/[0.06] bg-ink-900/40 py-24">
         <div className="container-x">
           <p className="text-center font-mono text-xs uppercase tracking-[0.25em] text-chalk-dim">
             Backed by industry & the university
           </p>
         </div>
-        <div className="mt-8">
+        <div className="mt-12">
           <Marquee duration={38}>
-            {allSponsors.map((name) => (
-              <span
-                key={name}
-                className="mx-2 whitespace-nowrap rounded-full border border-white/[0.08] bg-white/[0.02] px-6 py-3 font-display text-lg text-chalk-soft"
+            {allSponsors.map((s) => (
+              <a
+                key={s.name}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={s.name}
+                className="mx-3 flex h-28 w-56 shrink-0 items-center justify-center rounded-2xl border-2 border-badger/50 bg-white px-6 py-5 transition-all hover:border-badger hover:opacity-95"
               >
-                {name}
-              </span>
+                {s.logo ? (
+                  <img
+                    src={s.logo}
+                    alt={s.name}
+                    className="max-h-16 max-w-full object-contain"
+                    loading="lazy"
+                  />
+                ) : (
+                  <span className="text-center text-sm font-semibold text-ink-950">
+                    {s.name}
+                  </span>
+                )}
+              </a>
             ))}
           </Marquee>
         </div>
-        <div className="container-x mt-8 text-center">
+        <div className="container-x mt-12 text-center">
           <Link
             to="/sponsors"
             className="group inline-flex items-center gap-2 text-sm font-semibold text-white"
